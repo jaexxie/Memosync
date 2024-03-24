@@ -1,8 +1,12 @@
 from bottle import route, run, template, static_file
 
 @route('/')
-def hello():
+def index():
     return template('index')
+
+@route('/register')
+def register():
+    return template('register')
 
 @route('/static/<filename>')
 def server_static(filename):
