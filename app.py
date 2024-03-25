@@ -8,6 +8,10 @@ def index():
 def register():
     return template('register')
 
+@route('/header')
+def register():
+    return template('header_base')
+
 @route('/static/<filename>')
 def server_static(filename):
     '''
