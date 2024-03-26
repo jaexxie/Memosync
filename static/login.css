@@ -13,7 +13,7 @@ body {
 .login {
     background-color: #ffffff;
     opacity: 0.7;
-    max-width: 250px;
+    max-width: 100%;
     min-width: 170px;
     padding: 30px;
     padding-top: 50px;
@@ -54,4 +54,27 @@ input {
     border-bottom: 1.5px solid #C35F5F;
     padding-bottom: 10px;
     padding-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .login {
+        max-width: 50%;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .login > h2 {
+        font-size: 20px;
+    }
+
+    .login input {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 90%;
+    }
+
+    .login button {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
