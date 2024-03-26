@@ -143,18 +143,22 @@ header > div > img {
     top: 0;
     right: 0;
     height: 100%;
-    width: 30vh;
+    width: 0vh;
     background-color: #E7DCCA;
     padding: 15px 40px;
     box-sizing: border-box;
     border-radius: 20px 0px 0px 20px;
     visibility: hidden;
     pointer-events: none;
+    opacity: 0;
+    transition: .5s all;
 }
 
 .header_slide_in_container.show {
     visibility: visible;
     pointer-events: all;
+    width: 30vh;
+    opacity: 1;
 }
 
 .header_slide_in_container > h2 {
