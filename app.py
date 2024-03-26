@@ -8,13 +8,18 @@ def index():
 def register():
     return template('register')
 
-@route('/static/<filename>')
-def server_static(filename):
+@route('/header')
+def register():
+    return template('header_base')
+
+@route('/static/<filepath:path>')
+def server_static(filepath):
     '''
         Returnerar statiska filer från mappen
         "static"
     '''
-    return static_file(filename, root='static')
+    print(filepath)
+    return static_file(filepath, root='static')
 
 
 run(host='localhost', port=8080, debug=True)

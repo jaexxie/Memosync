@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    background-image: url(pic/rose.bg.jpg);
+    background-size: cover;
+    background-attachment: scroll;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.login {
+    background-color: #ffffff;
+    opacity: 0.7;
+    max-width: 250px;
+    min-width: 170px;
+    padding: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 15px;
+    align-content: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000000;
+    font-family: "Montserrat",  sans-serif;
+}
+
+.login > h2 {
+    font-size: 25px;
+    font-weight: 700;
+    padding-bottom: 5px;
+}
+
+.login input {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.login button {
+    display: block;
+    margin-top: 10px;
+    background-color: transparent;
+    border: 1.5px solid #C35F5F;
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    
+}
+
+input {
+    border: none;
+    border-bottom: 1.5px solid #C35F5F;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
