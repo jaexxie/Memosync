@@ -8,6 +8,10 @@ def index():
 def register():
     return template('register')
 
+@route('/login')
+def login():
+    return template('login')
+
 @route('/header')
 def register():
     return template('header_base')
