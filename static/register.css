@@ -50,6 +50,14 @@ h2 > span {
   font-size: 46pt;
 }
 
+p {
+  color: #f0e7d8;
+  font-size: 40pt;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
 main > .register_link {
   padding: 10px 40px;
   border-radius: 20px;
