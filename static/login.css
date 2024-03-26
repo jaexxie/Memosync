@@ -56,7 +56,7 @@ input {
     padding-top: 10px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
     .login {
         max-width: 50%;
         padding-top: 30px;
