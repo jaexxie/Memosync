@@ -10,7 +10,7 @@ body {
   align-items: center;
 }
 
-.login {
+.register {
   background-color: #ffffff;
   opacity: 0.7;
   max-width: 250px;
@@ -25,18 +25,18 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-.login > h2 {
+.register > h2 {
   font-size: 25px;
   font-weight: 700;
   padding-bottom: 5px;
 }
 
-.login input {
+.register input {
   margin-bottom: 10px;
   width: 100%;
 }
 
-.login button {
+.register button {
   display: block;
   margin-top: 10px;
   background-color: transparent;
