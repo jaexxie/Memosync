@@ -8,17 +8,17 @@ header {
     justify-content: space-between;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #E7DCCA;
+    background-color: #F0E7D8;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
-header > aside {
+header>aside {
     display: flex;
     align-items: center;
     gap: 60px;
 }
 
-header > aside > a {
+header>aside>a {
     color: #312822;
     font-size: 26px;
     margin: 0;
@@ -27,12 +27,12 @@ header > aside > a {
     text-decoration: none;
 }
 
-header > aside > a > span {
+header>aside>a>span {
     color: #A63A50;
     font-size: 34px;
 }
 
-header > aside > ul {
+header>aside>ul {
     display: flex;
     align-items: center;
     gap: 40px;
@@ -41,11 +41,11 @@ header > aside > ul {
     list-style: none;
 }
 
-header > aside > ul > li {
+header>aside>ul>li {
     text-decoration: none;
 }
 
-header > aside > ul > li > a {
+header>aside>ul>li>a {
     color: #312822;
     letter-spacing: 1px;
     font-size: 16px;
@@ -54,18 +54,18 @@ header > aside > ul > li > a {
     transition: .5s all;
 }
 
-header > aside > ul > li > a:hover {
+header>aside>ul>li>a:hover {
     text-underline-offset: 8px;
 }
 
-header > div {
+header>div {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
 }
 
-header > div > div {
+header>div>div {
     height: 40px;
     width: 40px;
     background-color: #A63A50;
@@ -73,7 +73,7 @@ header > div > div {
     cursor: pointer;
 }
 
-header > div > img {
+header>div>img {
     height: 50px;
     width: 50px;
     cursor: pointer;
@@ -82,11 +82,11 @@ header > div > img {
 
 @media only screen and (max-width: 800px) {
 
-    header > aside > ul {
+    header>aside>ul {
         display: none;
     }
-    
-    header > div > img {
+
+    header>div>img {
         display: block;
     }
 
@@ -94,24 +94,24 @@ header > div > img {
 
 @media only screen and (max-width: 450px) {
 
-    header > aside > a {
+    header>aside>a {
         font-size: 22px;
     }
-    
-    header > aside > a > span {
+
+    header>aside>a>span {
         font-size: 30px;
     }
 
-    header > div {
+    header>div {
         gap: 15px;
     }
 
-    header > div > div {
+    header>div>div {
         height: 25px;
         width: 25px;
     }
-    
-    header > div > img {
+
+    header>div>img {
         height: 32px;
         width: 32px;
     }
@@ -161,14 +161,14 @@ header > div > img {
     opacity: 1;
 }
 
-.header_slide_in_container > h2 {
+.header_slide_in_container>h2 {
     font-family: monospace;
     letter-spacing: 2.5px;
     font-size: 30px;
     margin: 0;
 }
 
-.header_slide_in_container > ul {
+.header_slide_in_container>ul {
     list-style: none;
     padding: 0;
     margin: 40px 0px 0px 0px;
@@ -177,7 +177,7 @@ header > div > img {
     gap: 50px;
 }
 
-.header_slide_in_container > ul > li > a {
+.header_slide_in_container>ul>li>a {
     color: #312822;
     letter-spacing: 1px;
     font-size: 16px;
@@ -186,6 +186,6 @@ header > div > img {
     transition: .5s all;
 }
 
-.header_slide_in_container > ul > li > a:hover {
+.header_slide_in_container>ul>li>a:hover {
     text-underline-offset: 8px;
 }
