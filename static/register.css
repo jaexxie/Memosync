@@ -47,14 +47,14 @@ body {
   padding-right: 30px;
   cursor: pointer;
   transition-duration: 0.4s;
-  text-decoration: none;
 }
-button:hover {
+
+.register button:hover {
   background-color: #c35f5f;
   color: white;
 }
 
-.register a {
+a {
   text-decoration: none;
 }
 
@@ -99,9 +99,13 @@ input {
     padding-right: 30px;
     transition-duration: 0.4s;
   }
-  button:hover {
+  .register button:hover {
     background-color: #c35f5f;
     color: white;
+  }
+  
+  a {
+    text-decoration: none;
   }
 }
 
@@ -139,8 +143,13 @@ input {
     padding-right: 30px;
     transition-duration: 0.4s;
   }
-  button:hover {
+
+  .register button:hover {
     background-color: #c35f5f;
     color: white;
+  }
+  
+  a {
+    text-decoration: none;
   }
 }
