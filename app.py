@@ -16,6 +16,14 @@ def login():
 def register():
     return template('header_base')
 
+@route('/overview')
+def overview():
+    return template('overview')
+
+@route('/to-do-list')
+def to_do_list():
+    return template('to_do_list')
+
 @route('/static/<filepath:path>')
 def server_static(filepath):
     '''
