@@ -28,7 +28,7 @@ body {
 .register > h2 {
   font-size: 25px;
   font-weight: 700;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 
 .register input {
@@ -45,11 +45,22 @@ body {
   padding: 5px;
   padding-left: 30px;
   padding-right: 30px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.register button:hover {
+  background-color: #c35f5f;
+  color: white;
+}
+
+a {
+  text-decoration: none;
 }
 
 input {
   border: none;
-  border-bottom: 1.5px solid #c35f5f;
+  border-top: 1.5px solid #c35f5f;
   padding-bottom: 10px;
   padding-top: 10px;
 }
@@ -86,6 +97,15 @@ input {
     padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
+    transition-duration: 0.4s;
+  }
+  .register button:hover {
+    background-color: #c35f5f;
+    color: white;
+  }
+
+  a {
+    text-decoration: none;
   }
 }
 
@@ -121,5 +141,15 @@ input {
     padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
+    transition-duration: 0.4s;
+  }
+
+  .register button:hover {
+    background-color: #c35f5f;
+    color: white;
+  }
+
+  a {
+    text-decoration: none;
   }
 }

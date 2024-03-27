@@ -39,6 +39,7 @@ body {
 
 #press {
     display: block;
+    text-decoration: none;
     margin-top: 10px;
     background-color: transparent;
     border: 1.5px solid #C35F5F;
