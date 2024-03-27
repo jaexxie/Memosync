@@ -45,6 +45,17 @@ body {
   padding: 5px;
   padding-left: 30px;
   padding-right: 30px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  text-decoration: none;
+}
+button:hover {
+  background-color: #c35f5f;
+  color: white;
+}
+
+.register a {
+  text-decoration: none;
 }
 
 input {
@@ -86,6 +97,11 @@ input {
     padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
+    transition-duration: 0.4s;
+  }
+  button:hover {
+    background-color: #c35f5f;
+    color: white;
   }
 }
 
@@ -121,5 +137,10 @@ input {
     padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
+    transition-duration: 0.4s;
+  }
+  button:hover {
+    background-color: #c35f5f;
+    color: white;
   }
 }
