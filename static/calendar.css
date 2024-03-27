@@ -1,0 +1,16 @@
+body {
+    background-color: #F0E7D8;
+}
+
+.create button {
+    display: block;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: #a63a50;
+    border: 0.8px solid black;
+    border-radius: 10px;
+    padding: 13px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-family: "Montserrat", sans-serif;
+  }
