@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/static//register.css" rel="stylesheet" type="text/css" />
+    <link href="/static//to_do.css" rel="stylesheet" type="text/css" />
     <link href="/static/reset.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,28 +15,9 @@
   </head>
 
   <body>
-    <div class="register">
-      <h2>Register</h2>
-      <input
-        type="text"
-        class="form-control"
-        required
-        placeholder="First Name"
-      />
-      <input
-        type="text"
-        class="form-control"
-        required
-        placeholder="Last Name"
-      />
-      <input type="email" class="form-control" required placeholder="Email" />
-      <input
-        type="password"
-        class="form-control"
-        required
-        placeholder="Password"
-      />
-      <button>Register</button>
+    % include('header_base.html')
+    <div class="create">
+      <button>Create</button>
     </div>
   </body>
 </html>

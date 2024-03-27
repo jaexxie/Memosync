@@ -8,9 +8,21 @@ def index():
 def register():
     return template('register')
 
+@route('/login')
+def login():
+    return template('login')
+
 @route('/header')
 def register():
     return template('header_base')
+
+@route('/overview')
+def overview():
+    return template('overview')
+
+@route('/to-do-list')
+def to_do_list():
+    return template('to_do_list')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
