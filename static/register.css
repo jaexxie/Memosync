@@ -28,7 +28,7 @@ body {
 .register > h2 {
   font-size: 25px;
   font-weight: 700;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 
 .register input {
@@ -60,7 +60,7 @@ a {
 
 input {
   border: none;
-  border-bottom: 1.5px solid #c35f5f;
+  border-top: 1.5px solid #c35f5f;
   padding-bottom: 10px;
   padding-top: 10px;
 }
@@ -103,7 +103,7 @@ input {
     background-color: #c35f5f;
     color: white;
   }
-  
+
   a {
     text-decoration: none;
   }
@@ -148,7 +148,7 @@ input {
     background-color: #c35f5f;
     color: white;
   }
-  
+
   a {
     text-decoration: none;
   }
