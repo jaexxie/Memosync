@@ -25,7 +25,7 @@ body {
     font-family: "Montserrat",  sans-serif;
 }
 
-.login > h2 {
+#header {
     font-size: 25px;
     font-weight: 700;
     padding-bottom: 5px;
@@ -37,7 +37,7 @@ body {
     width: 100%;
 }
 
-.login button {
+#press {
     display: block;
     margin-top: 10px;
     background-color: transparent;
@@ -46,7 +46,12 @@ body {
     padding: 5px;
     padding-left: 30px;
     padding-right: 30px;
-    
+}
+
+#press:hover {
+    background-color: #C35F5F;
+    transition-duration: 0.2s;
+    color: white;
 }
 
 input {
@@ -73,7 +78,7 @@ input {
         width: 90%;
     }
 
-    .login button {
+    #press {
         padding-left: 20px;
         padding-right: 20px;
     }
