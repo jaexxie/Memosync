@@ -20,7 +20,7 @@ def register():
 def overview():
     return template('overview')
 
-@route('/to-do-list')
+@route('/to_do_list')
 def to_do_list():
     return template('to_do_list')
 
