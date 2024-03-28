@@ -27,7 +27,7 @@ def to_do_list():
 @route('/static/<filepath:path>')
 def server_static(filepath):
     '''
-        Returnerar statiska filer från mappen
+        returns static files from the folder
         "static"
     '''
     print(filepath)
