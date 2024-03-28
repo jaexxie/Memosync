@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  background-color: #f0e7d8;
+}
+
 .create button {
   display: block;
   margin-top: 20px;
