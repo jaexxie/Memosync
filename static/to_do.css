@@ -1,3 +1,8 @@
+body {
+  background-color: #F0E7D8;
+  margin: 0;
+}
+
 .create button {
   display: block;
   margin-top: 20px;
@@ -33,7 +38,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0px;
-  background-color: white;
+  background-color: #F0E7D8;
   border-radius: 0px;
   opacity: 0;
   transition: .5s all;
@@ -49,8 +54,44 @@
   pointer-events: all;
 }
 
-.popup_container > form {
+.popup_container>form {
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+
+form>fieldset>* {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form>fieldset>legend {
+  font-size: 16pt;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: "Montserrat", sans-serif;
+}
+
+form>fieldset>label {
+  font-size: 12pt;
+  font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#submit {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #A63A50;
+}
+
+input[type="submit"] {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
 }

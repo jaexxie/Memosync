@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/static/to_do.css" rel="stylesheet" type="text/css" />
-    <link href="/static/reset.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <title>MemoSync Register</title>
-  </head>
 
-  <body>
-    % include('header_base.html')
-    <div class="create">
-      <button id="open_popup_btn">Create</button>
-    </div>
-    <!-- popup -->
-    <div class="popup_background"></div>
-    <div class="popup_container">
-      <form action="" method="post">
-        <input type="text" name="text" id="text">
-        <input type="text" name="text" id="text">
-        <input type="text" name="text" id="text">
-        <input type="text" name="text" id="text">
-      </form>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/static/to_do.css" rel="stylesheet" type="text/css" />
+  <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+    rel="stylesheet" />
+  <title>MemoSync Register</title>
+</head>
+
+<body>
+  % include('header_base.html')
+  <div class="create">
+    <button id="open_popup_btn">Create</button>
+  </div>
+  <!-- popup -->
+  <div class="popup_background"></div>
+  <div class="popup_container">
+    <form action="/to_do_list" method="get">
+      <fieldset>
+        <legend>Create New To-Do List</legend>
+        <label for="category">Enter a category for your to-do list:</label>
+        <input type="text" name="category" id="category" required placeholder="e.g grocery list">
+        <label for="description">Enter a description:</label>
+        <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
+        <label for="colour">Select colour for your to-do list:</label>
+        <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
+        <input type="submit" id="submit" value="Create">
+      </fieldset>
+    </form>
+  </div>
+</body>
+
 </html>
 <script src="/static/js/popup.js"></script>

@@ -20,14 +20,14 @@ def register():
 def overview():
     return template('overview')
 
-@route('/to-do-list')
+@route('/to_do_list')
 def to_do_list():
     return template('to_do_list')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
     '''
-        Returnerar statiska filer från mappen
+        returns static files from the folder
         "static"
     '''
     print(filepath)
