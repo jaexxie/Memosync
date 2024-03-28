@@ -15,3 +15,83 @@ body {
   padding-right: 30px;
   font-family: "Montserrat", sans-serif;
 }
+
+.popup_background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.537);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.popup_background.show {
+  visibility: visible;
+  pointer-events: all;
+}
+
+.popup_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+  background-color: #F0E7D8;
+  border-radius: 0px;
+  opacity: 0;
+  transition: .5s all;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.popup_container.show {
+  padding: 50px;
+  border-radius: 15px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.popup_container>form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+form>fieldset>* {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form>fieldset>legend {
+  font-size: 16pt;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: "Montserrat", sans-serif;
+}
+
+form>fieldset>label {
+  font-size: 12pt;
+  font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#submit {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #A63A50;
+}
+
+input[type="submit"] {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
