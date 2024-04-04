@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file
+from db import make_db_connection
 
 @route('/')
 def index():
