@@ -49,21 +49,35 @@ body {
   transition-duration: 0.4s;
 }
 
-.register button:hover {
-  background-color: #c35f5f;
-  color: white;
-}
-
 a {
   text-decoration: none;
 }
 
 input {
   border: none;
-  border-top: 1.5px solid #c35f5f;
+  border-bottom: 1.5px solid #c35f5f;
   padding-bottom: 10px;
   padding-top: 10px;
 }
+
+#submit {
+  display: block;
+  margin-top: 10px;
+  background-color: transparent;
+  border: 1.5px solid #c35f5f;
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+#submit:hover {
+  background-color: #c35f5f;
+  color: white;
+}
+
 
 @media only screen and (max-width: 1025px) {
   .register {
