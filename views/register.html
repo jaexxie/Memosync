@@ -15,19 +15,17 @@
   </head>
 
   <body>
-    <div class="register">
+    <form action="/register/add/user" method="post" class="register">
       <h2>Register</h2>
       <label for="name-field">First Name:</label>
-      <input type="text" class="form-control" label="" required />
+      <input type="text" name="first_name" class="form-control" label="" required />
       <label for="lastname-field">Last Name:</label>
-      <input type="text" class="form-control" required />
+      <input type="text" name="last_name" class="form-control" required />
       <label for="email">Email:</label>
-      <input type="email" class="form-control" required />
+      <input type="email" name="email" class="form-control" required />
       <label for="password">Password:</label>
-      <input type="password" class="form-control" required />
-      <a href="/overview">
-        <button type="submit">Register</button>
-      </a>
-    </div>
+      <input type="password" name="password" class="form-control" required />
+      <button type="submit">Register</button>
+    </form>
   </body>
 </html>
