@@ -18,11 +18,17 @@
   % include('header_base.html')
   <div class="create">
     <button id="open_popup_btn">Create</button>
+
+    % for info in to_do:
+    <div id="to_do">
+      {{ to_do[2]}}
+    </div>
+    % end
   </div>
   <!-- popup -->
   <div class="popup_background"></div>
   <div class="popup_container">
-    <form action="/to_do_list" method="POST">
+    <form action="/create_to_do_list" method="POST">
       <fieldset>
         <legend>Create New To-Do List</legend>
         <label for="title">Enter a category for your to-do list:</label>
