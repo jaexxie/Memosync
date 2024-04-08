@@ -103,11 +103,39 @@ def overview():
     else:
         return redirect('/')
 
-@route('/to_do_list', method=['post'])
+@route('/to_do_list')
 def to_do_list():
-    '''
+    return template('to_do_list')
+
+@route("/create_to_do_list", method="POST")
+def create_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute("SELECT id FROM user_info WHERE email = %s", (logged_in_cookie,))
+            user_id = cursor.fetchone()[0]
+
+            to_do_list_title = request.forms.get("title")
+            to_do_list_description = request.forms.get("description")
+
+            cursor.execute('INSERT INTO to_do_list (task_do_list_title, to_do_list_description) values (%s, %s) WHERE user_id =%s', (to_do_list_title, to_do_list_description, user_id,))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+            
+#under works
+
+'''@route('/to_do_list', method=['post'])
+    def to_do_list():
     This function adds to-do list and its category to the database.
-    '''
     # Make sure they aren't already logged in
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
@@ -136,7 +164,7 @@ def to_do_list():
         finally:
             # Closing Database connection after it's been used
             cursor.close()
-            db.close()
+            db.close()'''
 
 
 @route('/static/<filepath:path>')
