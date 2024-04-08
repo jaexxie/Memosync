@@ -95,7 +95,7 @@ def overview():
             cursor.execute('select * from user_info where id = %s', (logged_in_cookie))
             user_info = cursor.fetchone()
 
-            return redirect('/overview')
+            return template('overview')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
