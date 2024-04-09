@@ -113,9 +113,10 @@ def to_do_list():
             cursor = db.cursor()
 
             cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
-            to_do = cursor.fetchall()
+            to_dos = cursor.fetchall()
 
-            return template('to_do_list', to_do=to_do)
+            return template('to_do_list', to_dos=to_dos)
+
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -134,7 +135,7 @@ def create_to_do_list():
             to_do_list_title = request.forms.get("title")
             to_do_list_description = request.forms.get("description")
 
-            cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description) values (%s, %s) WHERE user_id =%s', (to_do_list_title, to_do_list_description, logged_in_cookie,))
+            cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
 
             return redirect('/to_do_list')
