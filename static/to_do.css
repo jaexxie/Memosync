@@ -3,6 +3,17 @@ body {
   background-color: #F0E7D8;
 }
 
+body>h2 {
+  font-family: monospace;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #312822;
+  font-size: 26px;
+  margin: 20px;
+  letter-spacing: 1px;
+  font-size: 20px;
+}
+
 .create button {
   display: block;
   margin-top: 20px;
@@ -13,11 +24,13 @@ body {
   padding: 13px;
   padding-left: 30px;
   padding-right: 30px;
+  margin-bottom: 20px;
+}
+
+#open_popup_btn {
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
 }
-
-
 
 .popup_background {
   position: fixed;
@@ -99,3 +112,56 @@ input[type="submit"] {
   font-family: "Montserrat", sans-serif;
   text-align: center;
 }
+
+#to_do_container {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#to_do_lists {
+  background-color: #f8f8f8;
+  border: 1px solid black;
+  width: 250px;
+  min-height: 50px;
+  border-radius: 5px;
+  margin: 10px;
+  justify-content: space-between;
+}
+
+#to_do_title {
+  padding: 5px;
+  background-color: #A63A50;
+  margin-top: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* .todo-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.todo-item {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: calc(33.33% - 20px);
+  box-sizing: border-box;
+}
+
+.todo-header {
+  color: #c0392b;
+  margin-bottom: 5px;
+}
+
+.todo-body {
+  margin-bottom: 0;
+}
+
+class="todo_container
+ class="todo_item">class="todo_header"
+<div class="todo_body">
