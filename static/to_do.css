@@ -114,10 +114,9 @@ input[type="submit"] {
 }
 
 #to_do_container {
-  margin: 10px;
+  margin: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 
 #to_do_lists {
@@ -127,7 +126,6 @@ input[type="submit"] {
   min-height: 50px;
   border-radius: 5px;
   margin: 10px;
-  justify-content: space-between;
 }
 
 #to_do_title {
