@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: #f0e7d8;
+  background-color: #F0E7D8;
 }
 
 .create button {
@@ -14,11 +14,10 @@ body {
   padding-left: 30px;
   padding-right: 30px;
   font-family: "Montserrat", sans-serif;
-}
-
-.create {
   cursor: pointer;
 }
+
+
 
 .popup_background {
   position: fixed;
