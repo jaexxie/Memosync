@@ -16,6 +16,10 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.create {
+  cursor: pointer;
+}
+
 .popup_background {
   position: fixed;
   top: 0;
@@ -89,6 +93,7 @@ input[type="text"] {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #A63A50;
+  cursor: pointer;
 }
 
 input[type="submit"] {

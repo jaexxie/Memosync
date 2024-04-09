@@ -105,9 +105,24 @@ def overview():
 
 @route('/to_do_list')
 def to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
+            to_do = cursor.fetchall()
+
+            return template('to_do_list', to_do=to_do)
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
     return template('to_do_list')
 
-@route("/create_to_do_list", method="POST")
+@route('/create_to_do_list', method='POST')
 def create_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
@@ -116,13 +131,10 @@ def create_to_do_list():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT id FROM user_info WHERE email = %s", (logged_in_cookie,))
-            user_id = cursor.fetchone()[0]
-
             to_do_list_title = request.forms.get("title")
             to_do_list_description = request.forms.get("description")
 
-            cursor.execute('INSERT INTO to_do_list (task_do_list_title, to_do_list_description) values (%s, %s) WHERE user_id =%s', (to_do_list_title, to_do_list_description, user_id,))
+            cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description) values (%s, %s) WHERE user_id =%s', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
 
             return redirect('/to_do_list')
@@ -131,41 +143,12 @@ def create_to_do_list():
             cursor.close()
             db.close()
             
-#under works
 
-'''@route('/to_do_list', method=['post'])
-    def to_do_list():
-    This function adds to-do list and its category to the database.
-    # Make sure they aren't already logged in
-    logged_in_cookie = request.get_cookie('loggedIn')
-    if logged_in_cookie:
-        return template('to_do_list')
-    else:
-        try:
-            # Database Connection
-            db = make_db_connection()
-            cursor = db.cursor()
+@route('/calendar')
+def calendar():
+    return template('calendar')
 
-            cursor.execute("SELECT id FROM user_info WHERE email = %s", (logged_in_cookie,))
-            user_id = cursor.fetchone()[0]
-
-            if request.method == 'POST':
-                task = request.forms.get('task')
-                to_do_date = request.forms.get('to_do_date')
-                to_do_time = request.forms.get('to_do_time')
-                finished = request.forms.get('finished')
-                category = request.forms.get('category')
-
-                cursor.execute('insert into to_do_category (category) values (%s, %s)', (user_id, category))
-                cursor.execute('insert into to_do_list (task, to_do_date, to_do_time, finished) values (%s, %s, %s, %s, %s)', (user_id, task, to_do_date, to_do_time, finished))
-                db.commit()
-
-            return redirect('/overview')
-        finally:
-            # Closing Database connection after it's been used
-            cursor.close()
-            db.close()'''
-
+@route('/progress_table')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
