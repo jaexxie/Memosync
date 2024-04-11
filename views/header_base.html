@@ -19,7 +19,7 @@
       </ul>
     </aside>
     <div>
-      <div></div>
+      <img id="profile_btn" src="/static/pic/user_profile_pictures/{{ user_info[5] }}" alt="user_profile_picture">
       <img id="hamburger_btn" src="static/pic/Hamburger_icon.png" alt="hamburger menu" />
     </div>
   </header>
@@ -32,6 +32,22 @@
       <li><a href="/to_do_list">To-Do List</a></li>
       <li><a href="">Progress Table</a></li>
     </ul>
+  </section>
+  <!-- Slide in Profile -->
+  <div class="header_slide_in_profile_background"></div>
+  <section class="header_slide_in_profile_container">
+    <div>
+      <h2>{{ user_info[1] }}</h2>
+      <img src="/static/pic/user_profile_pictures/{{ user_info[5] }}" alt="profile_picture">
+    </div>
+    <form action="update/user/info" method="post", enctype="multipart/form-data">
+      <input type="text" name="first_name" id="first_name" value="{{ user_info[1] }}" placeholder="First Name">
+      <input type="text" name="last_name" id="last_name" value="{{ user_info[2] }}" placeholder="Last Name">
+      <input type="email" name="email" id="email" value="{{ user_info[3] }}" placeholder="Email">
+      <input type="password" name="password" id="password" value="{{ user_info[4] }}" placeholder="Password">
+      <input type="file" name="pic" id="pic">
+      <button type="submit">Submit Changes</button>
+    </form>
   </section>
 </body>
 
