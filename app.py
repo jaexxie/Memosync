@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file, request, redirect, response
+import os
 from db import make_db_connection
 
 @route('/register')
@@ -92,16 +93,69 @@ def overview():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute('select * from user_info where id = %s', (logged_in_cookie))
-            user_info = cursor.fetchone()
-
-            return template('overview')
+            return template('overview', user_info=get_user_info(logged_in_cookie, cursor))
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
         return redirect('/')
+    
+@route('/update/user/info', method=['GET', 'POST'])
+def update_user_info():
+    # Make sure they aren't already logged in
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # Get the data from the form
+            first_name = request.forms.get('first_name')
+            last_name = request.forms.get('last_name')
+            email = request.forms.get('email')
+            password = request.forms.get('password')
+            image = request.files.get('pic')  # Retrieve the file object
+
+            if image:
+                filename = image.filename  # Get the original filename
+                filepath = os.path.join('static/pic/user_profile_pictures', filename)  # Construct the full file path
+                
+                # Save the file to the specified directory with its original filename
+                image.save(filepath)
+
+                cursor.execute('''
+                update memosync.user_info
+                set profile_picture = %s
+                where id = %s
+                ''', (filename, logged_in_cookie))
+                db.commit()
+
+            cursor.execute('''
+            update memosync.user_info
+            set name = %s, lastname = %s, email = %s, password = %s
+            where id = %s
+            ''', (first_name, last_name, email, password, logged_in_cookie))
+            db.commit()
+            
+            # Take User Back To The Previous Page
+            return redirect(request.get_header('Referer'))
+
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
+def get_user_info(id, cursor):
+    '''
+    This function gets the users informaiton, so that they can change or update it.
+    '''
+    cursor.execute('select * from user_info where id = %s', (id))
+    return cursor.fetchone()
 
 @route('/to_do_list')
 def to_do_list():
