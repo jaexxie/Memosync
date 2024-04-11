@@ -2,13 +2,13 @@ body {
     margin: 0;
 }
 
-header {
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #F0E7D8;
+    background-color: #E7DCCA;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
@@ -22,9 +22,10 @@ header>aside>a {
     color: #312822;
     font-size: 26px;
     margin: 0;
-    font-family: monospace;
+    font-family: "Montserrat", sans-serif;
     letter-spacing: 2.5px;
     text-decoration: none;
+    font-weight: bold;
 }
 
 header>aside>a>span {
