@@ -13,12 +13,12 @@ popup_container.addEventListener("click", function () {
     popup_container.classList.remove('show')
 });
 
-/*
-open_popup_btn = document.querySelector('#open_popup_btn')
+
+create_to_do_pop_up = document.querySelector('#create_to_do_pop_up')
 popup_background = document.querySelector('.popup_background')
 popup_container = document.querySelector('.popup_container')
 
-open_popup_btn.addEventListener('click', function () {
+create_to_do_pop_up.addEventListener('click', function () {
     if (popup_background.classList.contains('show')) {
         popup_background.classList.remove('show')
         popup_container.classList.remove('show')
@@ -31,4 +31,4 @@ open_popup_btn.addEventListener('click', function () {
 popup_background.addEventListener("click", function () {
     popup_background.classList.remove('show')
     popup_container.classList.remove('show')
-});*/
+});

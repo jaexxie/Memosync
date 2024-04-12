@@ -25,13 +25,13 @@
 
   <!---create button menu pop up-->
   <div id="to_do_menu" class="popup_container">
-    <a href="" id="first">Create to-do list</a>
-    <a href="">Add task to list</a>
+    <a href="#new_to_do" id="create_to_do_pop_up">Create to-do list</a>
+    <a href="#new_task">Add task to list</a>
   </div>
 
   <!-- popup -->
   <div class="popup_background"></div>
-  <div class="popup_container">
+  <div id="new_to_do" class="popup_container">
     <form action="/create_to_do_list" method="POST">
       <fieldset>
         <legend>Create New To-Do List</legend>
