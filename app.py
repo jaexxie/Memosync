@@ -150,6 +150,7 @@ def update_user_info():
     else:
         return redirect('/')
 
+
 def get_user_info(id, cursor):
     '''
     This function gets the users informaiton, so that they can change or update it.
