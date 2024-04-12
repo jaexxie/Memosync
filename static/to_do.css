@@ -113,6 +113,26 @@ input[type="submit"] {
   text-align: center;
 }
 
+#to_do_menu {
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin-left: 20px;
+  position: fixed;
+}
+
+#to_do_menu>a {
+  text-decoration: none;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+#to_do_menu>#first {
+  border-bottom: #312822;
+}
+
 #to_do_container {
   margin: 20px;
   display: flex;
@@ -135,31 +155,3 @@ input[type="submit"] {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-
-/* .todo-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.todo-item {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  width: calc(33.33% - 20px);
-  box-sizing: border-box;
-}
-
-.todo-header {
-  color: #c0392b;
-  margin-bottom: 5px;
-}
-
-.todo-body {
-  margin-bottom: 0;
-}
-
-class="todo_container
- class="todo_item">class="todo_header"
-<div class="todo_body">
