@@ -169,7 +169,7 @@ def to_do_list():
             cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
             to_dos = cursor.fetchall()
 
-            return template('to_do_list', to_dos=to_dos)
+            return template('to_do_list', to_dos=to_dos, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:
             # Closing Database connection after it's been used
