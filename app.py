@@ -141,8 +141,8 @@ def update_user_info():
             
             # Take User Back To The Previous Page
             return redirect(request.get_header('Referer'))
-
-
+        except:
+            return redirect(request.get_header('Referer'))
         finally:
             # Closing Database connection after it's been used
             cursor.close()
