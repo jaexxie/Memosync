@@ -26,32 +26,65 @@ body {
 }
 
 #progress_container {
-    border: 1px solid black;
-    margin: auto;
+    border: 1px solid #111111;
+    background-color: #fbf9f5;
+    margin: 25px auto 20px auto ;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    padding: 4px 50px;
+    padding: 4px 50px 20px 50px;
+    width: 80%;
+
+ 
 }
 
 #progress_container table{
     width: 100%;
     border-collapse: collapse ;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
 
 #progress_container th {
-    border-bottom: 1px solid grey;
-    border-right: 1px solid grey;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
     padding: 8px;
 
 }
 
+
 #progress_container td {
-   border-bottom: 1px solid grey;
-   border-right: 1px solid grey;
+   border-bottom: 1px solid #ccc;
+   border-right: 1px solid #ccc;
    padding: 6px;
+   text-align: center;
 }
 
+/* Detta tar bort höger border på sista elementet i <tr> */
 #progress_container td:last-child, #progress_container th:last-child{
     border-right: none;
+}
+
+/* Ta bort margin for select form */
+#progress_container form {
+    margin: 0;
+}
+
+/*styla select rutan  */
+#progress_container select {
+    padding: 2px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: none;
+    background-color: none;
+    cursor: pointer;
+}
+
+/* Ta bor fokusram */
+#progress_container select:focus{
+    outline: none;
+}
+
+#progress_container select option{
+    background-color: rgba(251, 249, 245, 0.8);
+    text-align: center;
 }

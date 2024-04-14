@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="/static/progress_bar.css" rel="stylesheet" type="text/css" />
-  <link href="/static/reset.css" rel="stylesheet" type="text/css">
+  <link href="/static/reset.css" rel="stylesheet" type="text/css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -26,22 +26,24 @@
       <table>
         <thead>
           <tr>
-            <th>Task</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Status</th>
+            <th class="task">Task</th>
+            <th class="description">Description</th>
+            <th class="date">Date</th>
+            <th class="status">Status</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Project</td>
             <td>Systemutveckling</td>
-            <td>24-04-13</td>
+            <td>
+              <input class="date_input" value="2024-07-22" type="date" name="date" min="2024-01-01" max="2025-12-31">
+            </td>
             <td>
               <form action="#">
                 <select name="status" id="status">
-                  <option value="" selected disabled>Choose Status</option>
-                  <option value="not_started">Not Started</option>
+                  <option value="choose_status"  disabled>Choose Status</option>
+                  <option value="not_started" selected>Not Started</option>
                   <option value="in_progress">In Progress</option>
                   <option value="done">Done</option>
                 </select>
@@ -58,5 +60,6 @@
 
   </div>
 </body>
+<script src="/static/js/progress-modal.js"></script>
 
 </html>
