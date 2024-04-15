@@ -9,7 +9,16 @@ def register():
     if logged_in_cookie:
         return redirect('/overview')
     else:
-        return template('register')
+        return template('register', message=None)
+
+@route('/register/<message>')
+def register(message):
+    # Make sure they aren't already logged in
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        return redirect('/overview')
+    else:
+        return template('register', message=message)
 
 @route('/register/add/user', method=['post'])
 def add_user():
@@ -30,6 +39,13 @@ def add_user():
                 last_name = request.forms.get('last_name')
                 email = request.forms.get('email')
                 password = request.forms.get('password')
+
+
+                # Make Sure Email doesn't already exist
+                cursor.execute('select * from user_info where email=%s', (email,))
+                does_mail_already_exist = cursor.fetchall()
+                if does_mail_already_exist:
+                    return redirect('/register/Email Already Exists')
 
                 cursor.execute('insert into user_info (name, lastname, email, password) values (%s, %s, %s, %s)', (first_name, last_name, email, password))
                 db.commit()
