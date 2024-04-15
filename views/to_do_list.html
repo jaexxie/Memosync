@@ -11,22 +11,31 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
     rel="stylesheet" />
-  <title>MemoSync Register</title>
+  <title>MemoSync</title>
 </head>
 
 <body>
+
   % include('header_base.html')
+
+  <h2>To-Do Lists</h2>
   <div class="create">
-    <button id="open_popup_btn">Create</button>
+    <button id="open_popup_options_btn">Create</button>
+    <div class="dropdown-content">
+      <a id="open_popup_btn">Create Catagory</a>
+      <a >Create Task</a>
+    </div>
   </div>
+
+
   <!-- popup -->
   <div class="popup_background"></div>
-  <div class="popup_container">
-    <form action="/to_do_list" method="post">
+  <div id="new_to_do" class="popup_container">
+    <form action="/create_to_do_list" method="POST">
       <fieldset>
         <legend>Create New To-Do List</legend>
-        <label for="category">Enter a category for your to-do list:</label>
-        <input type="text" name="category" id="category" required placeholder="e.g grocery list">
+        <label for="title">Enter a category for your to-do list:</label>
+        <input type="text" name="title" id="title" required placeholder="e.g grocery list">
         <label for="description">Enter a description:</label>
         <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
         <label for="colour">Select colour for your to-do list:</label>
@@ -34,6 +43,20 @@
         <input type="submit" id="submit" value="Create">
       </fieldset>
     </form>
+  </div>
+
+  <!-- Display To-Do Lists -->
+  <div id="to_do_container">
+    % if to_dos:
+    % for to_do in to_dos:
+    <div id="to_do_lists">
+      <div id="to_do_title">
+        <h3>{{to_do[0]}}</h3>
+      </div>
+      <p>{{to_do[1]}}</p>
+    </div>
+    % end
+    % end
   </div>
 </body>
 

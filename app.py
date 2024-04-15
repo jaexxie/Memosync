@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file, request, redirect, response
+import os
 from db import make_db_connection
 
 @route('/register')
@@ -92,10 +93,56 @@ def overview():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute('select * from user_info where id = %s', (logged_in_cookie))
-            user_info = cursor.fetchone()
+            return template('overview', user_info=get_user_info(logged_in_cookie, cursor))
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+    
+@route('/update/user/info', method=['GET', 'POST'])
+def update_user_info():
+    # Make sure they aren't already logged in
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
 
-            return redirect('/overview')
+            # Get the data from the form
+            first_name = request.forms.get('first_name')
+            last_name = request.forms.get('last_name')
+            email = request.forms.get('email')
+            password = request.forms.get('password')
+            image = request.files.get('pic')  # Retrieve the file object
+
+            if image:
+                filename = image.filename  # Get the original filename
+                filepath = os.path.join('static/pic/user_profile_pictures', filename)  # Construct the full file path
+                
+                # Save the file to the specified directory with its original filename
+                image.save(filepath)
+
+                cursor.execute('''
+                update memosync.user_info
+                set profile_picture = %s
+                where id = %s
+                ''', (filename, logged_in_cookie))
+                db.commit()
+
+            cursor.execute('''
+            update memosync.user_info
+            set name = %s, lastname = %s, email = %s, password = %s
+            where id = %s
+            ''', (first_name, last_name, email, password, logged_in_cookie))
+            db.commit()
+            
+            # Take User Back To The Previous Page
+            return redirect(request.get_header('Referer'))
+        except:
+            return redirect(request.get_header('Referer'))
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -103,41 +150,74 @@ def overview():
     else:
         return redirect('/')
 
-@route('/to_do_list', method=['post'])
-def to_do_list():
+
+def get_user_info(id, cursor):
     '''
-    This function adds to-do list and its category to the database.
+    This function gets the users informaiton, so that they can change or update it.
     '''
-    # Make sure they aren't already logged in
+    cursor.execute('select * from user_info where id = %s', (id))
+    return cursor.fetchone()
+
+@route('/logout', method=['GET', 'POST'])
+def logout():
+    """Logs out a user"""
+    # Make sure they are logged in
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
-        return template('to_do_list')
+        # Deleting The Cookie
+        response.set_cookie('loggedIn', '', expires=0)
+        return redirect('/')
     else:
+        return redirect('/')
+
+
+@route('/to_do_list')
+def to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
         try:
             # Database Connection
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT id FROM user_info WHERE email = %s", (logged_in_cookie,))
-            user_id = cursor.fetchone()[0]
+            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
+            to_dos = cursor.fetchall()
 
-            if request.method == 'POST':
-                task = request.forms.get('task')
-                to_do_date = request.forms.get('to_do_date')
-                to_do_time = request.forms.get('to_do_time')
-                finished = request.forms.get('finished')
-                category = request.forms.get('category')
+            return template('to_do_list', to_dos=to_dos, user_info=get_user_info(logged_in_cookie, cursor))
 
-                cursor.execute('insert into to_do_category (category) values (%s, %s)', (user_id, category))
-                cursor.execute('insert into to_do_list (task, to_do_date, to_do_time, finished) values (%s, %s, %s, %s, %s)', (user_id, task, to_do_date, to_do_time, finished))
-                db.commit()
-
-            return redirect('/overview')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    return template('to_do_list')
 
+@route('/create_to_do_list', method='POST')
+def create_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            to_do_list_title = request.forms.get("title")
+            to_do_list_description = request.forms.get("description")
+
+            cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+            
+
+@route('/calendar')
+def calendar():
+    return template('calendar')
+
+@route('/progress_table')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):

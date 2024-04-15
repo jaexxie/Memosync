@@ -1,40 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/header_base.css" />
-    <title>Header</title>
-  </head>
-  <body>
-    <header>
-      <aside>
-        <a href="/overview"><span>M</span>EMO<span>S</span>YNC</a>
-        <ul>
-          <li><a href="">Calendar</a></li>
-          <li><a href="/to_do_list">To-Do List</a></li>
-          <li><a href="">Progress Bar</a></li>
-        </ul>
-      </aside>
-      <div>
-        <div></div>
-        <img
-          id="hamburger_btn"
-          src="static/pic/Hamburger_icon.png"
-          alt="hamburger menu"
-        />
-      </div>
-    </header>
-    <!-- Slide In Menu -->
-    <div class="header_slide_in_background"></div>
-    <section class="header_slide_in_container">
-      <h2>Menu</h2>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="static/header_base.css" />
+  <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+    rel="stylesheet" />
+  <title>Header</title>
+</head>
+
+<body>
+  <header class="header">
+    <aside>
+      <a href="/overview"><span>M</span>EMO<span>S</span>YNC</a>
       <ul>
-        <li><a href="">Calendar</a></li>
+        <li><a href="/calendar">Calendar</a></li>
         <li><a href="/to_do_list">To-Do List</a></li>
-        <li><a href="">Progress Bar</a></li>
+        <li><a href="">Progress Table</a></li>
       </ul>
-    </section>
-  </body>
+    </aside>
+    <div>
+      <img id="profile_btn" src="/static/pic/user_profile_pictures/{{ user_info[5] }}" alt="user_profile_picture">
+      <img id="hamburger_btn" src="static/pic/Hamburger_icon.png" alt="hamburger menu" />
+    </div>
+  </header>
+  <!-- Slide In Menu -->
+  <div class="header_slide_in_background"></div>
+  <section class="header_slide_in_container">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="/calendar">Calendar</a></li>
+      <li><a href="/to_do_list">To-Do List</a></li>
+      <li><a href="">Progress Table</a></li>
+    </ul>
+  </section>
+  <!-- Slide in Profile -->
+  <div class="header_slide_in_profile_background"></div>
+  <section class="header_slide_in_profile_container">
+    <div>
+      <h2>{{ user_info[1] }}</h2>
+      <img src="/static/pic/user_profile_pictures/{{ user_info[5] }}" alt="profile_picture">
+    </div>
+    <form action="update/user/info" method="post", enctype="multipart/form-data">
+      <input type="text" name="first_name" id="first_name" value="{{ user_info[1] }}" placeholder="First Name">
+      <input type="text" name="last_name" id="last_name" value="{{ user_info[2] }}" placeholder="Last Name">
+      <input type="email" name="email" id="email" value="{{ user_info[3] }}" placeholder="Email">
+      <input type="password" name="password" id="password" value="{{ user_info[4] }}" placeholder="Password">
+      <input type="file" name="pic" id="pic">
+      <button type="submit">Submit Changes</button>
+    </form>
+    <a href="/logout">Logout</a>
+  </section>
+</body>
+
 </html>
 <script src="static/js/header_base.js"></script>

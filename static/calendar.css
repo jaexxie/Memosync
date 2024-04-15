@@ -13,4 +13,5 @@ body {
     padding-left: 30px;
     padding-right: 30px;
     font-family: "Montserrat", sans-serif;
-  }
+    cursor: pointer;
+}
