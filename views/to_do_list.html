@@ -22,27 +22,28 @@
   <div class="create">
     <button id="open_popup_options_btn">Create</button>
     <div class="dropdown-content">
-      <a id="open_popup_btn">Create Catagory</a>
-      <a >Create Task</a>
+      <a id="open_popup_btn">Create To-Do List</a>
+      <a>Add Task to List</a>
     </div>
   </div>
 
 
   <!-- popup -->
-  <div class="popup_background"></div>
-  <div id="new_to_do" class="popup_container">
-    <form action="/create_to_do_list" method="POST">
-      <fieldset>
-        <legend>Create New To-Do List</legend>
-        <label for="title">Enter a category for your to-do list:</label>
-        <input type="text" name="title" id="title" required placeholder="e.g grocery list">
-        <label for="description">Enter a description:</label>
-        <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
-        <label for="colour">Select colour for your to-do list:</label>
-        <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
-        <input type="submit" id="submit" value="Create">
-      </fieldset>
-    </form>
+  <div class="popup_background">
+    <div id="new_to_do" class="popup_container">
+      <form action="/create_to_do_list" method="POST">
+        <fieldset>
+          <legend>Create New To-Do List</legend>
+          <label for="title">Enter a category for your to-do list:</label>
+          <input type="text" name="title" id="title" required placeholder="e.g grocery list">
+          <label for="description">Enter a description:</label>
+          <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
+          <label for="colour">Select colour for your to-do list:</label>
+          <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
+          <input type="submit" id="submit" value="Create">
+        </fieldset>
+      </form>
+    </div>
   </div>
 
   <!-- Display To-Do Lists -->
