@@ -72,10 +72,12 @@ body>h2 {
   top: 0;
   right: 0;
   height: 100%;
-  width: 100%;
+  width: max-content;
+  padding: 30px;
   background-color: rgba(0, 0, 0, 0.537);
-  visibility: hidden;
+  /* visibility: hidden; */
   pointer-events: none;
+  z-index: 10;
 }
 
 .popup_background.show {
@@ -91,9 +93,9 @@ body>h2 {
   padding: 0px;
   background-color: #F0E7D8;
   border-radius: 0px;
-  opacity: 0;
+  /* opacity: 0; */
   transition: .5s all;
-  visibility: hidden;
+  /* visibility: hidden; */
   pointer-events: none;
 }
 
@@ -192,4 +194,23 @@ input[type="submit"] {
   margin-top: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+#dialog {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.hidden_dialog {
+  visibility: hidden;
+}
+
+.shown_dialog {
+  visibility: visible;
 }
