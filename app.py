@@ -204,6 +204,30 @@ def calendar():
     return template('calendar')
 
 @route('/progress_table')
+def progress_table():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
+            to_dos = cursor.fetchall()
+
+            return template('progress_table', progress_tasks=progress_tasks)
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    return template('progress_table')
+
+
+
+
+     
+
 
 @route('/static/<filepath:path>')
 def server_static(filepath):

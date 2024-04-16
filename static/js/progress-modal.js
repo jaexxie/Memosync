@@ -1,17 +1,37 @@
-document.addEventListener("DOMContentLoaded", function() {
-    var btn = document.getElementsByClassName("create-btn")[0];
-    var modal = document.querySelector(".modal-container"); // Use querySelector to select the modal container
-    var span = document.getElementsByClassName("close")[0];
+//const modal = document.querySelector("#modal-container");
+//const openModalBtn = document.querySelector(".create-btn");
+//const closeModalBtn = document.querySelector(".close");
 
-    // Check if the button element exists
-    if (btn) {
-        // Add event listener for click event
-        btn.onclick = function() {
-            modal.style.display = "block";
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.querySelector(".modal-container");
+    const openModalBtn = document.getElementById("create-btn");
+    const closeModalBtn = document.querySelector(".close");
+    const modalOverlay = document.querySelector(".modal-overlay");
+
+    //Open modal when create-btn i clicked 
+    openModalBtn.addEventListener("click", () => {
+        modal.style.display = "block";
+        modalOverlay.style.display = "block";
+    });
+
+    //close modal when close btn is clicked
+    closeModalBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        modalOverlay.style.display = "none";
+
+    });
+
+    //close modal even with clicking outside the modal
+    document.addEventListener("click", function (e) {
+        if(e.target === modal) {
+            modal.style.display = "none";
         }
-    } else {
-        console.error("Button element not found.");
-    }
+    });
 
-    // Rest of your code for modal functionality
+    // Close modal when the Esc key is pressed
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.style.display !== "none") {
+        closeModal();
+        }
+    });
 });
