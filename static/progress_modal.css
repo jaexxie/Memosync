@@ -105,7 +105,7 @@
     margin-top: 10px;
 }
 
-.modal-footer .modal-create-btn{
+.modal-footer .add-task-btn{
     width: 80px;
     background-color: var(--btn-color);
     border: none;

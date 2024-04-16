@@ -27,7 +27,7 @@
         <button id="create-btn">Create</button>
 
         <!--modal overlay prevents the user from interacting with the content below the modal-->
-        <div class="modal-overlay"></div>
+        <!--<div class="modal-overlay"></div>-->
 
 
         <!--Modal for create/add new task-->
@@ -49,12 +49,25 @@
                 <input type="text" id="description" name="description" placeholder="e.g team meeting">
                 <label for="deadline_date">Enter a deadline (date):</label>
                 <input type="text" id="deadline_date" name="deadline_date" placeholder="e.g april 13, 2024">
+                <label type="date" data-status="status">
+                    choose status:
+                    <section>
+                        <form action="#">
+                            <select name="status" id="status">
+                            <option value="choose_status"  disabled>Choose Status</option>
+                            <option value="not_started" selected>Not Started</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="done">Done</option>
+                            </select>
+                        </form>
+                    </section>
+
             </form>
 
             
             </div>
             <div class="modal-footer ">
-            <button  type="submit" class="modal-create-btn">Create</button>
+            <button  type="submit" class="add-task-btn">Create</button>
             
             </div>
 
@@ -72,23 +85,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Project</td>
-                <td>Systemutveckling</td>
-                <td>
-                <input class="date_input" value="2024-07-22" type="date" name="date" min="2024-01-01" max="2025-12-31">
-                </td>
-                <td>
-                <form action="#">
-                    <select name="status" id="status">
-                    <option value="choose_status"  disabled>Choose Status</option>
-                    <option value="not_started" selected>Not Started</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="done">Done</option>
-                    </select>
-                </form>
-                </td>
-            </tr>
+
+
+            <tr></tr>
 
             </tbody>
         </table>
@@ -99,6 +98,7 @@
 
     </div>
     <script src="/static/js/progress-modal.js"></script>
+    <script src="/static/js/add-task.js"></script>
     </body>
 
 </html>

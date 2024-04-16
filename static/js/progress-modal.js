@@ -6,18 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.querySelector(".modal-container");
     const openModalBtn = document.getElementById("create-btn");
     const closeModalBtn = document.querySelector(".close");
-    const modalOverlay = document.querySelector(".modal-overlay");
 
     //Open modal when create-btn i clicked 
     openModalBtn.addEventListener("click", () => {
         modal.style.display = "block";
-        modalOverlay.style.display = "block";
     });
 
     //close modal when close btn is clicked
     closeModalBtn.addEventListener("click", () => {
         modal.style.display = "none";
-        modalOverlay.style.display = "none";
+
 
     });
 
