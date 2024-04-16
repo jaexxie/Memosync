@@ -8,12 +8,6 @@
     
 }
 
-/*modal-overlay style */
-
-.modal-overlay {
-    display: fixed;
-}
-
 
 /* give container fixed position and z-index to move it to the top */
 .modal-container {
@@ -99,19 +93,53 @@
 
 .modal-body input[type="text"]::placeholder {
     color: #ccc;
-  }
-
-.modal-footer{
-    margin-top: 10px;
 }
 
-.modal-footer .add-task-btn{
+/*styla select rutan  */
+.modal-body select{
+    width: 100%;
+    padding: 8px; 
+    border: var(--light-grey-border);
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    background-color: none;
+    cursor: pointer;
+}
+
+/* Ta bor fokusram */
+.modal-body select:focus{
+    outline: none;
+    border-color: var(--btn-color);
+}
+
+.modal-body select option{
+    background-color: rgba(251, 249, 245, 0.6);
+    text-align: center;
+
+}
+
+.not-started {
+    background-color: lightgray;
+}
+
+.in-progress {
+    background-color: lightblue;
+}
+
+.done {
+    background-color: lightgreen;
+}
+
+
+.add-task-btn{
     width: 80px;
     background-color: var(--btn-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     padding: 10px;
+    margin-top: 14px;
     font-weight: bold;
 }
 

@@ -42,33 +42,33 @@
 
             </div>
             <div class="modal-body">
-            <form action="">
-                <label for="task">Enter a task:</label>
-                <input type="text" id="task" name="task" placeholder="e.g meeting">
-                <label for="description">Enter a description:</label>
-                <input type="text" id="description" name="description" placeholder="e.g team meeting">
-                <label for="deadline_date">Enter a deadline (date):</label>
-                <input type="text" id="deadline_date" name="deadline_date" placeholder="e.g april 13, 2024">
-                <label type="date" data-status="status">
-                    choose status:
-                    <section>
-                        <form action="#">
-                            <select name="status" id="status">
-                            <option value="choose_status"  disabled>Choose Status</option>
-                            <option value="not_started" selected>Not Started</option>
-                            <option value="in_progress">In Progress</option>
-                            <option value="done">Done</option>
-                            </select>
-                        </form>
-                    </section>
 
-            </form>
+                <form action="" id="task-form">
 
-            
-            </div>
-            <div class="modal-footer ">
-            <button  type="submit" class="add-task-btn">Create</button>
-            
+                    <label for="task">Enter a task:</label>
+                    <input type="text" id="task" name="task" placeholder="e.g meeting" required>
+
+                    <label for="description">Enter a description:</label>
+                    <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
+
+                    <label for="deadline_date">Enter a deadline (date):</label>
+                    <input type="text" id="deadline_date" name="deadline_date" placeholder="e.g april 13, 2024" required>
+
+                    <label for="status">
+                        choose status:
+                    </label>
+                    
+                    <select name="status" id="status">
+                    <option  value="Choose status"  disabled>Choose Status</option>
+                    <option id="not-started" value="Not started" selected>Not Started</option>
+                    <option id="in-progress" value="In progress">In Progress</option>
+                    <option id="done" value="Done">Done</option>
+                    </select>
+
+                    <button  type="submit" class="add-task-btn">Create</button>
+
+                </form>
+
             </div>
 
         </div>

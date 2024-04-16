@@ -48,6 +48,7 @@ body {
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
     padding: 8px;
+    font-weight: bold;
 
 }
 
@@ -64,27 +65,3 @@ body {
     border-right: none;
 }
 
-/* Ta bort margin for select form */
-#progress_container form {
-    margin: 0;
-}
-
-/*styla select rutan  */
-#progress_container select {
-    padding: 2px;
-    font-size: 14px;
-    border-radius: 20px;
-    border: none;
-    background-color: none;
-    cursor: pointer;
-}
-
-/* Ta bor fokusram */
-#progress_container select:focus{
-    outline: none;
-}
-
-#progress_container select option{
-    background-color: rgba(251, 249, 245, 0.8);
-    text-align: center;
-}
