@@ -71,13 +71,11 @@ body>h2 {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100%;
-  width: max-content;
-  padding: 30px;
-  background-color: rgba(0, 0, 0, 0.537);
-  /* visibility: hidden; */
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.441);
+  visibility: hidden;
   pointer-events: none;
-  z-index: 10;
 }
 
 .popup_background.show {
