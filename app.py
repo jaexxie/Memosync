@@ -227,6 +227,28 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+
+@route('/add_task_to_do_list', method='POST')
+def create_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            task = request.forms.get("task")
+            category_id = request.forms.get("choice")
+
+            #not done
+            cursor.execute('INSERT INTO to_do_lists_task (user_id, category_id, task) VALUES SELECT %s, (SELECT id FROM categories WHERE name = %s), %s, %s', (logged_in_cookie, category_id, task,))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
             
 
 @route('/calendar')
