@@ -60,7 +60,7 @@
           <select name="choice" id="choice">
             % if to_dos:
             % for to_do in to_dos:
-            <option>{{to_do[0]}}</option>
+            <option>{{to_do[2]}}</option>
             % end
             % end
             <input type="submit" id="add" value="Add">
@@ -75,9 +75,10 @@
     % for to_do in to_dos:
     <div id="to_do_lists">
       <div id="to_do_title">
-        <h3>{{to_do[0]}}</h3>
+        <h3>{{to_do[2]}}</h3>
       </div>
-      <p>{{to_do[1]}}</p>
+      <p>{{to_do[3]}}</p>
+      <p>{{to_do[7]}}</p>
     </div>
     % end
     % end
