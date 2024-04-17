@@ -41,7 +41,7 @@ body>h2 {
   width: 140px;
   left: 20px;
   top: 185px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
 }
@@ -54,7 +54,11 @@ body>h2 {
   cursor: pointer;
 }
 
-#open_popup_options_btn:hover + .dropdown-content {
+.dropdown-content a:hover {
+  background-color: #e3e3e3;
+}
+
+#open_popup_options_btn:hover+.dropdown-content {
   display: block;
 }
 
@@ -62,23 +66,26 @@ body>h2 {
   display: block;
 }
 
-.popup_background {
+#popup_background_1,
+#popup_background_2 {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.537);
+  background-color: rgba(0, 0, 0, 0.441);
   visibility: hidden;
   pointer-events: none;
 }
 
-.popup_background.show {
+#popup_background_1.show,
+#popup_background_2.show {
   visibility: visible;
   pointer-events: all;
 }
 
-.popup_container {
+#popup_container_1,
+#popup_container_2 {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -86,13 +93,14 @@ body>h2 {
   padding: 0px;
   background-color: #F0E7D8;
   border-radius: 0px;
-  opacity: 0;
+  /* opacity: 0; */
   transition: .5s all;
-  visibility: hidden;
+  /* visibility: hidden; */
   pointer-events: none;
 }
 
-.popup_container.show {
+#popup_container_1.show,
+#popup_container_2.show {
   padding: 50px;
   border-radius: 15px;
   opacity: 1;
@@ -100,7 +108,13 @@ body>h2 {
   pointer-events: all;
 }
 
-.popup_container>form {
+#popup_container_1>form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+#popup_container_2>form {
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -187,4 +201,23 @@ input[type="submit"] {
   margin-top: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+#dialog {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.hidden_dialog {
+  visibility: hidden;
+}
+
+.shown_dialog {
+  visibility: visible;
 }

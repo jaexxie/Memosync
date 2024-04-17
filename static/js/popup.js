@@ -1,34 +1,32 @@
-open_popup_btn = document.querySelector('#open_popup_btn')
+open_popup_btn = document.querySelector('.open_popup_btn')
 popup_container = document.querySelector('.popup_container')
 
-open_popup_btn.addEventListener('click', function () {
-    if (popup_container.classList.contains('show')) {
-        popup_container.classList.remove('show')
-    } else {
-        popup_container.classList.add('show')
-    }
-});
+// create to-do list
+open_popup_btn_1 = document.querySelector('#open_popup_btn_1')
+popup_container_1 = document.querySelector('#popup_container_1')
+popup_background_1 = document.querySelector('#popup_background_1')
 
-popup_container.addEventListener("click", function () {
-    popup_container.classList.remove('show')
-});
+open_popup_btn_1.addEventListener('click', function () {
+    popup_container_1.classList.add('show')
+    popup_background_1.classList.add('show')
+})
 
+popup_background_1.addEventListener('click', function () {
+    popup_container_1.classList.remove('show')
+    popup_background_1.classList.remove('show')
+})
 
-create_to_do_pop_up = document.querySelector('#create_to_do_pop_up')
-popup_background = document.querySelector('.popup_background')
-popup_container = document.querySelector('.popup_container')
+// add new task
+open_popup_btn_2 = document.querySelector('#open_popup_btn_2')
+popup_container_2 = document.querySelector('#popup_container_2')
+popup_background_2 = document.querySelector('#popup_background_2')
 
-create_to_do_pop_up.addEventListener('click', function () {
-    if (popup_background.classList.contains('show')) {
-        popup_background.classList.remove('show')
-        popup_container.classList.remove('show')
-    } else {
-        popup_background.classList.add('show')
-        popup_container.classList.add('show')
-    }
-});
+open_popup_btn_2.addEventListener('click', function () {
+    popup_container_2.classList.add('show')
+    popup_background_2.classList.add('show')
+})
 
-popup_background.addEventListener("click", function () {
-    popup_background.classList.remove('show')
-    popup_container.classList.remove('show')
-});
+popup_background_2.addEventListener('click', function () {
+    popup_container_2.classList.remove('show')
+    popup_background_2.classList.remove('show')
+})

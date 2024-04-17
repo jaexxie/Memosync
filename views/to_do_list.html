@@ -22,27 +22,51 @@
   <div class="create">
     <button id="open_popup_options_btn">Create</button>
     <div class="dropdown-content">
-      <a id="open_popup_btn">Create Catagory</a>
-      <a >Create Task</a>
+      <a id="open_popup_btn_1">Create To-Do List</a>
+      <a id="open_popup_btn_2">Add Task to List</a>
     </div>
   </div>
 
 
-  <!-- popup -->
-  <div class="popup_background"></div>
-  <div id="new_to_do" class="popup_container">
-    <form action="/create_to_do_list" method="POST">
-      <fieldset>
-        <legend>Create New To-Do List</legend>
-        <label for="title">Enter a category for your to-do list:</label>
-        <input type="text" name="title" id="title" required placeholder="e.g grocery list">
-        <label for="description">Enter a description:</label>
-        <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
-        <label for="colour">Select colour for your to-do list:</label>
-        <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
-        <input type="submit" id="submit" value="Create">
-      </fieldset>
-    </form>
+  <!-- create to-do popup -->
+  <section id="popup_background_1"></section>
+  <div id="dialog" class="hidden_dialog">
+    <div id="popup_container_1">
+      <form action="/create_to_do_list" method="POST">
+        <fieldset>
+          <legend>Create New To-Do List</legend>
+          <label for="title">Enter a category for your to-do list:</label>
+          <input type="text" name="title" id="title" required placeholder="e.g grocery list">
+          <label for="description">Enter a description:</label>
+          <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
+          <label for="colour">Select colour for your to-do list:</label>
+          <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
+          <input type="submit" id="submit" value="Create">
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <!-- add task popup -->
+  <section id="popup_background_2"></section>
+  <div id="dialog" class="hidden_dialog">
+    <div id="popup_container_2">
+      <form action="/add_task_to_do_list" method="POST">
+        <fieldset>
+          <legend>Add Task to To-Do List</legend>
+          <label for="task">Enter task:</label>
+          <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
+          <label for="choice">Select To-Do List:</label>
+          <select name="choice" id="choice">
+            % if to_dos:
+            % for to_do in to_dos:
+            <option>{{to_do[0]}}</option>
+            % end
+            % end
+            <input type="submit" id="add" value="Add">
+        </fieldset>
+      </form>
+    </div>
   </div>
 
   <!-- Display To-Do Lists -->
