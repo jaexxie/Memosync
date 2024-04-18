@@ -79,10 +79,16 @@
             <table>
                 <thead>
                     <tr>
+                        % if pbs:
+                        % for pb in pbs:
                         <th class="task">Task</th>
+                        <td>{{pb[0]}}</td>
                         <th class="description">Description</th>
+                        <td>{{pb[1]}}</td>
                         <th class="date">Date</th>
+                        <td>{{pb[2]}}</td>
                         <th class="status">Status</th>
+                        <td>{{pb[3]}}</td>
                     </tr>
                 </thead>
                 <tbody>

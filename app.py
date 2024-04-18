@@ -186,7 +186,6 @@ def logout():
     else:
         return redirect('/')
 
-
 @route('/to_do_list')
 def to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -270,7 +269,7 @@ def progress_table():
             cursor.execute("SELECT project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
             pbs = cursor.fetchall()
 
-            return template('to_do_list', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
+            return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:
             # Closing Database connection after it's been used
