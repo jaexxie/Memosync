@@ -127,18 +127,18 @@ def update_user_info():
             db = make_db_connection()
             cursor = db.cursor()
 
-            # Get the data from the form
             first_name = request.forms.get('first_name')
             last_name = request.forms.get('last_name')
             email = request.forms.get('email')
             password = request.forms.get('password')
-            image = request.files.get('pic')  # Retrieve the file object
+            image = request.files.get('pic')
 
             if image:
-                filename = image.filename  # Get the original filename
-                filepath = os.path.join('static/pic/user_profile_pictures', filename)  # Construct the full file path
-                
-                # Save the file to the specified directory with its original filename
+                # Get the original filename
+                filename = image.filename
+
+                # Construct the full file path and save
+                filepath = os.path.join('static/pic/user_profile_pictures', filename)
                 image.save(filepath)
 
                 cursor.execute('''
@@ -165,7 +165,6 @@ def update_user_info():
             db.close()
     else:
         return redirect('/')
-
 
 def get_user_info(id, cursor):
     '''
@@ -204,7 +203,8 @@ def to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('to_do_list')
+    else:
+        return redirect('/')
 
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
@@ -226,9 +226,11 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
 
 @route('/add_task_to_do_list', method='POST')
-def create_to_do_list():
+def add_task_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -250,12 +252,16 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
             
-
 @route('/calendar')
 def calendar():
     logged_in_cookie = request.get_cookie('loggedIn')
-    return template('calendar')
+    if logged_in_cookie:
+        return template('calendar')
+    else:
+        return redirect('/')
 
 @route('/progress_table')
 def progress_table():
@@ -275,7 +281,8 @@ def progress_table():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('to_do_list')
+    else:
+        return redirect('/')
 
 @route('/add_project', method='POST')
 def add_project():
@@ -299,6 +306,8 @@ def add_project():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
