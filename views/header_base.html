@@ -21,7 +21,7 @@
       <ul>
         <li><a href="/calendar">Calendar</a></li>
         <li><a href="/to_do_list">To-Do List</a></li>
-        <li><a href="">Progress Table</a></li>
+        <li><a href="/progress_table">Progress Table</a></li>
       </ul>
     </aside>
     <div>
@@ -36,7 +36,7 @@
     <ul>
       <li><a href="/calendar">Calendar</a></li>
       <li><a href="/to_do_list">To-Do List</a></li>
-      <li><a href="">Progress Table</a></li>
+      <li><a href="/progress_table">Progress Table</a></li>
     </ul>
   </section>
   <!-- Slide in Profile -->
@@ -46,7 +46,7 @@
       <h2>{{ user_info[1] }}</h2>
       <img src="/static/pic/user_profile_pictures/{{ user_info[5] }}" alt="profile_picture">
     </div>
-    <form action="update/user/info" method="post", enctype="multipart/form-data">
+    <form action="update/user/info" method="post" , enctype="multipart/form-data">
       <input type="text" name="first_name" id="first_name" value="{{ user_info[1] }}" placeholder="First Name">
       <input type="text" name="last_name" id="last_name" value="{{ user_info[2] }}" placeholder="Last Name">
       <input type="email" name="email" id="email" value="{{ user_info[3] }}" placeholder="Email">

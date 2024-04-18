@@ -186,7 +186,6 @@ def logout():
     else:
         return redirect('/')
 
-
 @route('/to_do_list')
 def to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -196,7 +195,7 @@ def to_do_list():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
+            cursor.execute("SELECT memosync.to_do_list.*, memosync.to_do_lists_task.* FROM memosync.to_do_list left JOIN memosync.to_do_lists_task ON memosync.to_do_list.id = memosync.to_do_lists_task.category_id WHERE to_do_list.user_id = %s;", (logged_in_cookie,))
             to_dos = cursor.fetchall()
 
             return template('to_do_list', to_dos=to_dos, user_info=get_user_info(logged_in_cookie, cursor))
@@ -227,13 +226,79 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+
+@route('/add_task_to_do_list', method='POST')
+def create_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            task = request.forms.get("task")
+            to_do_list_title = request.forms.get("choice")
+
+            cursor.execute('SELECT id FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s', (to_do_list_title, logged_in_cookie))
+            category_id = cursor.fetchone()
+
+            cursor.execute('INSERT INTO to_do_lists_task (user_id, category_id, task) VALUES (%s, %s, %s)', (logged_in_cookie, category_id, task))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
             
 
 @route('/calendar')
 def calendar():
+    logged_in_cookie = request.get_cookie('loggedIn')
     return template('calendar')
 
 @route('/progress_table')
+def progress_table():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute("SELECT project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
+            pbs = cursor.fetchall()
+
+            return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    return template('to_do_list')
+
+@route('/add_project', method='POST')
+def add_project():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            project = request.forms.get("task")
+            description = request.forms.get("description")
+            spb_date = request.forms.get("deadline_date")
+            status = request.forms.get("status")
+
+            cursor.execute('INSERT INTO progress_bar(project, description, spb_date, status) VALUES (%s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
+            db.commit()
+
+            return redirect('/progress_bar')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
