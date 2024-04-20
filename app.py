@@ -272,18 +272,67 @@ def calendar():
             db.close()
     else:
         return redirect('/')
+    
+@route('/add_event', method=['GET', 'POST'])
+def add_event():
+    '''
+        This function adds events to the events.json file
+    '''
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+
+        title = request.forms.get('event_name')
+        start_date = request.forms.get('start_date')
+        start_time = request.forms.get('start_time')
+        end_date = request.forms.get('end_date')
+        end_time = request.forms.get('end_time')
+
+        # open Json FIle
+        with open('static/json/events.json', 'r') as file:
+            events = json.load(file)['events']
+
+        # This creates incroment for id:s
+        for event in events:
+            max_id = int(event.get('id', 0))
+            id_for_new_event = max_id + 1
+
+        add_event = {
+            "id": str(id_for_new_event),
+            "user_id": str(logged_in_cookie),
+            "title": title,
+            "start": f"{start_date}T{start_time}",
+            "end": f"{end_date}T{end_time}"
+        }
+
+        events.append(add_event)
+
+        # Write updated events back to the JSON file
+        with open('static/json/events.json', 'w') as file:
+            json.dump({"events": events}, file, indent=4)
+
+        return redirect('/calendar') 
+
+    else:
+        return redirect('/')
 
 @route('/get_events')
 def get_events():
-    """Return a JSON object with all events that matches the users ID"""
-    # Read events from the JSON file
+
+
     with open('static/json/events.json', 'r') as file:
         all_events = json.load(file)['events']
+
+    logged_in_cookie = request.get_cookie('loggedIn')
+    filtered_events = []
+    for event in all_events:
+        if event.get('user_id') == str(logged_in_cookie):
+            filtered_events.append(event)
 
     response.content_type = 'application/json'
     
     # Return the JSON-encoded event data
     return json.dumps(all_events)
+    return json.dumps(filtered_events)
 
 @route('/progress_table')
 def progress_table():

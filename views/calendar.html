@@ -18,46 +18,61 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
+      // popup
+      add_event_btn = document.querySelector('#add_event_btn')
+      background_create_event = document.querySelector('.background_create_event')
+      container_create_event = document.querySelector('.container_create_event')
+      
+       // this creates a default datestamp for the input valeus
+       var currentDate = new Date().toISOString().split('T')[0];
+       document.getElementById('start_date').value = currentDate;
+       document.getElementById('end_date').value = currentDate;
 
-        // this code shows the diffrent views
-        initialView: 'timeGridWeek',
-        headerToolbar: {
-          left: 'prev,next',
-          center: 'title',
-          right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek' // user can switch between the two
-        },
-
-        // You can select days with selectable true
-        selectable: true,
-
-        eventSources: [
-
-        // your event source
-        {
-          url: '/get_events', // use the `url` property
-          color: '#A63A50',    // an option!
-          textColor: 'white'  // an option!
-        }
-
-      ],
-
-
+      add_event_btn.addEventListener('click', function() {
+        background_create_event.classList.add('show')
+        container_create_event.classList.add('show')
       });
-      calendar.render();
-    });
 
+      background_create_event.addEventListener("click", function() {
+        background_create_event.classList.remove('show')
+        container_create_event.classList.remove('show')
+      });
+
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {})
+    });
+ 
   </script>
-  <title>MemoSync Register</title>
 </head>
 
 <body>
 
-  % include('header_base.html')
-
-  <div class="create_event">
     <button id="add_event_btn">Add event</button>
+  </div>
+
+  <!-- popup for creating event -->
+  <div class="background_create_event"></div>
+  <div class="container_create_event">
+    <form action="/add_event" method="post">
+
+      <label for="event_name">Event Name</label>
+      <input type="text" name="event_name" id="event_name" placeholder="Event Name">
+
+      <label for="start_date">Start Date</label>
+      <input type="date" name="start_date" id="start_date">
+
+      <label for="start_time">Start Time</label>
+      <input type="time" name="start_time" id="start_time">
+
+      <label for="end_date">End Date</label>
+      <input type="date" name="end_date" id="end_date">
+
+      <label for="end_time">End Time</label>
+      <input type="time" name="end_time" id="end_time">
+
+      <button type="submit">Add</button>
+
+    </form>
   </div>
 
   <div id='calendar'></div>
