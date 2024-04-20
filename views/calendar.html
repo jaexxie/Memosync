@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/static/calendar.css" rel="stylesheet" type="text/css" />
+  <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+    rel="stylesheet" />
+  <script src="
+  https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js
+  "></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+
+        // this code shows the diffrent views
+        initialView: 'timeGridWeek',
+        headerToolbar: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek' // user can switch between the two
+        },
+
+        // You can select days with selectable true
+        selectable: true,
+
+        eventSources: [
+
+        // your event source
+        {
+          url: '/get_events', // use the `url` property
+          color: '#A63A50',    // an option!
+          textColor: 'white'  // an option!
+        }
+
+      ],
+
+
+      });
+      calendar.render();
+    });
+
+  </script>
+  <title>MemoSync Register</title>
+</head>
+
+<body>
+
+  % include('header_base.html')
+
+  <div class="create_event">
+    <button id="add_event_btn">Add event</button>
+  </div>
+
+  <div id='calendar'></div>
+
+</body>
+
+</html>

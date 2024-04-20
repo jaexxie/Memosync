@@ -37,18 +37,19 @@ body {
     width: 100%;
 }
 
-#press {
+#submit {
     display: block;
+    text-decoration: none;
     margin-top: 10px;
     background-color: transparent;
     border: 1.5px solid #C35F5F;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
 }
 
-#press:hover {
+#submit:hover {
     background-color: #C35F5F;
     transition-duration: 0.2s;
     color: white;

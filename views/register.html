@@ -15,28 +15,21 @@
   </head>
 
   <body>
-    <div class="register">
+    <form action="/register/add/user" method="post" class="register">
       <h2>Register</h2>
-      <input
-        type="text"
-        class="form-control"
-        required
-        placeholder="First Name"
-      />
-      <input
-        type="text"
-        class="form-control"
-        required
-        placeholder="Last Name"
-      />
-      <input type="email" class="form-control" required placeholder="Email" />
-      <input
-        type="password"
-        class="form-control"
-        required
-        placeholder="Password"
-      />
-      <button>Register</button>
-    </div>
+      % if message:
+        <p>Detta Kontor Finns Redan</p>
+      % end
+      <label for="name-field"></label>
+      <input type="text" name="first_name" class="form-control" required placeholder="Name" />
+      <label for="lastname-field"></label>
+      <input type="text" name="last_name" class="form-control" required placeholder="Lastname" />
+      <label for="email"></label>
+      <input type="email" name="email" class="form-control" required placeholder="E-mail" />
+      <label for="password"></label>
+      <input type="password" name="password" class="form-control" required placeholder="Password" />
+      <input type="submit" id="submit" value="Register">
+      
+    </form>
   </body>
 </html>

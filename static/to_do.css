@@ -1,3 +1,19 @@
+body {
+  margin: 0;
+  background-color: #F0E7D8;
+}
+
+body>h2 {
+  font-family: monospace;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #312822;
+  font-size: 26px;
+  margin: 20px;
+  letter-spacing: 1px;
+  font-size: 20px;
+}
+
 .create button {
   display: block;
   margin-top: 20px;
@@ -8,5 +24,200 @@
   padding: 13px;
   padding-left: 30px;
   padding-right: 30px;
+  margin-bottom: 20px;
+  width: 110px;
+  box-sizing: border-box;
+}
+
+#open_popup_options_btn {
   font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: fixed;
+  background-color: #f1f1f1;
+  width: 140px;
+  left: 20px;
+  top: 185px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #e3e3e3;
+}
+
+#open_popup_options_btn:hover+.dropdown-content {
+  display: block;
+}
+
+.dropdown-content:hover {
+  display: block;
+}
+
+#popup_background_1,
+#popup_background_2 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.441);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#popup_background_1.show,
+#popup_background_2.show {
+  visibility: visible;
+  pointer-events: all;
+}
+
+#popup_container_1,
+#popup_container_2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+  background-color: #F0E7D8;
+  border-radius: 0px;
+  /* opacity: 0; */
+  transition: .5s all;
+  /* visibility: hidden; */
+  pointer-events: none;
+}
+
+#popup_container_1.show,
+#popup_container_2.show {
+  padding: 50px;
+  border-radius: 15px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+#popup_container_1>form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+#popup_container_2>form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+form>fieldset>* {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form>fieldset>legend {
+  font-size: 16pt;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: "Montserrat", sans-serif;
+}
+
+form>fieldset>label {
+  font-size: 12pt;
+  font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#submit {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #A63A50;
+  cursor: pointer;
+}
+
+input[type="submit"] {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+
+#to_do_menu {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 20px;
+  top: 190px;
+  width: 110px;
+  box-sizing: border-box;
+}
+
+#to_do_menu>a {
+  text-decoration: none;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+#to_do_menu>#first {
+  border-bottom: #312822;
+}
+
+#to_do_container {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#to_do_lists {
+  background-color: #f8f8f8;
+  border: 1px solid black;
+  width: 250px;
+  min-height: 50px;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+#to_do_title {
+  padding: 5px;
+  background-color: #A63A50;
+  margin-top: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#dialog {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.hidden_dialog {
+  visibility: hidden;
+}
+
+.shown_dialog {
+  visibility: visible;
 }
