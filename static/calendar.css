@@ -1,13 +1,28 @@
 body {
     background-color: #F0E7D8;
+    font-family: monospace;
 }
 
-.create button {
+#calendar {
+    padding: 50px;
+}
+
+.fc .fc-button-primary {
+    background: #A63A50;
+    color: white;
+}
+
+.fc .fc-daygrid-day-frame {
+    background-color: #a63a507d;
+}
+
+.create_event > button {
     display: block;
     margin-top: 20px;
     margin-left: 20px;
     background-color: #a63a50;
     border: 0.8px solid black;
+    color: white;
     border-radius: 10px;
     padding: 13px;
     padding-left: 30px;
@@ -15,3 +30,4 @@ body {
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
 }
+

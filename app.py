@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file, request, redirect, response
+import json
 import os
 from db import make_db_connection
 
@@ -259,9 +260,30 @@ def add_task_to_do_list():
 def calendar():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
-        return template('calendar')
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
     else:
         return redirect('/')
+
+@route('/get_events')
+def get_events():
+    """Return a JSON object with all events that matches the users ID"""
+    # Read events from the JSON file
+    with open('static/json/events.json', 'r') as file:
+        all_events = json.load(file)['events']
+
+    response.content_type = 'application/json'
+    
+    # Return the JSON-encoded event data
+    return json.dumps(all_events)
 
 @route('/progress_table')
 def progress_table():
