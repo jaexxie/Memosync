@@ -10,10 +10,9 @@
 
 
 /* give container fixed position and z-index to move it to the top */
-.modal-container {
+.modal-overlay {
     display: none;
     position: fixed;
-    background-color: rgba(240, 231, 216, 0.8);
     top: 0;
     left: 0;
     margin: auto;
@@ -22,33 +21,39 @@
     height: 100%;
     z-index: 999;
     overflow: auto;
+    background-color: rgba(0, 0, 0, 0.537);
 }
 
-/*modal box*/
-.modal-content{
-    background-color: var(--body-color);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 120px auto;
-    border-radius: 10px;
-    padding: 20px;
-    border: var(--border);
-    width: 40%;
-    
-}
+/*modal container*/
+.modal-container {
+    display: none;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #F0E7D8;
+    border-radius: 15px;
+    padding: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
 
 .modal-header{
     display: flex;
     justify-content: space-between;
     align-items: center; 
-    padding: 8px 16px;
-    border-bottom: var(--light-grey-border);
+    margin-bottom: 15px;
 }
 
-.modal-header h2{
+.modal-header h3{
     font-family: "Montserrat", sans-serif;
-    font-weight: bold;
     text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 24px;
     margin: 0;
+
 }
 
 .close{
@@ -66,84 +71,52 @@
 
 }
 
-.modal-body{
+.modal-form-box{
     margin-top: 5px;
-    display: grid;
 }
 
-/*syling form labels*/
-.modal-body label{
-    margin: 0 0 5px 2px;
-    display: block;
+.modal-form-box > form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     
 }
 
-.modal-body input[type="text"] {
-    width: 95%;
-    padding: 8px; 
-    margin-bottom: 10px;
-    border: var(--light-grey-border);
-    border-radius: 5px;
+/*syling form labels*/
+.modal-form-box > form label{
+    font-size: 12pt;
+    font-family: "Montserrat", sans-serif;
+    
 }
 
-.modal-body input[type="text"]:focus{
-    outline: none;
-    border-color: var(--btn-color);
-}
-
-.modal-body input[type="text"]::placeholder {
-    color: #ccc;
-}
-
-/*styla select rutan  */
-.modal-body select{
+.modal-form-box form input[type="text"] {
     width: 100%;
     padding: 8px; 
     border: var(--light-grey-border);
     border-radius: 5px;
-    font-size: 14px;
-    border: none;
-    background-color: none;
-    cursor: pointer;
 }
 
-/* Ta bor fokusram */
-.modal-body select:focus{
+
+.modal-form-box form input[type="text"]:focus{
     outline: none;
     border-color: var(--btn-color);
 }
 
-.modal-body select option{
-    background-color: rgba(251, 249, 245, 0.6);
-    text-align: center;
-
+.modal-form-box form input[type="text"]::placeholder {
+    color: #ccc;
 }
-
-.not-started {
-    background-color: lightgray;
-}
-
-.in-progress {
-    background-color: lightblue;
-}
-
-.done {
-    background-color: lightgreen;
-}
-
 
 .add-task-btn{
-    width: 80px;
+    max-width: 30%;
     background-color: var(--btn-color);
-    border: none;
-    border-radius: 5px;
+    border: 0.8px solid black;
+    border-radius: 10px;
     cursor: pointer;
-    padding: 10px;
-    margin-top: 14px;
-    font-weight: bold;
+    padding: 10px 15px;
+    font-family: "Montserrat", sans-serif;
 }
 
-.modal-create-btn:hover {
+.add-task-btn:hover {
     background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
   }
 
