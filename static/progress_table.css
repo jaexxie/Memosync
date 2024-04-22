@@ -15,14 +15,14 @@ body {
     text-decoration: underline;
     text-underline-offset: 3px;
     color: #312822;
-    margin: 40px 0 10px 30px;
+    margin: 20px 0px 0px 30px;
     letter-spacing: 1px;
     font-size: 20px;
   }
 
 
 #create-btn{
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: 30px;
     background-color: #a63a50;
     border: 0.8px solid black;
