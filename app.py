@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file, request, redirect, response
+import json
 import os
 from db import make_db_connection
 
@@ -127,18 +128,18 @@ def update_user_info():
             db = make_db_connection()
             cursor = db.cursor()
 
-            # Get the data from the form
             first_name = request.forms.get('first_name')
             last_name = request.forms.get('last_name')
             email = request.forms.get('email')
             password = request.forms.get('password')
-            image = request.files.get('pic')  # Retrieve the file object
+            image = request.files.get('pic')
 
             if image:
-                filename = image.filename  # Get the original filename
-                filepath = os.path.join('static/pic/user_profile_pictures', filename)  # Construct the full file path
-                
-                # Save the file to the specified directory with its original filename
+                # Get the original filename
+                filename = image.filename
+
+                # Construct the full file path and save
+                filepath = os.path.join('static/pic/user_profile_pictures', filename)
                 image.save(filepath)
 
                 cursor.execute('''
@@ -165,7 +166,6 @@ def update_user_info():
             db.close()
     else:
         return redirect('/')
-
 
 def get_user_info(id, cursor):
     '''
@@ -204,7 +204,8 @@ def to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('to_do_list')
+    else:
+        return redirect('/')
 
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
@@ -226,9 +227,11 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
 
 @route('/add_task_to_do_list', method='POST')
-def create_to_do_list():
+def add_task_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -250,12 +253,110 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
             
-
 @route('/calendar')
 def calendar():
     logged_in_cookie = request.get_cookie('loggedIn')
-    return template('calendar')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
+@route('/add_event', method=['GET', 'POST'])
+def add_event():
+    '''
+        This function adds events to the events.json file
+    '''
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+
+        title = request.forms.get('event_name')
+        start_date = request.forms.get('start_date')
+        start_time = request.forms.get('start_time')
+        end_date = request.forms.get('end_date')
+        end_time = request.forms.get('end_time')
+
+        # open Json FIle
+        with open('static/json/events.json', 'r') as file:
+            events = json.load(file)['events']
+
+        # This creates incroment for id:s
+        for event in events:
+            max_id = int(event.get('id', 0))
+            id_for_new_event = max_id + 1
+
+        add_event = {
+            "id": str(id_for_new_event),
+            "user_id": str(logged_in_cookie),
+            "title": title,
+            "start": f"{start_date}T{start_time}",
+            "end": f"{end_date}T{end_time}"
+        }
+
+        events.append(add_event)
+
+        # Write updated events back to the JSON file
+        with open('static/json/events.json', 'w') as file:
+            json.dump({"events": events}, file, indent=4)
+
+        return redirect('/calendar') 
+
+    else:
+        return redirect('/')
+
+@route('/delete/event/<id>')
+def delete_event(id):
+    '''
+        This function deltes specifik events
+    '''
+    with open('static/json/events.json', 'r') as file:
+        events = json.load(file)['events']
+    
+    # Find the index of the event to be deleted
+    index_to_delete = None
+    for i, event in enumerate(events):
+        if event.get('id') == id:
+            index_to_delete = i
+            break
+
+    # If event ID is found, delete the event
+    if index_to_delete is not None:
+        del events[index_to_delete]
+    
+    with open('static/json/events.json', 'w') as file:
+        json.dump({"events": events}, file, indent=4)
+    
+    return redirect("/calendar")
+    
+@route('/get_events')
+def get_events():
+    """Return a JSON object with all events that matches the users ID"""
+    # Read events from the JSON file
+    with open('static/json/events.json', 'r') as file:
+        all_events = json.load(file)['events']
+
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    filtered_events = []
+    for event in all_events:
+        if event.get('user_id') == str(logged_in_cookie):
+            filtered_events.append(event)
+
+    response.content_type = 'application/json'
+    
+    # Return the JSON-encoded event data
+    return json.dumps(filtered_events)
 
 @route('/progress_table')
 def progress_table():
@@ -275,7 +376,8 @@ def progress_table():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('to_do_list')
+    else:
+        return redirect('/')
 
 @route('/add_project', method='POST')
 def add_project():
@@ -299,6 +401,8 @@ def add_project():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
