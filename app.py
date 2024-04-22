@@ -346,9 +346,11 @@ def get_events():
     with open('static/json/events.json', 'r') as file:
         all_events = json.load(file)['events']
 
+    logged_in_cookie = request.get_cookie('loggedIn')
+
     filtered_events = []
     for event in all_events:
-        if event.get('user_id') == '1':
+        if event.get('user_id') == str(logged_in_cookie):
             filtered_events.append(event)
 
     response.content_type = 'application/json'
