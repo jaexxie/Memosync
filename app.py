@@ -243,7 +243,7 @@ def add_task_to_do_list():
             to_do_list_title = request.forms.get("choice")
 
             cursor.execute('SELECT id FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s', (to_do_list_title, logged_in_cookie))
-            category_id = cursor.fetchone()
+            category_id = cursor.fetchone()[0]
 
             cursor.execute('INSERT INTO to_do_lists_task (user_id, category_id, task) VALUES (%s, %s, %s)', (logged_in_cookie, category_id, task))
             db.commit()
