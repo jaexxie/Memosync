@@ -9,11 +9,12 @@ main {
     flex-direction: column;
 }
 
-div h2 {
+div a {
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     padding-bottom: 5px;
     text-decoration: underline black;
+    color: black;
 }
 
 #top {
@@ -29,7 +30,7 @@ div h2 {
     width: 40%;
 }
 
-#top>#left>#todo {
+#top>#left>a>#todo {
     border: 1px solid black;
     margin: 10px;
     border-radius: 15px;
@@ -44,7 +45,7 @@ div h2 {
     width: 60%;
 }
 
-#top>#right>#calendar {
+#top>#right>a>#calendar {
     border: 1px solid black;
     margin: 10px;
     border-radius: 15px;
