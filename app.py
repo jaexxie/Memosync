@@ -1,4 +1,5 @@
 from bottle import route, run, template, static_file, request, redirect, response
+import json
 import os
 from db import make_db_connection
 
@@ -127,18 +128,18 @@ def update_user_info():
             db = make_db_connection()
             cursor = db.cursor()
 
-            # Get the data from the form
             first_name = request.forms.get('first_name')
             last_name = request.forms.get('last_name')
             email = request.forms.get('email')
             password = request.forms.get('password')
-            image = request.files.get('pic')  # Retrieve the file object
+            image = request.files.get('pic')
 
             if image:
-                filename = image.filename  # Get the original filename
-                filepath = os.path.join('static/pic/user_profile_pictures', filename)  # Construct the full file path
-                
-                # Save the file to the specified directory with its original filename
+                # Get the original filename
+                filename = image.filename
+
+                # Construct the full file path and save
+                filepath = os.path.join('static/pic/user_profile_pictures', filename)
                 image.save(filepath)
 
                 cursor.execute('''
@@ -166,7 +167,6 @@ def update_user_info():
     else:
         return redirect('/')
 
-
 def get_user_info(id, cursor):
     '''
     This function gets the users informaiton, so that they can change or update it.
@@ -186,7 +186,6 @@ def logout():
     else:
         return redirect('/')
 
-
 @route('/to_do_list')
 def to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -196,7 +195,7 @@ def to_do_list():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
+            cursor.execute("SELECT memosync.to_do_list.*, memosync.to_do_lists_task.* FROM memosync.to_do_list left JOIN memosync.to_do_lists_task ON memosync.to_do_list.id = memosync.to_do_lists_task.category_id WHERE to_do_list.user_id = %s;", (logged_in_cookie,))
             to_dos = cursor.fetchall()
 
             return template('to_do_list', to_dos=to_dos, user_info=get_user_info(logged_in_cookie, cursor))
@@ -205,7 +204,8 @@ def to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('to_do_list')
+    else:
+        return redirect('/')
 
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
@@ -227,9 +227,11 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
 
 @route('/add_task_to_do_list', method='POST')
-def create_to_do_list():
+def add_task_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -238,10 +240,12 @@ def create_to_do_list():
             cursor = db.cursor()
 
             task = request.forms.get("task")
-            category_id = request.forms.get("choice")
+            to_do_list_title = request.forms.get("choice")
 
-            #not done
-            cursor.execute('INSERT INTO to_do_lists_task (user_id, category_id, task) VALUES SELECT %s, (SELECT id FROM categories WHERE name = %s), %s, %s', (logged_in_cookie, category_id, task,))
+            cursor.execute('SELECT id FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s', (to_do_list_title, logged_in_cookie))
+            category_id = cursor.fetchone()
+
+            cursor.execute('INSERT INTO to_do_lists_task (user_id, category_id, task) VALUES (%s, %s, %s)', (logged_in_cookie, category_id, task))
             db.commit()
 
             return redirect('/to_do_list')
@@ -249,11 +253,110 @@ def create_to_do_list():
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+    else:
+        return redirect('/')
             
-
 @route('/calendar')
 def calendar():
-    return template('calendar')
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
+@route('/add_event', method=['GET', 'POST'])
+def add_event():
+    '''
+        This function adds events to the events.json file
+    '''
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+
+        title = request.forms.get('event_name')
+        start_date = request.forms.get('start_date')
+        start_time = request.forms.get('start_time')
+        end_date = request.forms.get('end_date')
+        end_time = request.forms.get('end_time')
+
+        # open Json FIle
+        with open('static/json/events.json', 'r') as file:
+            events = json.load(file)['events']
+
+        # This creates incroment for id:s
+        for event in events:
+            max_id = int(event.get('id', 0))
+            id_for_new_event = max_id + 1
+
+        add_event = {
+            "id": str(id_for_new_event),
+            "user_id": str(logged_in_cookie),
+            "title": title,
+            "start": f"{start_date}T{start_time}",
+            "end": f"{end_date}T{end_time}"
+        }
+
+        events.append(add_event)
+
+        # Write updated events back to the JSON file
+        with open('static/json/events.json', 'w') as file:
+            json.dump({"events": events}, file, indent=4)
+
+        return redirect('/calendar') 
+
+    else:
+        return redirect('/')
+
+@route('/delete/event/<id>')
+def delete_event(id):
+    '''
+        This function deltes specifik events
+    '''
+    with open('static/json/events.json', 'r') as file:
+        events = json.load(file)['events']
+    
+    # Find the index of the event to be deleted
+    index_to_delete = None
+    for i, event in enumerate(events):
+        if event.get('id') == id:
+            index_to_delete = i
+            break
+
+    # If event ID is found, delete the event
+    if index_to_delete is not None:
+        del events[index_to_delete]
+    
+    with open('static/json/events.json', 'w') as file:
+        json.dump({"events": events}, file, indent=4)
+    
+    return redirect("/calendar")
+    
+@route('/get_events')
+def get_events():
+    """Return a JSON object with all events that matches the users ID"""
+    # Read events from the JSON file
+    with open('static/json/events.json', 'r') as file:
+        all_events = json.load(file)['events']
+
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    filtered_events = []
+    for event in all_events:
+        if event.get('user_id') == str(logged_in_cookie):
+            filtered_events.append(event)
+
+    response.content_type = 'application/json'
+    
+    # Return the JSON-encoded event data
+    return json.dumps(filtered_events)
 
 @route('/progress_table')
 def progress_table():
@@ -264,22 +367,42 @@ def progress_table():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT to_do_list_title, to_do_list_description FROM to_do_list WHERE user_id = %s", (logged_in_cookie,))
-            to_dos = cursor.fetchall()
+            cursor.execute("SELECT project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
+            pbs = cursor.fetchall()
 
-            return template('progress_table', progress_tasks=progress_tasks)
+            return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
-    return template('progress_table')
+    else:
+        return redirect('/')
 
+@route('/add_project', method='POST')
+def add_project():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
 
+            project = request.forms.get("task")
+            description = request.forms.get("description")
+            spb_date = request.forms.get("deadline_date")
+            status = request.forms.get("status")
 
+            cursor.execute('INSERT INTO progress_bar(project, description, spb_date, status) VALUES (%s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
+            db.commit()
 
-     
-
+            return redirect('/progress_bar')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
