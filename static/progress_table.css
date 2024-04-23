@@ -18,7 +18,7 @@ body {
     margin: 20px 0px 0px 30px;
     letter-spacing: 1px;
     font-size: 20px;
-  }
+}
 
 
 #create-btn{
@@ -31,6 +31,10 @@ body {
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
 
+}
+
+#create-btn:hover {
+    background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
 }
 
 #progress_container {

@@ -11,7 +11,6 @@
 
 /* give container fixed position and z-index to move it to the top */
 .modal-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -19,12 +18,26 @@
     height: 100%;
     z-index: 999;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.537);
+    background-color: rgba(0, 0, 0, 0.441);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/*Show class is to the overlay, its visibility changes with JS*/
+.modal-overlay.show{
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/*hide modal overlay with 1 second delay*/
+.modal-overlay:not(.show) {
+    transition-duration: 2s;
 }
 
 /*modal container*/
 .modal-container {
-    display: none;
     width: 300px;
     position: fixed;
     top: 50%;
@@ -35,7 +48,16 @@
     padding: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-  }
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/*Show class is to the .modal-container, its visibility changes with JS*/
+.modal-container.show{
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+}
 
 /*Modal header */
 .modal-header{
@@ -56,7 +78,7 @@
 
 /* "X" in modal header to close the modal*/
 .close{
-    color: #a63a50;
+    color: black;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -65,7 +87,7 @@
 }
 
 .close:hover, .close:focus{
-    color: black;
+    color: var(--btn-color);
     text-decoration: none;
 
 }
@@ -94,7 +116,7 @@
 .modal-form-container form input[type="text"] {
     width: 100%;
     padding: 8px; 
-    border: var(--light-grey-border);
+    border: none;
     border-radius: 5px;
     outline: none;
 }
@@ -102,15 +124,18 @@
 .modal-form-container form input[type="date"] {
     width: 100%;
     padding: 8px; 
-    border: var(--light-grey-border);
+    border: none;
     border-radius: 5px;
     outline: none;
+    font-family: "Montserrat", sans-serif;
+    
     
 }
 
-
-.modal-form-container form input[type="text"]:focus, input[type="date"]:focus {
-    border-color: var(--btn-color);
+/*give the input field border bottom in focus*/
+.modal-form-container form input[type="text"]:focus, 
+.modal-form-container form input[type="date"]:focus {
+    border-bottom: 1px solid var(--btn-color);
 }
 
 /*Create button for adding the task to table*/
