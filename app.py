@@ -195,10 +195,10 @@ def to_do_list():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT memosync.to_do_list.*, memosync.to_do_lists_task.* FROM memosync.to_do_list left JOIN memosync.to_do_lists_task ON memosync.to_do_list.id = memosync.to_do_lists_task.category_id WHERE to_do_list.user_id = %s;", (logged_in_cookie,))
-            to_dos = cursor.fetchall()
+            cursor.execute("SELECT to_do_list.*, to_do_lists_task.id AS task_id, to_do_lists_task.task, to_do_lists_task.finished FROM memosync.to_do_list todl LEFT JOIN memosync.to_do_lists_task tdlt ON todl.id = tdlt.category_id AND tdlt.user_id = %s WHERE todl.user_id = %s;", (logged_in_cookie, logged_in_cookie))
+            todos = cursor.fetchall()
 
-            return template('to_do_list', to_dos=to_dos, user_info=get_user_info(logged_in_cookie, cursor))
+            return template('to_do_list', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:
             # Closing Database connection after it's been used
