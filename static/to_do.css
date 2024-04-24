@@ -145,7 +145,20 @@ input[type="text"] {
   padding: 5px;
 }
 
+select[name="choice"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 #submit {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #A63A50;
+  cursor: pointer;
+}
+
+#add {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #A63A50;
