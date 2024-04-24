@@ -196,8 +196,8 @@ def to_do_list():
             cursor = db.cursor()
 
             cursor.execute("SELECT to_do_list.*, to_do_lists_task.id AS task_id, to_do_lists_task.task, to_do_lists_task.finished FROM memosync.to_do_list LEFT JOIN memosync.to_do_lists_task ON to_do_list.id = to_do_lists_task.category_id AND to_do_lists_task.user_id = %s WHERE to_do_list.user_id = %s;", (logged_in_cookie, logged_in_cookie))
-            todos = cursor.fetchall()[0]
-
+            todos = cursor.fetchall()
+    
             return template('to_do_list', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:

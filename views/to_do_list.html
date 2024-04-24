@@ -69,9 +69,8 @@
     </div>
   </div>
 
-  <!--Display to-do lists-->
+  <!--Display to-do lists -->
   <div id="to_do_container">
-    % if todos:
     % for todo in todos:
     <div id="to_do_lists">
       <div id="to_do_title">
@@ -80,7 +79,6 @@
       <p>{{todo[3]}}</p>
       <p>{{todo[5]}}</p>
     </div>
-    % end
     % end
 
 </body>
