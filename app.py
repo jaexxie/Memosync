@@ -110,7 +110,10 @@ def overview():
             db = make_db_connection()
             cursor = db.cursor()
 
-            return template('overview', user_info=get_user_info(logged_in_cookie, cursor))
+            cursor.execute('SELECT * FROM to_do_list WHERE user_id = %s', (logged_in_cookie))
+            todos = cursor.fetchall()
+
+            return template('overview', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
             # Closing Database connection after it's been used
             cursor.close()

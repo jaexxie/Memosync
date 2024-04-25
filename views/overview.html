@@ -59,21 +59,27 @@
     <main>
         <div id="top">
             <section id="left">
-                <a href="/to_do_list">To-Do List</a>
                 <a href="/to_do_list">
-                    <section id="todo"></section>
+                    <h3>To-Do List</h3>
+                    <section id="todo">
+                        <ul>
+                            % for todo in todos:
+                            <li>{{ todo[2]}}</li>
+                            % end
+                        </ul>
+                    </section>
                 </a>
             </section>
             <section id="right">
-                <a href="/calendar">Calendar</a>
                 <a href="/calendar">
-                    <div id='calendar'></div>
+                    <h3>Calendar</h3>
+                    <section id="calendar"></section>
                 </a>
             </section>
         </div>
         <div id="bottom">
-            <a href="/progress_table">Progress Bar</a>
             <a href="/progress_table">
+                <h3>Progress Bar</h3>
                 <section id="progress"></section>
             </a>
         </div>
