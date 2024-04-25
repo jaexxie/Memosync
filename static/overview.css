@@ -17,7 +17,6 @@ div a {
   color: black;
 }
 
-<<<<<<< Updated upstream
 div>#left>a>h3,
 div>#right>a>h3,
 #bottom>a>h3 {
@@ -26,16 +25,16 @@ div>#right>a>h3,
     padding-bottom: 5px;
     text-decoration: underline black;
     color: black;
-div a {
-  font-family: "Montserrat", sans-serif;
-  font-size: 20px;
-  padding-bottom: 5px;
-  text-decoration: none;
-  color: black;
 }
 
-=======
->>>>>>> Stashed changes
+div a {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    padding-bottom: 5px;
+    text-decoration: none;
+    color: black;
+}
+
 .fc .fc-toolbar-title {
   font-size: 1.75em;
   margin: 0px;
@@ -88,7 +87,6 @@ div a {
   width: 60%;
 }
 
-<<<<<<< Updated upstream
 #todo ul>li {
     font-family: "Montserrat", sans-serif;
     color: black;
@@ -99,13 +97,15 @@ div a {
     border-bottom: 1px solid #bfbfbf;
     list-style-type: disc;
     margin-left: 10px;
+}
+
 #top > #left > a > #todo {
-  border: 1px solid black;
-  margin: 10px;
-  border-radius: 15px;
-  min-height: 300px;
-  box-shadow: 0 0 3px black;
-  background-color: #fbf9f5;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 15px;
+    min-height: 300px;
+    box-shadow: 0 0 3px black;
+    background-color: #fbf9f5;
 }
 
 #top > #right {
@@ -114,8 +114,6 @@ div a {
   width: 60%;
 }
 
-=======
->>>>>>> Stashed changes
 #top > #right > a > #calendar {
   border: 1px solid black;
   margin: 10px;
