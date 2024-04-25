@@ -82,21 +82,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    % if pbs:
 
-
-                    <tr>
-                        % if pbs:
                         % for pb in pbs:
-                        <!--<th class="task">Task</th>-->
-                        <td>{{pb[0]}}</td>
-                        <!--<th class="description">Description</th>-->
-                        <td>{{pb[1]}}</td>
-                        <!--<th class="date">Date</th>-->
-                        <td>{{pb[2]}}</td>
-                        <!--<th class="status">Status</th>-->
-                        <td>{{pb[3]}}</td>
-                        
-                    </tr>
+                            <tr>
+                                <!--<th class="task">Task</th>-->
+                                <td>{{pb[0]}}</td>
+                                <!--<th class="description">Description</th>-->
+                                <td>{{pb[1]}}</td>
+                                <!--<th class="date">Date</th>-->
+                                <td id="deadline-date">{{pb[2]}}</td>
+                                <!--<th class="status">Status</th>-->
+                                <td>
+                                    {{pb[3]}}
+                                    In progress
+                                </td>
+                            </tr>
+                        %end
+
+                    %end
 
                 </tbody>
             </table>
@@ -108,7 +112,6 @@
     </div>
     
 </body>
-<script src="/static/js/add-task.js"></script>
 
 </html>
 

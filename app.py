@@ -195,10 +195,13 @@ def to_do_list():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT to_do_list.*, to_do_lists_task.id AS task_id, to_do_lists_task.task, to_do_lists_task.finished FROM memosync.to_do_list LEFT JOIN memosync.to_do_lists_task ON to_do_list.id = to_do_lists_task.category_id AND to_do_lists_task.user_id = %s WHERE to_do_list.user_id = %s;", (logged_in_cookie, logged_in_cookie))
-            todos = cursor.fetchall()
-    
-            return template('to_do_list', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
+            cursor.execute('SELECT * from to_do_list where user_id = %s', (logged_in_cookie))
+            category = cursor.fetchall()
+
+            cursor.execute('SELECT * from to_do_lists_task where user_id = %s', (logged_in_cookie))
+            tasks = cursor.fetchall()
+
+            return template('to_do_list', category=category, tasks=tasks, user_info=get_user_info(logged_in_cookie, cursor))
 
         finally:
             # Closing Database connection after it's been used
@@ -438,10 +441,10 @@ def add_project():
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
 
-            cursor.execute('INSERT INTO progress_bar(project, description, spb_date, status) VALUES (%s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
+            cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
-            return redirect('/progress_bar')
+            return redirect('/progress_table')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
