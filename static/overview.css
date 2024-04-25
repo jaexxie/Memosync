@@ -1,18 +1,23 @@
 body {
-    margin: 0;
-    background-color: #F0E7D8;
+  margin: 0;
+  background-color: #f0e7d8;
 }
 
 main {
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-div>section>a {
-    text-decoration: none;
+div a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
 }
 
+<<<<<<< Updated upstream
 div>#left>a>h3,
 div>#right>a>h3,
 #bottom>a>h3 {
@@ -21,35 +26,69 @@ div>#right>a>h3,
     padding-bottom: 5px;
     text-decoration: underline black;
     color: black;
+div a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+=======
+>>>>>>> Stashed changes
+.fc .fc-toolbar-title {
+  font-size: 1.75em;
+  margin: 0px;
+  margin-left: 20px;
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.fc .fc-button {
+  margin-top: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.4em 0.65em;
+  text-align: center;
+  user-select: none;
+  vertical-align: middle;
+  margin-right: 20px;
 }
 
 #top {
-    height: 50%;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
-#top>#left {
-    margin-right: 20px;
-    margin-left: 20px;
-    width: 40%;
+#top > #left {
+  margin-right: 20px;
+  margin-left: 20px;
+  width: 40%;
 }
 
-#top>#left>a>#todo {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 150px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
-    padding: 15px;
+#top > #left > a > #todo {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
 }
 
-#todo ul>li::marker {
-    color: #a63a50;
+#top > #right {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 60%;
 }
 
+<<<<<<< Updated upstream
 #todo ul>li {
     font-family: "Montserrat", sans-serif;
     color: black;
@@ -60,54 +99,61 @@ div>#right>a>h3,
     border-bottom: 1px solid #bfbfbf;
     list-style-type: disc;
     margin-left: 10px;
+#top > #left > a > #todo {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
 }
 
-#top>#right {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 60%;
+#top > #right {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 60%;
 }
 
-#top>#right>a>#calendar {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 150px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
+=======
+>>>>>>> Stashed changes
+#top > #right > a > #calendar {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
 }
 
 #bottom {
-    height: 50%;
-    margin: 20px;
+  height: 50%;
+  margin: 20px;
 }
 
 #progress {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 300px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
 }
 
 @media only screen and (max-width: 600px) {
+  #top {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-    #top {
-        height: 50%;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
+  #top > #right {
+    margin: 20px;
+    width: 90%;
+  }
 
-    #top>#right {
-        margin: 20px;
-        width: 90%;
-    }
-
-    #top>#left {
-        margin: 20px;
-        width: 90%;
-
-    }
+  #top > #left {
+    margin: 20px;
+    width: 90%;
+  }
 }
