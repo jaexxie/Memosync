@@ -441,10 +441,10 @@ def add_project():
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
 
-            cursor.execute('INSERT INTO progress_bar(project, description, spb_date, status) VALUES (%s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
+            cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
-            return redirect('/progress_bar')
+            return redirect('/progress_table')
         finally:
             # Closing Database connection after it's been used
             cursor.close()

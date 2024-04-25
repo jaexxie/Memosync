@@ -45,7 +45,6 @@ body {
     padding: 10px 50px;
     width: 80%;
 
- 
 }
 
 #progress_container table{
@@ -81,11 +80,11 @@ body {
 }
 
 #progress_container td {
-   border-bottom: 1px solid #ccc;
-   border-right: 1px solid #ccc;
-   padding: 6px;
-   text-align: center;
-   font-family: monospace;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+    font-family: monospace;
 }
 
 /* Detta tar bort höger border på sista elementet i <tr> */
