@@ -34,6 +34,13 @@
             },
           ],
 
+                // this code shows the diffrent views
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    right: 'dayGridMonth' // user can switch between the two
+                },
+
+
           eventClick: function (info) {
             background_view_event.classList.add("show");
             container_view_event.classList.add("show");
@@ -55,26 +62,32 @@
   <body>
     % include('header_base.html')
     <main>
-      <div id="top">
-        <section id="left">
-          <a href="/to_do_list">To-Do List</a>
-          <a href="/to_do_list">
-            <section id="todo"></section>
-          </a>
-        </section>
-        <section id="right">
-          <a href="/calendar">Calendar</a>
-          <a href="/calendar">
-            <div id="calendar"></div>
-          </a>
-        </section>
-      </div>
-      <div id="bottom">
-        <a href="/progress_table">Progress Bar</a>
-        <a href="/progress_table">
-          <section id="progress"></section>
-        </a>
-      </div>
+        <div id="top">
+            <section id="left">
+                <a href="/to_do_list">
+                    <h3>To-Do List</h3>
+                    <section id="todo">
+                        <ul>
+                            % for todo in todos:
+                            <li>{{ todo[2]}}</li>
+                            % end
+                        </ul>
+                    </section>
+                </a>
+            </section>
+            <section id="right">
+                <a href="/calendar">
+                    <h3>Calendar</h3>
+                    <section id="calendar"></section>
+                </a>
+            </section>
+        </div>
+        <div id="bottom">
+            <a href="/progress_table">
+                <h3>Progress Bar</h3>
+                <section id="progress"></section>
+            </a>
+        </div>
     </main>
   </body>
 </html>

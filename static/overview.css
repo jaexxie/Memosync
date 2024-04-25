@@ -17,6 +17,24 @@ div a {
   color: black;
 }
 
+div>#left>a>h3,
+div>#right>a>h3,
+#bottom>a>h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: underline black;
+  color: black;
+}
+
+div a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
+}
+
 .fc .fc-toolbar-title {
   font-size: 1.75em;
   margin: 0px;
@@ -48,28 +66,59 @@ div a {
   margin-bottom: 20px;
 }
 
-#top > #left {
+#top>#left {
   margin-right: 20px;
   margin-left: 20px;
   width: 40%;
 }
 
-#top > #left > a > #todo {
+#top>#left>a>#todo {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
-  min-height: 300px;
+  min-height: 150px;
   box-shadow: 0 0 3px black;
   background-color: #fbf9f5;
 }
 
-#top > #right {
+#top>#right {
   margin-left: 20px;
   margin-right: 20px;
   width: 60%;
 }
 
-#top > #right > a > #calendar {
+#todo ul>li::marker {
+  color: #a63a50;
+}
+
+#todo ul>li {
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  text-decoration: none;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  font-size: 12pt;
+  border-bottom: 1px solid #bfbfbf;
+  list-style-type: disc;
+  margin-left: 10px;
+}
+
+#top>#left>a>#todo {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 150px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
+}
+
+#top>#right {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 60%;
+}
+
+#top>#right>a>#calendar {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
@@ -100,12 +149,12 @@ div a {
     margin-bottom: 20px;
   }
 
-  #top > #right {
+  #top>#right {
     margin: 20px;
     width: 90%;
   }
 
-  #top > #left {
+  #top>#left {
     margin: 20px;
     width: 90%;
   }
