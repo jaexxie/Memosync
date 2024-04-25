@@ -40,10 +40,14 @@ div>#right>a>h3,
     border: 1px solid black;
     margin: 10px;
     border-radius: 15px;
-    min-height: 300px;
+    min-height: 150px;
     box-shadow: 0 0 3px black;
     background-color: #FBF9F5;
     padding: 15px;
+}
+
+#todo ul>li::marker {
+    color: #a63a50;
 }
 
 #todo ul>li {
@@ -55,6 +59,7 @@ div>#right>a>h3,
     font-size: 12pt;
     border-bottom: 1px solid #bfbfbf;
     list-style-type: disc;
+    margin-left: 10px;
 }
 
 #top>#right {
@@ -67,7 +72,7 @@ div>#right>a>h3,
     border: 1px solid black;
     margin: 10px;
     border-radius: 15px;
-    min-height: 300px;
+    min-height: 150px;
     box-shadow: 0 0 3px black;
     background-color: #FBF9F5;
 }
