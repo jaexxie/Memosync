@@ -199,6 +199,15 @@ input[type="submit"] {
   flex-wrap: wrap;
 }
 
+.delete_todo {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em
+}
+
 #to_do_lists {
   background-color: #f8f8f8;
   border: 1px solid black;
@@ -214,6 +223,9 @@ input[type="submit"] {
   margin-top: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
 }
 
 #to_do_title>h3 {
