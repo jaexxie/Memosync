@@ -49,7 +49,7 @@ deleteButtons.forEach((button) => {
 
         toDoListId = button.id;
 
-        fetch(`/delete_todo_list/${toDoListId}`, {
+        fetch(`/delete_to_do_list/${toDoListId}`, {
             method: 'DELETE',
         })
             .then((response) => {
@@ -64,5 +64,3 @@ deleteButtons.forEach((button) => {
             });
     });
 });
-
-

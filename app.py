@@ -236,8 +236,8 @@ def create_to_do_list():
     else:
         return redirect('/')
     
-@delete('/to_do_list/<to_do_list_id:int>')
-def to_do_list(to_do_list_id):
+@route('/delete_to_do_list/<to_do_list_id:int>')
+def delete_to_do_list(to_do_list_id):
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -250,14 +250,14 @@ def to_do_list(to_do_list_id):
             cursor.execute('DELETE FROM to_do_list WHERE id = %s', (to_do_list_id,))
             db.commit()
 
-            return template('to_do_list')
+            return template('/to_do_list')
 
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
-        return redirect('/to_do_list')
+        return redirect('/')
 
 @route('/add_task_to_do_list', method='POST')
 def add_task_to_do_list():
