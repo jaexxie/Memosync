@@ -32,11 +32,10 @@ popup_background_2.addEventListener('click', function () {
 })
 
 // checkbox strikthrough
-taskCheckboxes = document.querySelectorAll('.task-checkbox');
+taskCheckboxes = document.querySelectorAll('.task_checkbox');
 
 taskCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
         this.parentNode.classList.toggle('completed');
     });
 });
-
