@@ -58,12 +58,12 @@
           <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
           <label for="choice">Select To-Do List:</label>
           <select name="choice" id="choice">
-          % if category: 
-            % for cate in category: 
-              <option>{{cate[2]}}</option>
-            % end 
-          % end
-          <input type="submit" id="add" value="Add">
+            % if category:
+            % for cate in category:
+            <option>{{cate[2]}}</option>
+            % end
+            % end
+            <input type="submit" id="add" value="Add">
         </fieldset>
       </form>
     </div>
@@ -72,16 +72,21 @@
   <!--Display to-do lists -->
   <div id="to_do_container">
     % for cate in category:
-      <div id="to_do_lists">
-        <div id="to_do_title">
-          <h3>{{ cate[3] }}</h3>
-        </div>
+    <div id="to_do_lists">
+      <div id="to_do_title">
+        <h3>{{ cate[2] }}</h3>
+      </div>
+      <div id="to_do_tasks">
         % for task in tasks:
-          % if task[2] == cate[0]:
-            <p>{{ task[3] }}</p>
-          % end
+        % if task[2] == cate[0]:
+        <label>
+          <input type="checkbox" class="task-checkbox">
+          {{ task[3] }}
+        </label>
+        % end
         % end
       </div>
+    </div>
     % end
 
 
