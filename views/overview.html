@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/static/overview.css" rel="stylesheet" type="text/css" />
@@ -9,52 +8,58 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
-        rel="stylesheet" />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+      href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          // this code shows the diffrent views
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            right: "dayGridMonth", // user can switch between the two
+          },
 
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+          // You can select days with selectable true
+          selectable: true,
+
+          eventSources: [
+            // your event source
+            {
+              url: "/get_events", // use the `url` property
+              color: "#A63A50", // an option!
+              textColor: "white", // an option!
+            },
+          ],
 
                 // this code shows the diffrent views
-                initialView: 'timeGridWeek',
+                initialView: 'dayGridMonth',
                 headerToolbar: {
-                    right: 'timeGridWeek' // user can switch between the two
+                    right: 'dayGridMonth' // user can switch between the two
                 },
 
-                // You can select days with selectable true
-                selectable: true,
 
-                eventSources: [
-
-                    // your event source
-                    {
-                        url: '/get_events', // use the `url` property
-                        color: '#A63A50',    // an option!
-                        textColor: 'white'  // an option!
-                    }
-
-                ],
-
-                eventClick: function (info) {
-                    background_view_event.classList.add('show')
-                    container_view_event.classList.add('show')
-                    paragraphs[0].innerText = 'Event Name: ' + info.event.title
-                    paragraphs[2].innerHTML = '<a href="delete/event/' + info.event.id + '" id="delete_event_link">Delete Event</a>';
-                    // change the border color just for fun
-                    info.el.style.border = '1.5px solid #2c3e50';
-                }
-
-            });
-            calendar.render();
+          eventClick: function (info) {
+            background_view_event.classList.add("show");
+            container_view_event.classList.add("show");
+            paragraphs[0].innerText = "Event Name: " + info.event.title;
+            paragraphs[2].innerHTML =
+              '<a href="delete/event/' +
+              info.event.id +
+              '" id="delete_event_link">Delete Event</a>';
+            // change the border color just for fun
+            info.el.style.border = "1.5px solid #2c3e50";
+          },
         });
+        calendar.render();
+      });
     </script>
     <title>MemoSync - Overview</title>
-</head>
+  </head>
 
-<body>
+  <body>
     % include('header_base.html')
     <main>
         <div id="top">
@@ -84,6 +89,5 @@
             </a>
         </div>
     </main>
-</body>
-
+  </body>
 </html>
