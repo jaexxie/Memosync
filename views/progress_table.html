@@ -10,7 +10,7 @@
     <link href="/static/reset.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="/static/js/progress_modal.js"></script>    
+    <script src="/static/js/progress_modal.js"></script>  
     <link
         href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
         rel="stylesheet" />
@@ -82,21 +82,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    % if pbs:
 
-
-                    <tr>
-                        % if pbs:
                         % for pb in pbs:
-                        <!--<th class="task">Task</th>-->
-                        <td>{{pb[0]}}</td>
-                        <!--<th class="description">Description</th>-->
-                        <td>{{pb[1]}}</td>
-                        <!--<th class="date">Date</th>-->
-                        <td>{{pb[2]}}</td>
-                        <!--<th class="status">Status</th>-->
-                        <td>{{pb[3]}}</td>
-                        
-                    </tr>
+                            <tr>
+                                <!--<th class="task">Task</th>-->
+                                <td>{{pb[0]}}</td>
+                                <!--<th class="description">Description</th>-->
+                                <td>{{pb[1]}}</td>
+                                <!--<th class="date">Date</th>-->
+                                <td id="deadline-date">{{pb[2]}}</td>
+                                <!--<th class="status">Status</th>-->
+                                <td>
+                                    {{pb[3]}}
+                                    In progress
+                                </td>
+                            </tr>
+                        %end
+
+                    %end
 
                 </tbody>
             </table>
@@ -106,7 +110,7 @@
 
 
     </div>
-    <!--<script src="/static/js/add-task.js"></script>-->
+    
 </body>
 
 </html>
