@@ -76,17 +76,18 @@
       <div id="to_do_title">
         <h3>{{ cate[2] }}</h3>
       </div>
-      <div id="to_do_tasks">
+      <form action="/delete_to_do_list" method="post" id="to_do_tasks">
         <h4>{{ cate[3]}}</h4>
         % for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox">
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" value="{{ task[3] }}">
           {{ task[3] }}
         </label>
         % end
         % end
-      </div>
+        <button type="submit">updatera</button>
+      </form>
     </div>
     % end
 

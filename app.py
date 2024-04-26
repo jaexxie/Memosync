@@ -213,6 +213,30 @@ def to_do_list():
     else:
         return redirect('/')
 
+@route('/delete_to_do_list', method=['GET', 'POST'])
+def delete_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            values = request.forms.getall('checkbox_todo')
+
+            for value in values:
+                cursor.execute('delete from to_do_lists_task where task = %s and user_id = %s', (value, logged_in_cookie))
+            db.commit()
+            
+            return redirect('to_do_list')
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
