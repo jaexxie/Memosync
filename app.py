@@ -110,7 +110,10 @@ def overview():
             db = make_db_connection()
             cursor = db.cursor()
 
-            return template('overview', user_info=get_user_info(logged_in_cookie, cursor))
+            cursor.execute('SELECT * FROM to_do_list WHERE user_id = %s', (logged_in_cookie))
+            todos = cursor.fetchall()
+
+            return template('overview', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -386,24 +389,19 @@ def delete_event(id):
     
 @route('/get_events')
 def get_events():
-
-
+    """Return a JSON object with all events that matches the users ID"""
+    # Read events from the JSON file
     with open('static/json/events.json', 'r') as file:
         all_events = json.load(file)['events']
 
-    logged_in_cookie = request.get_cookie('loggedIn')
-
     filtered_events = []
     for event in all_events:
-        if event.get('user_id') == str(logged_in_cookie):
+        if event.get('user_id') == '1':
             filtered_events.append(event)
 
     response.content_type = 'application/json'
     
     # Return the JSON-encoded event data
-
-    return json.dumps(all_events)
-
     return json.dumps(filtered_events)
 
 @route('/progress_table')
@@ -440,16 +438,21 @@ def add_project():
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
+            if status is None:
+                status = "not_started"
 
-            cursor.execute('INSERT INTO progress_bar(project, description, spb_date, status) VALUES (%s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
+            cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
-            return redirect('/progress_bar')
+            # Redirect to progress table
+            return redirect('/progress_table')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
+
+        # Redirect to login page for unathenticated users
         return redirect('/')
 
 @route('/static/<filepath:path>')

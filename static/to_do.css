@@ -3,7 +3,7 @@ body {
   background-color: #f0e7d8;
 }
 
-body > h2 {
+body>h2 {
   font-family: monospace;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -58,7 +58,7 @@ body > h2 {
   background-color: #e3e3e3;
 }
 
-#open_popup_options_btn:hover + .dropdown-content {
+#open_popup_options_btn:hover+.dropdown-content {
   display: block;
 }
 
@@ -108,25 +108,25 @@ body > h2 {
   pointer-events: all;
 }
 
-#popup_container_1 > form {
+#popup_container_1>form {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-#popup_container_2 > form {
+#popup_container_2>form {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-form > fieldset > * {
+form>fieldset>* {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
 }
 
-form > fieldset > legend {
+form>fieldset>legend {
   font-size: 16pt;
   margin-bottom: 15px;
   text-decoration: underline;
@@ -134,7 +134,7 @@ form > fieldset > legend {
   font-family: "Montserrat", sans-serif;
 }
 
-form > fieldset > label {
+form>fieldset>label {
   font-size: 12pt;
   font-family: "Montserrat", sans-serif;
 }
@@ -145,10 +145,23 @@ input[type="text"] {
   padding: 5px;
 }
 
+select[name="choice"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 #submit {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #a63a50;
+  cursor: pointer;
+}
+
+#add {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #A63A50;
   cursor: pointer;
 }
 
@@ -170,13 +183,13 @@ input[type="submit"] {
   box-sizing: border-box;
 }
 
-#to_do_menu > a {
+#to_do_menu>a {
   text-decoration: none;
   color: black;
   font-family: "Montserrat", sans-serif;
 }
 
-#to_do_menu > #first {
+#to_do_menu>#first {
   border-bottom: #312822;
 }
 
@@ -196,11 +209,39 @@ input[type="submit"] {
 }
 
 #to_do_title {
-  padding: 5px;
+  padding: 10px;
   background-color: #a63a50;
   margin-top: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+#to_do_title>h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12pt;
+}
+
+#to_do_tasks {
+  padding: 0 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#to_do_tasks>h4 {
+  font-family: monospace;
+  font-size: 11pt;
+  padding-top: 5px;
+}
+
+#to_do_tasks label {
+  padding: 5px 0 5px 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10pt;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #bfbfbf;
 }
 
 #dialog {

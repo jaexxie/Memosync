@@ -14,102 +14,16 @@
   <script src="
   https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js
   "></script>
-  <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // popup
-      add_event_btn = document.querySelector('#add_event_btn')
-      background_create_event = document.querySelector('.background_create_event')
-      container_create_event = document.querySelector('.container_create_event')
-
-      background_view_event = document.querySelector('.background_view_event')
-      container_view_event = document.querySelector('.container_view_event')
-      paragraphs = document.querySelectorAll('#event_info')
-
-      
-       // this creates a default datestamp for the input valeus
-       var currentDate = new Date().toISOString().split('T')[0];
-       document.getElementById('start_date').value = currentDate;
-       document.getElementById('end_date').value = currentDate;
-
-
-      add_event_btn.addEventListener('click', function() {
-        background_create_event.classList.add('show')
-        container_create_event.classList.add('show')
-      });
-
-
-      background_create_event.addEventListener("click", function() {
-        background_create_event.classList.remove('show')
-        container_create_event.classList.remove('show')
-      });
-
-      background_view_event.addEventListener("click", function() {
-        background_view_event.classList.remove('show')
-        container_view_event.classList.remove('show')
-      });
-
-      // this creates a default datestamp for the input valeus
-      var currentDate = new Date().toISOString().split('T')[0];
-      document.getElementById('start_date').value = currentDate;
-      document.getElementById('end_date').value = currentDate;
-
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-
-
-      background_create_event.addEventListener("click", function() {
-        background_create_event.classList.remove('show')
-        container_create_event.classList.remove('show')
-      });
-
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {})
-    });
- 
-  </script>
+  <script src="/static/js/calendar.js"></script>
+  <title>MemoSync Register</title>
 </head>
 
 <body>
 
+  % include('header_base.html')
+
+  <div class="create_event">
     <button id="add_event_btn">Add event</button>
-  </div>
-
-  <!-- popup for creating event -->
-  <div class="background_create_event"></div>
-  <div class="container_create_event">
-    <form action="/add_event" method="post">
-
-
-      eventClick: function(info) {
-      background_view_event.classList.add('show')
-      container_view_event.classList.add('show')
-      paragraphs[0].innerText =  'Event Name: ' + info.event.title
-      paragraphs[2].innerHTML = '<a href="delete/event/' + info.event.id + '" id="delete_event_link">Delete Event</a>';
-      // change the border color just for fun
-      info.el.style.border = '1.5px solid #2c3e50';
-    }
-
-      <label for="event_name">Event Name</label>
-      <input type="text" name="event_name" id="event_name" placeholder="Event Name">
-
-
-      <label for="start_date">Start Date</label>
-      <input type="date" name="start_date" id="start_date">
-
-      <label for="start_time">Start Time</label>
-      <input type="time" name="start_time" id="start_time">
-
-      <label for="end_date">End Date</label>
-      <input type="date" name="end_date" id="end_date">
-
-      <label for="end_time">End Time</label>
-      <input type="time" name="end_time" id="end_time">
-
-      <button type="submit">Add</button>
-
-    </form>
   </div>
 
   <!-- popup for creating event -->
