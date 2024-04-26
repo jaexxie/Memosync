@@ -415,19 +415,23 @@ def delete_event(id):
 def get_events():
     """Return a JSON object with all events that matches the users ID"""
     # Read events from the JSON file
-    with open('static/json/events.json', 'r') as file:
-        all_events = json.load(file)['events']
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        with open('static/json/events.json', 'r') as file:
+            all_events = json.load(file)['events']
 
-    filtered_events = []
-    for event in all_events:
-        if event.get('user_id') == '1':
-            filtered_events.append(event)
+        filtered_events = []
+        for event in all_events:
+            if event.get('user_id') == logged_in_cookie:
+                filtered_events.append(event)
 
-    response.content_type = 'application/json'
+        response.content_type = 'application/json'
+        
+        # Return the JSON-encoded event data
+        return json.dumps(filtered_events)
+    else:
+        return redirect('/')
     
-    # Return the JSON-encoded event data
-    return json.dumps(filtered_events)
-
 @route('/progress_table')
 def progress_table():
     logged_in_cookie = request.get_cookie('loggedIn')
