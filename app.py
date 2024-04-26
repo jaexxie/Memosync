@@ -438,16 +438,21 @@ def add_project():
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
+            if status is None:
+                status = "not_started"
 
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
+            # Redirect to progress table
             return redirect('/progress_table')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
+
+        # Redirect to login page for unathenticated users
         return redirect('/')
 
 @route('/static/<filepath:path>')
