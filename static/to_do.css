@@ -234,9 +234,21 @@ input[type="submit"] {
 }
 
 #to_do_tasks {
-  padding: 0 10px 0 10px;
+  padding: 0 10px 10px 10px;
   display: flex;
   flex-direction: column;
+}
+
+#to_do_tasks>button {
+  padding: 5px 10px;
+  box-sizing: border-box;
+  background-color: #A63A50;
+  color: #312822;
+  font-weight: lighter;
+  border: 0;
+  border-radius: 15px;
+  margin: 10px 0px;
+  cursor: pointer;
 }
 
 #to_do_tasks>h4 {

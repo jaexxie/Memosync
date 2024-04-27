@@ -57,7 +57,7 @@ body {
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
     font-family: monospace;
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px;
 
 }
@@ -80,11 +80,12 @@ body {
 }
 
 #progress_container td {
+    position: relative;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
     padding: 6px;
     text-align: center;
-    font-family: monospace;
+    font-family: "Montserrat", sans-serif;
 }
 
 /* Detta tar bort höger border på sista elementet i <tr> */
@@ -92,36 +93,37 @@ body {
     border-right: none;
 }
 
-.status-select{
-    max-width: 104px;
+td .delete-task-btn{
+    display: block;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%) ;
+    font-size: 22px;
+
+}
+
+.status-col{
     background-color: #f8f8f8;
     box-sizing: border-box;
-    border-radius: 5px;
     padding: 3px;
     font-size: 14px;
-    border: none;
     cursor: pointer;
+    border: none;
+    border-radius: 14px;
 }
 
 /*Ta bor fokusram */
-.status-select:focus{
+.status-col:focus{
     outline: none;
 }
 
-.status-select option{
+.status-col option {
     background-color: rgba(251, 249, 245, 0.6);
     text-align: center;
-
-}
-.status-select .not-started {
-    background-color: rgba(255, 0, 0, 0.3);
 }
 
-.status-select .in-progress {
-    background-color: rgba(255, 255, 0, 0.3);
-}
 
-.status-select .done {
-    background-color: rgba(0, 255, 0, 0.3); 
-}
 

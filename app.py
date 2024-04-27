@@ -213,6 +213,30 @@ def to_do_list():
     else:
         return redirect('/')
 
+@route('/delete_to_do_list', method=['GET', 'POST'])
+def delete_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            values = request.forms.getall('checkbox_todo')
+
+            for value in values:
+                cursor.execute('delete from to_do_lists_task where task = %s and user_id = %s', (value, logged_in_cookie))
+            db.commit()
+            
+            return redirect('to_do_list')
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -415,19 +439,23 @@ def delete_event(id):
 def get_events():
     """Return a JSON object with all events that matches the users ID"""
     # Read events from the JSON file
-    with open('static/json/events.json', 'r') as file:
-        all_events = json.load(file)['events']
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        with open('static/json/events.json', 'r') as file:
+            all_events = json.load(file)['events']
 
-    filtered_events = []
-    for event in all_events:
-        if event.get('user_id') == '1':
-            filtered_events.append(event)
+        filtered_events = []
+        for event in all_events:
+            if event.get('user_id') == logged_in_cookie:
+                filtered_events.append(event)
 
-    response.content_type = 'application/json'
+        response.content_type = 'application/json'
+        
+        # Return the JSON-encoded event data
+        return json.dumps(filtered_events)
+    else:
+        return redirect('/')
     
-    # Return the JSON-encoded event data
-    return json.dumps(filtered_events)
-
 @route('/progress_table')
 def progress_table():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -462,16 +490,21 @@ def add_project():
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
+            if status is None:
+                status = "not_started"
 
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
+            # Redirect to progress table
             return redirect('/progress_table')
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
+
+        # Redirect to login page for unathenticated users
         return redirect('/')
 
 @route('/static/<filepath:path>')
