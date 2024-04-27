@@ -39,3 +39,28 @@ taskCheckboxes.forEach(checkbox => {
         this.parentNode.classList.toggle('completed');
     });
 });
+
+// delete todo
+deleteButtons = document.querySelectorAll('.delete_todo');
+
+deleteButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        toDoListId = button.id;
+
+        fetch(`/delete_to_do_list/${toDoListId}`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if (response.ok) {
+                    console.log('To-do list deleted successfully.');
+                } else {
+                    console.error('Failed to delete the to-do list.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+});
