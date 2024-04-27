@@ -491,18 +491,13 @@ def add_project():
             spb_date = request.forms.get("deadline_date")
             status = request.forms.get("status")
 
-            cursor.execute('SELECT MAX(id) FROM progress_bar')
-            max_id = cursor.fetchone()[0]
-            if max_id is None:
-                max_id = 0
 
-            new_id = max_id + 1
-
-            cursor.execute('INSERT INTO progress_bar(id, user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s, %s)', (new_id, logged_in_cookie, project, description, spb_date, status))
+            cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
             # Redirect to progress table
             return redirect('/progress_table')
+        
         finally:
             # Closing Database connection after it's been used
             cursor.close()
