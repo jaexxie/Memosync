@@ -489,7 +489,7 @@ def add_project():
             project = request.forms.get("task")
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
-            status = request.forms.get("status")
+            status = 'not_started'
 
 
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
@@ -520,10 +520,11 @@ def update_status():
                 task_id = request.forms.get("task_id")
                 new_status = request.forms.get("new_status")
 
-                cursor.execute('UPDATE progress_bar SET status = %s WHERE task_id = %s AND user_id = %s', (new_status, task_id, logged_in_cookie))
+                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s AND user_id = %s', (new_status, task_id, logged_in_cookie))
                 db.commit()
                 
-                return "Status updated"
+                # Redirect to progress table
+                return redirect('/progress_table')
             finally:
 
                 # Closing Database connection after it's been used
