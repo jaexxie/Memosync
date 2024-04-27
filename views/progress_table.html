@@ -10,7 +10,7 @@
     <link href="/static/reset.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="/static/js/progress_modal.js"></script>  
+    <script src="/static/js/progress_modal.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
         rel="stylesheet" />
@@ -34,58 +34,54 @@
 
 
         <!--Modal for create/add new task-->
-        
+
         <div class="modal-container">
-            <section class="modal-header">
-                <h3>
-                    Create New Task
-                </h3>
-                <span class="close">&times;</span>
+            <span class="close">&times;</span>
 
             </section>
 
             <section class="modal-form-container">
 
                 <form action="/add_project" id="task-form" method="post">
-
-                    <label for="task">Enter a task:</label>
-                    <input type="text" id="task" name="task" placeholder="e.g meeting" required>
-
-                    <label for="description">Enter a description:</label>
-                    <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
-
-                    <label for="deadline_date">Enter a deadline (date):</label>
-                    <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23" required>
-
-                    <button type="submit" id="submit" value="create" class="add-task-btn">Add task</button>
-
+                    <fieldset>
+                        <legend>Create New Task</legend>
+                        <label for="task">Enter a task:</label>
+                        <input type="text" id="task" name="task" placeholder="e.g meeting" required>
+                        <label for="description">Enter a description:</label>
+                        <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
+                        <label for="deadline_date">Enter a deadline (date):</label>
+                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23"
+                            required>
+                        <button type="submit" id="submit" value="create" class="add-task-btn">Create</button>
+                    </fieldset>
                 </form>
 
             </section>
 
         </div>
-        
+
         <!--Container that shows all task in a tabell-->
         <div id="progress_container">
             <table>
                 <thead>
                     <tr>
-                       
+
                         <th class="task">Task</th>
-                    
+
                         <th class="description">Description</th>
-                    
+
                         <th class="date">Date</th>
-                        
+
                         <th class="status">Status</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
                     % if pbs:
 
+<<<<<<< HEAD
                         % for pb in pbs:
-                        
+                                                   
                             <tr>
                                 
                                 <!--<th class="task">Task</th>-->
@@ -100,14 +96,41 @@
                                 <!--<th class="status">Status</th>-->
                                 <td>
                                     
-                                    <select name="status" class="status-col" id="status">
-                                        <option value="not_started" {{pb[3]}} >Not Started</option>
-                                        <option value="in_progress" {{pb[3]}}>In Progress</option>
-                                        <option value="completed" {{pb[3]}}>Completed</option>
+                                    <select name="status" class="status-col" id="status-{{ pb[] }}"
+                                        onchange="updateStatus ('{{ pb[0] }}', this.value)">
+                                        <option value="not_started"  {% if pb[3] = "not_started" %} {{ pb[3] }} >Not Started</option>
+                                        <option value="in_progress"  {% if pb[3] = "in_progress" %} {% endif %}>In Progress</option>
+                                        <option value="completed"  {% if pb[3] = "completed" %} {% endif %}>Completed</option>
                                     </select>
                                 </td>
                             </tr>
                         %end
+=======
+                    % for pb in pbs:
+
+                    <tr>
+
+                        <!--<th class="task">Task</th>-->
+                        <td>
+                            <span class="delete-task-btn">&times;</span>
+                            {{pb[0]}}
+                        </td>
+                        <!--<th class="description">Description</th>-->
+                        <td>{{pb[1]}}</td>
+                        <!--<th class="date">Date</th>-->
+                        <td id="deadline-date">{{pb[2]}}</td>
+                        <!--<th class="status">Status</th>-->
+                        <td>
+
+                            <select name="status" class="status-col" id="status">
+                                <option value="not_started" {{pb[3]}}>Not Started</option>
+                                <option value="in_progress" {{pb[3]}}>In Progress</option>
+                                <option value="completed" {{pb[3]}}>Completed</option>
+                            </select>
+                        </td>
+                    </tr>
+                    %end
+>>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
 
                     %end
 
@@ -119,8 +142,7 @@
 
 
     </div>
-    
+
 </body>
 
 </html>
-

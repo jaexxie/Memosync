@@ -3,6 +3,17 @@ body {
   font-family: monospace;
 }
 
+body>h2 {
+  font-family: monospace;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #312822;
+  font-size: 26px;
+  margin: 30px;
+  letter-spacing: 1px;
+  font-size: 20px;
+}
+
 #calendar {
   padding: 50px;
   font-family: "Montserrat", sans-serif;
@@ -38,10 +49,10 @@ element.style {
   font-weight: 400;
 }
 
-.create_event > button {
+.create_event>button {
   display: block;
   margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   color: white;
@@ -55,7 +66,7 @@ element.style {
 
 /* create event */
 
-.create_event > button {
+.create_event>button {
   display: block;
   margin-top: 20px;
   margin-left: 20px;
@@ -108,7 +119,7 @@ element.style {
   opacity: 1;
 }
 
-.container_create_event > form {
+.container_create_event>form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -116,12 +127,12 @@ element.style {
   padding: 20px;
 }
 
-.container_create_event > form > label {
+.container_create_event>form>label {
   font-weight: bold;
   letter-spacing: 0.5px;
 }
 
-.container_create_event > form > input {
+.container_create_event>form>input {
   width: 200px;
   border: 0;
   border-bottom: 2px solid #a63a50;
@@ -129,7 +140,7 @@ element.style {
   outline: 0;
 }
 
-.container_create_event > form > button {
+.container_create_event>form>button {
   background-color: transparent;
   border: 1px solid #a63a50;
   padding: 10px;
@@ -141,7 +152,7 @@ element.style {
   transition: 0.5s all;
 }
 
-.container_create_event > form > button:hover {
+.container_create_event>form>button:hover {
   background-color: #a63a50;
   color: white;
 }
@@ -190,7 +201,59 @@ element.style {
   opacity: 1;
 }
 
-.container_view_event > p > a {
+.container_create_event {
+  background-color: #f0e7d8;
+}
+
+form>fieldset>* {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form>fieldset>legend {
+  font-size: 16pt;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: "Montserrat", sans-serif;
+}
+
+form>fieldset>label {
+  font-size: 12pt;
+  font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+input[type="date"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+input[type="time"] {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#create {
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  background-color: #a63a50;
+  cursor: pointer;
+}
+
+#create:hover {
+  background-color: rgba(166, 58, 80, 0.9);
+}
+
+.container_view_event>p>a {
   background-color: transparent;
   border: 1px solid #a63a50;
   padding: 8px;
@@ -203,7 +266,7 @@ element.style {
   text-decoration: none;
 }
 
-.container_view_event > p > a:hover {
+.container_view_event>p>a:hover {
   background-color: #a63a50;
   color: white;
 }
@@ -219,7 +282,7 @@ element.style {
     background-color: white;
   }
 
-  .create_event > button {
+  .create_event>button {
     display: block;
     margin-top: 20px;
     margin-left: 76px;
@@ -271,7 +334,7 @@ element.style {
     font-family: "Montserrat", sans-serif;
   }
 
-  .create_event > button {
+  .create_event>button {
     display: block;
     margin-top: 20px;
     margin-left: 25px;
