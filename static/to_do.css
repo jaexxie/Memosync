@@ -9,7 +9,7 @@ body>h2 {
   text-underline-offset: 3px;
   color: #312822;
   font-size: 26px;
-  margin: 20px;
+  margin: 30px;
   letter-spacing: 1px;
   font-size: 20px;
 }
@@ -17,7 +17,7 @@ body>h2 {
 .create button {
   display: block;
   margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   border-radius: 10px;
@@ -32,6 +32,7 @@ body>h2 {
 #open_popup_options_btn {
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
+  color: white;
 }
 
 .dropdown-content {
@@ -231,6 +232,7 @@ input[type="submit"] {
 #to_do_title>h3 {
   font-family: "Montserrat", sans-serif;
   font-size: 12pt;
+  color: white;
 }
 
 #to_do_tasks {
@@ -249,6 +251,10 @@ input[type="submit"] {
   border-radius: 15px;
   margin: 10px 0px;
   cursor: pointer;
+  color: white;
+  font-family: monospace;
+  width: 60%;
+  align-self: center;
 }
 
 #to_do_tasks>h4 {

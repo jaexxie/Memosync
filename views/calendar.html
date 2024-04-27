@@ -21,7 +21,7 @@
 <body>
 
   % include('header_base.html')
-
+  <h2>Calender</h2>
   <div class="create_event">
     <button id="add_event_btn">Add event</button>
   </div>
@@ -30,24 +30,25 @@
   <div class="background_create_event"></div>
   <div class="container_create_event">
     <form action="/add_event" method="post">
+      <fieldset>
+        <legend>Create New Event</legend>
+        <label for="event_name">Event Name</label>
+        <input type="text" name="event_name" id="event_name" placeholder="Event Name">
 
-      <label for="event_name">Event Name</label>
-      <input type="text" name="event_name" id="event_name" placeholder="Event Name">
+        <label for="start_date">Start Date</label>
+        <input type="date" name="start_date" id="start_date">
 
-      <label for="start_date">Start Date</label>
-      <input type="date" name="start_date" id="start_date">
+        <label for="start_time">Start Time</label>
+        <input type="time" name="start_time" id="start_time">
 
-      <label for="start_time">Start Time</label>
-      <input type="time" name="start_time" id="start_time">
+        <label for="end_date">End Date</label>
+        <input type="date" name="end_date" id="end_date">
 
-      <label for="end_date">End Date</label>
-      <input type="date" name="end_date" id="end_date">
+        <label for="end_time">End Time</label>
+        <input type="time" name="end_time" id="end_time">
 
-      <label for="end_time">End Time</label>
-      <input type="time" name="end_time" id="end_time">
-
-      <button type="submit">Add</button>
-
+        <input type="submit" value="Create" id="create">
+      </fieldset>
     </form>
   </div>
 
