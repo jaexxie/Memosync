@@ -260,7 +260,6 @@ def create_to_do_list():
     else:
         return redirect('/')
 
-
 @delete('/delete_to_do_list/<to_do_list_id:int>', method="DELETE")
 def delete_to_do_list(to_do_list_id):
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -282,7 +281,6 @@ def delete_to_do_list(to_do_list_id):
             db.close()
     else:
         return redirect('/')
-
 
 @route('/add_task_to_do_list', method='POST')
 def add_task_to_do_list():
