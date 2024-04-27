@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     function updateStatus(taskId, newStatus) {
         // Send an AJAX request to update_status route
@@ -98,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
 =======
+=======
+>>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
     // Add an event listener to each select element
     document.querySelectorAll('.status-col').forEach(select => {
         select.addEventListener('change', function () {
@@ -121,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     });
+<<<<<<< HEAD
+
+
+>>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
+=======
 
 
 >>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
