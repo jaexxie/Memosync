@@ -78,37 +78,6 @@
                 </thead>
                 <tbody>
                     % if pbs:
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        % for pb in pbs:
-                                                   
-                            <tr>
-                                
-                                <!--<th class="task">Task</th>-->
-                                <td>
-                                    <span class="delete-task-btn">&times;</span>
-                                    {{pb[0]}}
-                                </td>
-                                <!--<th class="description">Description</th>-->
-                                <td>{{pb[1]}}</td>
-                                <!--<th class="date">Date</th>-->
-                                <td id="deadline-date">{{pb[2]}}</td>
-                                <!--<th class="status">Status</th>-->
-                                <td>
-                                    
-                                    <select name="status" class="status-col" id="status-{{ pb[] }}"
-                                        onchange="updateStatus ('{{ pb[0] }}', this.value)">
-                                        <option value="not_started"  {% if pb[3] = "not_started" %} {{ pb[3] }} >Not Started</option>
-                                        <option value="in_progress"  {% if pb[3] = "in_progress" %} {% endif %}>In Progress</option>
-                                        <option value="completed"  {% if pb[3] = "completed" %} {% endif %}>Completed</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        %end
-=======
-=======
->>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
                     % for pb in pbs:
 
                     <tr>
@@ -133,10 +102,6 @@
                         </td>
                     </tr>
                     %end
-<<<<<<< HEAD
->>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
-=======
->>>>>>> aa7b5c8bb7408d521e0e34d1ee22a8930107b426
 
                     %end
 
