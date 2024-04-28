@@ -87,6 +87,49 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
+    //funktion som raderar task (uppgifter) från databasen
+    //välj alla delete-task-btn
+    const deleteBtns = document.querySelectorAll(".delete-task-btn");
+
+    // Lägg till händelselyssnare för varje raderingsknapp
+    deleteBtns.forEach(button => {
+        button.addEventListener("click", function () {
+            const taskId = this.getAttribute("data-task-id");
+
+            // Anropa deleteTask-funktionen med uppgifts-ID
+            deleteTask(taskId)
+        });
+    });
+
+    function deleteTask(taskId) {
+        fetch('/delete_task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'task_id=' + encodeURIComponent(taskId),
+
+        })
+        .then(response => {
+            if(response.ok) {
+                // Ta bort motsvarande rad från tabellen
+                const row = document.querySelector(`[task-id="${taskId}"]`);
+                if (row) {
+                    row.remove();
+                } else {
+                    console.error("Row not found");
+                }
+            } else {
+                console.error("Failed to delete task");
+            }
+        })
+
+        .catch(error => {
+            console.error('Error', error);
+        });
+    }
+
+
 });
 
 
