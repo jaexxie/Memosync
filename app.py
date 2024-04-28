@@ -260,7 +260,6 @@ def create_to_do_list():
     else:
         return redirect('/')
 
-
 @delete('/delete_to_do_list/<to_do_list_id:int>', method="DELETE")
 def delete_to_do_list(to_do_list_id):
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -282,7 +281,6 @@ def delete_to_do_list(to_do_list_id):
             db.close()
     else:
         return redirect('/')
-
 
 @route('/add_task_to_do_list', method='POST')
 def add_task_to_do_list():
@@ -465,7 +463,7 @@ def progress_table():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
+            cursor.execute("SELECT id, project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
             pbs = cursor.fetchall()
 
             return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
@@ -482,22 +480,24 @@ def add_project():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
+
             # Database Connection
             db = make_db_connection()
             cursor = db.cursor()
 
+            
             project = request.forms.get("task")
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
-            status = request.forms.get("status")
-            if status is None:
-                status = "not_started"
+            status = 'not_started'
+
 
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
             # Redirect to progress table
             return redirect('/progress_table')
+        
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -506,6 +506,36 @@ def add_project():
 
         # Redirect to login page for unathenticated users
         return redirect('/')
+    
+@route ('/update_status', method='POST')
+def update_status():
+        logged_in_cookie = request.get_cookie('loggedIn')
+        if logged_in_cookie:
+            try:
+                # Database Connection
+                db = make_db_connection()
+                cursor = db.cursor()
+
+                task_id = request.forms.get("task_id")
+                new_status = request.forms.get("new_status")
+
+                # return new_status
+
+                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (new_status, task_id))
+                db.commit()
+                
+                # Redirect to progress table
+                return redirect('/progress_table')
+            finally:
+
+                # Closing Database connection after it's been used
+                cursor.close()
+                db.close()
+
+        else:
+            # Redirect to login page for unathenticated users
+            return redirect('/')
+
 
 @route('/static/<filepath:path>')
 def server_static(filepath):

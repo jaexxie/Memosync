@@ -249,6 +249,10 @@ input[type="time"] {
   cursor: pointer;
 }
 
+#create:hover {
+  background-color: rgba(166, 58, 80, 0.9);
+}
+
 .container_view_event>p>a {
   background-color: transparent;
   border: 1px solid #a63a50;

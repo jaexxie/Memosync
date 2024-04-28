@@ -95,6 +95,7 @@ body {
     padding: 6px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
+    
 }
 
 /* Detta tar bort höger border på sista elementet i <tr> */
@@ -115,7 +116,7 @@ td .delete-task-btn {
 
 }
 
-.status-col {
+.status-selector {
     background-color: #f8f8f8;
     box-sizing: border-box;
     padding: 3px;
@@ -126,11 +127,11 @@ td .delete-task-btn {
 }
 
 /*Ta bor fokusram */
-.status-col:focus {
+.status-selector:focus {
     outline: none;
 }
 
-.status-col option {
+.status-selector option {
     background-color: rgba(251, 249, 245, 0.6);
     text-align: center;
 }

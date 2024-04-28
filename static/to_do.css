@@ -159,11 +159,19 @@ select[name="choice"] {
   cursor: pointer;
 }
 
+#submit:hover {
+  background-color: rgba(166, 58, 80, 0.9);
+}
+
 #add {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #A63A50;
   cursor: pointer;
+}
+
+#add:hover {
+  background-color: rgba(166, 58, 80, 0.9);
 }
 
 input[type="submit"] {
