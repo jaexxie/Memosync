@@ -307,6 +307,26 @@ def add_task_to_do_list():
             db.close()
     else:
         return redirect('/')
+
+@route('/update_checkboxes')
+def add_task_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked_task, logged_in_cookie))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
             
 @route('/calendar')
 def calendar():
