@@ -1,4 +1,4 @@
-from crypt import methods
+#from crypt import methods
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
