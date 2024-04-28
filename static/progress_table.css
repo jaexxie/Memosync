@@ -1,5 +1,5 @@
 body {
-    background-color: #F0E7D8; 
+    background-color: #F0E7D8;
 }
 
 #container {
@@ -21,7 +21,7 @@ body {
 }
 
 
-#create-btn{
+#create-btn {
     margin-top: 20px;
     margin-left: 30px;
     background-color: #a63a50;
@@ -30,26 +30,27 @@ body {
     padding: 13px 30px;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
-
+    color: white;
 }
 
 #create-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
+    background-color: rgba(166, 58, 80, 0.9);
+    /* Change background color on hover */
 }
 
 #progress_container {
     border: 1px solid black;
     background-color: #f8f8f8;
-    margin: 20px auto ;
+    margin: 20px auto;
     border-radius: 10px;
     padding: 10px 50px;
     width: 80%;
 
 }
 
-#progress_container table{
+#progress_container table {
     width: 100%;
-    border-collapse: collapse ;
+    border-collapse: collapse;
 
 }
 
@@ -63,20 +64,28 @@ body {
 }
 
 /*change the width of cells in HTML table*/
-.task{
+.task {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.description{
+.description {
     width: 40%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.date{
+.date {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.status{
+.status {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
 #progress_container td {
@@ -86,26 +95,28 @@ body {
     padding: 6px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
+    
 }
 
 /* Detta tar bort höger border på sista elementet i <tr> */
-#progress_container td:last-child, #progress_container th:last-child{
+#progress_container td:last-child,
+#progress_container th:last-child {
     border-right: none;
 }
 
-td .delete-task-btn{
+td .delete-task-btn {
     display: block;
     position: absolute;
     text-align: center;
     cursor: pointer;
     left: -5px;
     top: 50%;
-    transform: translateY(-50%) ;
+    transform: translateY(-50%);
     font-size: 22px;
 
 }
 
-.status-col{
+.status-selector {
     background-color: #f8f8f8;
     box-sizing: border-box;
     padding: 3px;
@@ -116,14 +127,11 @@ td .delete-task-btn{
 }
 
 /*Ta bor fokusram */
-.status-col:focus{
+.status-selector:focus {
     outline: none;
 }
 
-.status-col option {
+.status-selector option {
     background-color: rgba(251, 249, 245, 0.6);
     text-align: center;
 }
-
-
-

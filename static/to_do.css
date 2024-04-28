@@ -9,7 +9,7 @@ body>h2 {
   text-underline-offset: 3px;
   color: #312822;
   font-size: 26px;
-  margin: 20px;
+  margin: 30px;
   letter-spacing: 1px;
   font-size: 20px;
 }
@@ -17,7 +17,7 @@ body>h2 {
 .create button {
   display: block;
   margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   border-radius: 10px;
@@ -32,6 +32,7 @@ body>h2 {
 #open_popup_options_btn {
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
+  color: white;
 }
 
 .dropdown-content {
@@ -158,11 +159,19 @@ select[name="choice"] {
   cursor: pointer;
 }
 
+#submit:hover {
+  background-color: rgba(166, 58, 80, 0.9);
+}
+
 #add {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #A63A50;
   cursor: pointer;
+}
+
+#add:hover {
+  background-color: rgba(166, 58, 80, 0.9);
 }
 
 input[type="submit"] {
@@ -199,6 +208,15 @@ input[type="submit"] {
   flex-wrap: wrap;
 }
 
+.delete_todo {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em
+}
+
 #to_do_lists {
   background-color: #f8f8f8;
   border: 1px solid black;
@@ -214,11 +232,15 @@ input[type="submit"] {
   margin-top: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
 }
 
 #to_do_title>h3 {
   font-family: "Montserrat", sans-serif;
   font-size: 12pt;
+  color: white;
 }
 
 #to_do_tasks {
@@ -237,6 +259,10 @@ input[type="submit"] {
   border-radius: 15px;
   margin: 10px 0px;
   cursor: pointer;
+  color: white;
+  font-family: monospace;
+  width: 60%;
+  align-self: center;
 }
 
 #to_do_tasks>h4 {
