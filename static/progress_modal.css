@@ -1,11 +1,11 @@
-:root{
-    --body-color:rgba(240, 231, 216);
+:root {
+    --body-color: rgba(240, 231, 216);
     --container-background: rgba(251, 249, 245);
     --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    --light-grey-border:  1px solid #ccc;
-    --btn-color:#a63a50;
+    --light-grey-border: 1px solid #ccc;
+    --btn-color: #a63a50;
     --border: 1px solid black;
-    
+
 }
 
 
@@ -25,10 +25,10 @@
 }
 
 /*Show class is to the overlay, its visibility changes with JS*/
-.modal-overlay.show{
-  visibility: visible;
-  pointer-events: auto;
-  opacity: 1;
+.modal-overlay.show {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
 }
 
 /*hide modal overlay with 1 second delay*/
@@ -53,21 +53,21 @@
 }
 
 /*Show class is to the .modal-container, its visibility changes with JS*/
-.modal-container.show{
+.modal-container.show {
     visibility: visible;
     pointer-events: auto;
     opacity: 1;
 }
 
 /*Modal header */
-.modal-header{
+.modal-header {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     margin-bottom: 15px;
 }
 
-.modal-header h3{
+.modal-header h3 {
     font-family: "Montserrat", sans-serif;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -77,7 +77,7 @@
 }
 
 /* "X" in modal header to close the modal*/
-.close{
+.close {
     color: black;
     font-size: 28px;
     font-weight: bold;
@@ -86,74 +86,73 @@
     border: none;
 }
 
-.close:hover, .close:focus{
+.close:hover,
+.close:focus {
     color: var(--btn-color);
     text-decoration: none;
 
 }
 
 /*the part of the modal, container that contains the form and submit button*/
-.modal-form-container{
+.modal-form-container {
     margin-top: 5px;
 }
 
 /* Styling for the form*/
-.modal-form-container > form {
+.modal-form-container>form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
+    gap: 40px;
+}
+
+form>fieldset>* {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+form>fieldset>legend {
+    font-size: 16pt;
+    margin-bottom: 15px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-family: "Montserrat", sans-serif;
 }
 
 /*syling form labels*/
-.modal-form-container > form label{
+.modal-form-container>form label {
     font-size: 12pt;
     font-family: "Montserrat", sans-serif;
-    
 }
 
 /*Styling form inputs with type="text"*/
 .modal-form-container form input[type="text"] {
     width: 100%;
-    padding: 8px; 
-    border: none;
     border-radius: 5px;
-    outline: none;
+    padding: 5px;
 }
 
 .modal-form-container form input[type="date"] {
     width: 100%;
-    padding: 8px; 
-    border: none;
     border-radius: 5px;
-    outline: none;
-    font-family: "Montserrat", sans-serif;
-    
-    
+    padding: 5px;
 }
 
 /*give the input field border bottom in focus*/
-.modal-form-container form input[type="text"]:focus, 
+.modal-form-container form input[type="text"]:focus,
 .modal-form-container form input[type="date"]:focus {
     border-bottom: 1px solid var(--btn-color);
 }
 
 /*Create button for adding the task to table*/
-.add-task-btn{
-    max-width: 30%;
-    background-color: var(--btn-color);
-    border: 0.8px solid black;
-    border-radius: 10px;
+.add-task-btn {
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    background-color: #a63a50;
     cursor: pointer;
-    padding: 10px 15px;
-    font-family: "Montserrat", sans-serif;
 }
 
 .add-task-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
-  }
-
-
-
-
-
+    background-color: rgba(166, 58, 80, 0.9);
+    /* Change background color on hover */
+}

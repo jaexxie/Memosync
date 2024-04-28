@@ -1,4 +1,4 @@
-from bottle import route, run, template, static_file, request, redirect, response
+from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
 from db import make_db_connection
@@ -213,6 +213,30 @@ def to_do_list():
     else:
         return redirect('/')
 
+@route('/delete_to_do_list', method=['GET', 'POST'])
+def delete_to_do_list():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            values = request.forms.getall('checkbox_todo')
+
+            for value in values:
+                cursor.execute('delete from to_do_lists_task where task = %s and user_id = %s', (value, logged_in_cookie))
+            db.commit()
+            
+            return redirect('to_do_list')
+
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -229,6 +253,28 @@ def create_to_do_list():
             db.commit()
 
             return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
+@delete('/delete_to_do_list/<to_do_list_id:int>', method="DELETE")
+def delete_to_do_list(to_do_list_id):
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('DELETE FROM to_do_lists_task WHERE category_id = %s;', (to_do_list_id,))
+            db.commit()
+            cursor.execute('DELETE FROM to_do_list WHERE id = %s', (to_do_list_id,))
+            db.commit()
+            return template('/to_do_list')
+        
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -391,19 +437,23 @@ def delete_event(id):
 def get_events():
     """Return a JSON object with all events that matches the users ID"""
     # Read events from the JSON file
-    with open('static/json/events.json', 'r') as file:
-        all_events = json.load(file)['events']
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        with open('static/json/events.json', 'r') as file:
+            all_events = json.load(file)['events']
 
-    filtered_events = []
-    for event in all_events:
-        if event.get('user_id') == '1':
-            filtered_events.append(event)
+        filtered_events = []
+        for event in all_events:
+            if event.get('user_id') == logged_in_cookie:
+                filtered_events.append(event)
 
-    response.content_type = 'application/json'
+        response.content_type = 'application/json'
+        
+        # Return the JSON-encoded event data
+        return json.dumps(filtered_events)
+    else:
+        return redirect('/')
     
-    # Return the JSON-encoded event data
-    return json.dumps(filtered_events)
-
 @route('/progress_table')
 def progress_table():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -430,25 +480,61 @@ def add_project():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
+
             # Database Connection
             db = make_db_connection()
             cursor = db.cursor()
 
+            
             project = request.forms.get("task")
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
-            status = request.forms.get("status")
+            status = 'not_started'
+
 
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
+            # Redirect to progress table
             return redirect('/progress_table')
+        
         finally:
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
     else:
+
+        # Redirect to login page for unathenticated users
         return redirect('/')
+    
+@route ('/update_status', method='POST')
+def update_status():
+        logged_in_cookie = request.get_cookie('loggedIn')
+
+        if logged_in_cookie:
+            try:
+                # Database Connection
+                db = make_db_connection()
+                cursor = db.cursor()
+
+                task_id = request.forms.get("task_id")
+                new_status = request.forms.get("new_status")
+
+                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s AND user_id = %s', (new_status, task_id, logged_in_cookie))
+                db.commit()
+                
+                # Redirect to progress table
+                return redirect('/progress_table')
+            finally:
+
+                # Closing Database connection after it's been used
+                cursor.close()
+                db.close()
+
+        else:
+            # Redirect to login page for unathenticated users
+            return redirect('/')
+
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
