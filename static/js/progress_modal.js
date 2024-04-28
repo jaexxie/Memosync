@@ -46,16 +46,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     //Funktion som uppdaterar backgrundsfärgen på select (#status-col)
-    var selects = document.querySelectorAll(".status-col");
+    var statusForms = document.querySelectorAll(".status-update-form");
 
     //loopa genom varje select alternativ
-    selects.forEach(function (select) {
+    statusForms.forEach(function (form) {
+        
+        var selectElement = form.querySelector(".status-selector")
+        
         //uppdatera backgrundsfärgen när select värde ändras
-        select.addEventListener("change", function () {
-            updateBackgroundColor(this);
+        selectElement.addEventListener("change", function () {
+            form.submit();
         });
-
-        updateBackgroundColor(select);
+        
+        //ge backgrundsfärgen baserad på select
+        updateBackgroundColor(selectElement);
     })
 
     function updateBackgroundColor(select) {
@@ -81,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         select.style.backgroundColor = backgroundColor;
     };
+
 
 });
 
