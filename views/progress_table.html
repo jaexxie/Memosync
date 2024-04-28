@@ -79,7 +79,7 @@
                 <tbody>
                     % if pbs:
                         % for pb in pbs:
-                        <tr>
+                        <tr data-task-id="{{ pb[0] }}">
                             <!--<th class="task">Task</th>-->
                             <td>
                                 <span class="delete-task-btn">&times;</span>
@@ -94,21 +94,10 @@
                                 <form action="/update_status" method="POST" class="status-update-form">
                                     <input type="hidden" name="task_id" value="{{ pb[0] }}">
                                     <select name="new_status" class="status-selector">
-                                        % if pb[4] == 'not_started': 
-                                            <option selected value="not_started">Not Started</option>
-                                            <option value="in_progress">In Progress</option>
-                                            <option value="completed">Completed</option>
-                                        % end
-                                        % if pb[4] == 'in_progress': 
-                                            <option value="not_started">Not Started</option>
-                                            <option selected value="in_progress">In Progress</option>
-                                            <option value="completed">Completed</option>
-                                        % end
-                                        % if pb[4] == 'completed': 
-                                            <option value="not_started">Not Started</option>
-                                            <option value="in_progress">In Progress</option>
-                                            <option selected value="completed">Completed</option>
-                                        % end
+                                        <option value="not_started" {{ 'selected' if pb[4] == 'not_started' else '' }}>Not Started</option>
+                                        <option value="in_progress" {{ 'selected' if pb[4] == 'in_progress' else '' }}>In Progress</option>
+                                        <option value="completed" {{ 'selected' if pb[4] == 'completed' else '' }}>Completed</option>
+                                       
                                     </select>
                                 </form>                                
                             </td>

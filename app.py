@@ -1,3 +1,4 @@
+from crypt import methods
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
@@ -556,7 +557,31 @@ def update_status():
             # Redirect to login page for unathenticated users
             return redirect('/')
 
+@route ('/delete_task', method='POST')
+def delete_task():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            #Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
 
+            # Extract task ID from the request body
+            task_id = request.forms.get("task_id")
+
+            cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
+            db.commit()
+
+            # Redirect to progress table after deletion
+            return redirect('/progress_table')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        # Redirect to login page for unauthenticated users
+        return redirect('/')
+     
 @route('/static/<filepath:path>')
 def server_static(filepath):
     '''
