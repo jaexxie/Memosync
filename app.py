@@ -463,7 +463,7 @@ def progress_table():
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute("SELECT project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
+            cursor.execute("SELECT id, project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
             pbs = cursor.fetchall()
 
             return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
@@ -510,7 +510,6 @@ def add_project():
 @route ('/update_status', method='POST')
 def update_status():
         logged_in_cookie = request.get_cookie('loggedIn')
-
         if logged_in_cookie:
             try:
                 # Database Connection
@@ -520,7 +519,9 @@ def update_status():
                 task_id = request.forms.get("task_id")
                 new_status = request.forms.get("new_status")
 
-                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s AND user_id = %s', (new_status, task_id, logged_in_cookie))
+                # return new_status
+
+                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (new_status, task_id))
                 db.commit()
                 
                 # Redirect to progress table

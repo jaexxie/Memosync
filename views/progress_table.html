@@ -78,36 +78,43 @@
                 </thead>
                 <tbody>
                     % if pbs:
-                    % for pb in pbs:
-
-                    <tr>
-
-                        <!--<th class="task">Task</th>-->
-                        <td>
-                            <span class="delete-task-btn">&times;</span>
-                            {{pb[0]}}
-                        </td>
-                        <!--<th class="description">Description</th>-->
-                        <td>{{pb[1]}}</td>
-                        <!--<th class="date">Date</th>-->
-                        <td id="deadline-date">{{pb[2]}}</td>
-                        <!--<th class="status">Status</th>-->
-                        <td>
-                            <form action="/update_status" method="POST" class="status-update-form">
-                                <input type="hidden" name="task_id" value="{{ pb[0] }}">
-                                <select name="new_status" class="status-selector" >
-                                    <option value="not_started" {{ pb[3] }}>Not Started</option>
-                                    <option value="in_progress" {{ pb[3] }}>In Progress</option>
-                                    <option value="completed" {{ pb[3] }}>Completed</option>
-                                </select>
-
-                            </form>
-                        </td>
-                    </tr>
+                        % for pb in pbs:
+                        <tr>
+                            <!--<th class="task">Task</th>-->
+                            <td>
+                                <span class="delete-task-btn">&times;</span>
+                                {{pb[1]}}
+                            </td>
+                            <!--<th class="description">Description</th>-->
+                            <td>{{pb[2]}}</td>
+                            <!--<th class="date">Date</th>-->
+                            <td id="deadline-date">{{pb[3]}}</td>
+                            <!--<th class="status">Status</th>-->
+                            <td>
+                                <form action="/update_status" method="POST" class="status-update-form">
+                                    <input type="hidden" name="task_id" value="{{ pb[0] }}">
+                                    <select name="new_status" class="status-selector">
+                                        % if pb[4] == 'not_started': 
+                                            <option selected value="not_started">Not Started</option>
+                                            <option value="in_progress">In Progress</option>
+                                            <option value="completed">Completed</option>
+                                        % end
+                                        % if pb[4] == 'in_progress': 
+                                            <option value="not_started">Not Started</option>
+                                            <option selected value="in_progress">In Progress</option>
+                                            <option value="completed">Completed</option>
+                                        % end
+                                        % if pb[4] == 'completed': 
+                                            <option value="not_started">Not Started</option>
+                                            <option value="in_progress">In Progress</option>
+                                            <option selected value="completed">Completed</option>
+                                        % end
+                                    </select>
+                                </form>                                
+                            </td>
+                        </tr>
+                        %end
                     %end
-
-                    %end
-
                 </tbody>
             </table>
 
