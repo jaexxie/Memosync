@@ -64,4 +64,32 @@ deleteButtons.forEach((button) => {
                 console.error('Error:', error);
             });
     });
+
+    //funktion som sparar checkade element i listan
+
+    checkboxes = document.querySelectorAll('.task_checkbox');
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function() {
+            var taskId = this.value;
+            var isChecked = this.checked;
+
+            fetch('/update_task_status', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                body: 'task_id=' + encodeURIComponent(taskId) + '&checked=' + isChecked
+            })
+
+            .then(response => {
+                if(!response.ok) {
+                    console.error("Failed to update task status");
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+        })
+    })
 });

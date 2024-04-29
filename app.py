@@ -308,6 +308,35 @@ def add_task_to_do_list():
             db.close()
     else:
         return redirect('/')
+
+@route('/update_task_status', method='POST')
+def update_task_status():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            task_id = request.forms.get("task_id")
+            checked = request.forms.get("checked")
+
+            # return new_status
+
+            cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (checked, task_id))
+            db.commit()
+            
+            # Redirect to progress table
+            return redirect('/progress_table')
+        finally:
+
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+
+    else:
+        # Redirect to login page for unathenticated users
+        return redirect('/')
             
 @route('/calendar')
 def calendar():
