@@ -89,15 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //funktion som raderar task (uppgifter) från databasen
     //välj alla delete-task-btn
-    const deleteBtns = document.querySelectorAll(".delete-task-btn");
-
-    // Lägg till händelselyssnare för varje raderingsknapp
-    deleteBtns.forEach(button => {
+    document.querySelectorAll('.delete-task-btn').forEach(button => {
+        // Lägg till händelselyssnare för varje raderingsknapp
         button.addEventListener("click", function () {
-            const taskId = this.getAttribute("data-task-id");
-
-            // Anropa deleteTask-funktionen med uppgifts-ID
-            deleteTask(taskId)
+            var taskId = this.dataset.taskId;
+            deleteTask(taskId);
         });
     });
 
@@ -105,20 +101,19 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/delete_task', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded' // Set content type to form data
             },
-            body: 'task_id=' + encodeURIComponent(taskId),
-
+            body: 'task_id=' + encodeURIComponent(taskId) // Encode task ID as form data
         })
+        
         .then(response => {
             if(response.ok) {
+
+                var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
+
                 // Ta bort motsvarande rad från tabellen
-                const row = document.querySelector(`[task-id="${taskId}"]`);
-                if (row) {
-                    row.remove();
-                } else {
-                    console.error("Row not found");
-                }
+                row.remove();
+                location.reload();
             } else {
                 console.error("Failed to delete task");
             }
@@ -127,7 +122,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => {
             console.error('Error', error);
         });
+
+
     }
+            
+        
 
 
 });
