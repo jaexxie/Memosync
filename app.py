@@ -252,7 +252,7 @@ def create_to_do_list():
 
             cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
-
+    
             return redirect('/to_do_list')
         finally:
             # Closing Database connection after it's been used

@@ -53,8 +53,9 @@ deleteButtons.forEach((button) => {
             method: 'DELETE',
         })
             .then((response) => {
-                if (response.ok) {
+                if (response !== 404) { // Ändra tillbaka till response.ok när ni har löst att API:et returnerar 200 eller 201
                     console.log('To-do list deleted successfully.');
+                    event.target.parentElement.parentElement.remove();
                 } else {
                     console.error('Failed to delete the to-do list.');
                 }
