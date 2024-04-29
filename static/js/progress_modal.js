@@ -107,32 +107,31 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         
         .then(response => {
-            if(response.ok) {
-
-                var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
-
-                // Ta bort motsvarande rad från tabellen
-                row.remove();
-                
-            } else {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
                 console.error("Failed to delete task");
 
                 //alert("Failed to delete task. Please try again later.");
-            }
+                
+            } 
+
+            //I annat fall (om svaret lyckas) hämtar hanteraren svaret
+            var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
+
+            // Ta bort motsvarande rad från tabellen
+            row.remove();
+
         })
 
-        .catch(error => {
+        .catch((error) => {
             console.error('Error', error);
+            poemDisplay.textContent =document.createTextNode('Could not fetch verse: ' + error);
 
             //alert("An error occurred while deleting the task.");
         });
 
-
     }
-            
-        
-
-
+     
 });
 
 
