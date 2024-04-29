@@ -89,15 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //funktion som raderar task (uppgifter) från databasen
     //välj alla delete-task-btn
-    const deleteBtns = document.querySelectorAll(".delete-task-btn");
-
-    // Lägg till händelselyssnare för varje raderingsknapp
-    deleteBtns.forEach(button => {
+    document.querySelectorAll('.delete-task-btn').forEach(button => {
+        // Lägg till händelselyssnare för varje raderingsknapp
         button.addEventListener("click", function () {
-            const taskId = this.getAttribute("data-task-id");
-
-            // Anropa deleteTask-funktionen med uppgifts-ID
-            deleteTask(taskId)
+            var taskId = this.dataset.taskId;
+            deleteTask(taskId);
         });
     });
 
@@ -105,31 +101,37 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/delete_task', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: 'task_id=' + encodeURIComponent(taskId),
-
+            body: 'task_id=' + encodeURIComponent(taskId)
         })
+        
         .then(response => {
-            if(response.ok) {
-                // Ta bort motsvarande rad från tabellen
-                const row = document.querySelector(`[task-id="${taskId}"]`);
-                if (row) {
-                    row.remove();
-                } else {
-                    console.error("Row not found");
-                }
-            } else {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
                 console.error("Failed to delete task");
-            }
+
+                //alert("Failed to delete task. Please try again later.");
+                
+            } 
+
+            //I annat fall (om svaret lyckas) hämtar hanteraren svaret
+            var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
+
+            // Ta bort motsvarande rad från tabellen
+            row.remove();
+
         })
 
-        .catch(error => {
+        .catch((error) => {
             console.error('Error', error);
+            poemDisplay.textContent =document.createTextNode('Could not fetch verse: ' + error);
+
+            //alert("An error occurred while deleting the task.");
         });
+
     }
-
-
+     
 });
 
 

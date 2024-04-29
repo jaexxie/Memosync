@@ -1,4 +1,4 @@
-from crypt import methods
+#from crypt import methods
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
@@ -571,7 +571,8 @@ def delete_task():
 
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
-
+            
+            print("task_id:", task_id)
             # Redirect to progress table after deletion
             return redirect('/progress_table')
         finally:

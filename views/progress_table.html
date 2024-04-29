@@ -79,10 +79,10 @@
                 <tbody>
                     % if pbs:
                         % for pb in pbs:
-                        <tr data-task-id="{{ pb[0] }}">
+                        <tr>
                             <!--<th class="task">Task</th>-->
                             <td>
-                                <span class="delete-task-btn">&times;</span>
+                                <span data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</span>
                                 {{pb[1]}}
                             </td>
                             <!--<th class="description">Description</th>-->
