@@ -101,9 +101,9 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/delete_task', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Set content type to form data
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: 'task_id=' + encodeURIComponent(taskId) // Encode task ID as form data
+            body: 'task_id=' + encodeURIComponent(taskId)
         })
         
         .then(response => {
@@ -113,14 +113,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Ta bort motsvarande rad från tabellen
                 row.remove();
-                location.reload();
+                
             } else {
                 console.error("Failed to delete task");
+
+                //alert("Failed to delete task. Please try again later.");
             }
         })
 
         .catch(error => {
             console.error('Error', error);
+
+            //alert("An error occurred while deleting the task.");
         });
 
 

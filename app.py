@@ -547,7 +547,7 @@ def delete_task():
             cursor = db.cursor()
 
             # Extract task ID from the request body
-            task_id = request.json.get("task_id")
+            task_id = request.forms.get("task_id")
 
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
