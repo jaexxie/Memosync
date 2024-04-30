@@ -339,7 +339,7 @@ def update_task_status():
 
     else:
         return redirect('/')
-         
+
 @route('/update_checkboxes')
 def update_checkboxes():
     logged_in_cookie = request.get_cookie('loggedIn')
