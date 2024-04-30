@@ -317,7 +317,7 @@ def update_task_status():
             # Database Connection
             db = make_db_connection()
             cursor = db.cursor()
-
+            
             task_id = request.forms.get("task_id")
             checked = request.forms.get("checked")
 
@@ -336,6 +336,21 @@ def update_task_status():
 
     else:
         # Redirect to login page for unathenticated users
+@route('/update_checkboxes')
+def update_checkboxes():
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+            cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked_task, logged_in_cookie))
+            db.commit()
+
+            return redirect('/to_do_list')
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
         return redirect('/')
             
 @route('/calendar')
