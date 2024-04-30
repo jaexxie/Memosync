@@ -3,6 +3,15 @@ body {
   background-color: #F0E7D8;
 }
 
+#calendar{
+  border: 1px solid black;
+  margin: 7px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
+}
+
 main {
   margin: 20px;
   display: flex;
@@ -25,6 +34,7 @@ div > #right > a > h3,
   padding-bottom: 5px;
   text-decoration: underline black;
   color: black;
+  margin-left: 15px;
 }
 
 div a {
@@ -70,6 +80,12 @@ div a {
   border-collapse: separate;
   border-right-width: 0px;
   border-left: none;
+}
+
+.fc .fc-daygrid-day-top {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 25px;
 }
 
 #top {
