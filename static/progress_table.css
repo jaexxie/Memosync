@@ -1,5 +1,5 @@
 body {
-    background-color: #F0E7D8; 
+    background-color: #F0E7D8;
 }
 
 #container {
@@ -21,7 +21,7 @@ body {
 }
 
 
-#create-btn{
+#create-btn {
     margin-top: 20px;
     margin-left: 30px;
     background-color: #a63a50;
@@ -30,27 +30,27 @@ body {
     padding: 13px 30px;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
-
+    color: white;
 }
 
 #create-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
+    background-color: rgba(166, 58, 80, 0.9);
+    /* Change background color on hover */
 }
 
 #progress_container {
     border: 1px solid black;
     background-color: #f8f8f8;
-    margin: 20px auto ;
+    margin: 20px auto;
     border-radius: 10px;
     padding: 10px 50px;
     width: 80%;
 
- 
 }
 
-#progress_container table{
+#progress_container table {
     width: 100%;
-    border-collapse: collapse ;
+    border-collapse: collapse;
 
 }
 
@@ -58,71 +58,80 @@ body {
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
     font-family: monospace;
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px;
 
 }
 
 /*change the width of cells in HTML table*/
-.task{
+.task {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.description{
+.description {
     width: 40%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.date{
+.date {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
-.status{
+.status {
     width: 20%;
+    font-family: "Montserrat", sans-serif;
+
 }
 
 #progress_container td {
-   border-bottom: 1px solid #ccc;
-   border-right: 1px solid #ccc;
-   padding: 6px;
-   text-align: center;
-   font-family: monospace;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    
 }
 
 /* Detta tar bort höger border på sista elementet i <tr> */
-#progress_container td:last-child, #progress_container th:last-child{
+#progress_container td:last-child,
+#progress_container th:last-child {
     border-right: none;
 }
 
-.status-select{
-    max-width: 104px;
+td .delete-task-btn {
+    display: block;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+
+}
+
+.status-selector {
     background-color: #f8f8f8;
     box-sizing: border-box;
-    border-radius: 5px;
     padding: 3px;
     font-size: 14px;
-    border: none;
     cursor: pointer;
+    border: none;
+    border-radius: 14px;
 }
 
 /*Ta bor fokusram */
-.status-select:focus{
+.status-selector:focus {
     outline: none;
 }
 
-.status-select option{
+.status-selector option {
     background-color: rgba(251, 249, 245, 0.6);
     text-align: center;
-
 }
-.status-select .not-started {
-    background-color: rgba(255, 0, 0, 0.3);
-}
-
-.status-select .in-progress {
-    background-color: rgba(255, 255, 0, 0.3);
-}
-
-.status-select .done {
-    background-color: rgba(0, 255, 0, 0.3); 
-}
-
