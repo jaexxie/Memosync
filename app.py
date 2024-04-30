@@ -252,7 +252,7 @@ def create_to_do_list():
 
             cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
-
+    
             return redirect('/to_do_list')
         finally:
             # Closing Database connection after it's been used
@@ -309,15 +309,39 @@ def add_task_to_do_list():
     else:
         return redirect('/')
 
-@route('/update_checkboxes')
-def add_task_to_do_list():
+@route('/update_task_status', method='POST')
+def update_task_status():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
             # Database Connection
             db = make_db_connection()
             cursor = db.cursor()
+            
+            task_id = request.forms.get("task_id")
+            checked = request.forms.get("checked")
 
+            # return new_status
+
+            cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (checked, task_id))
+            db.commit()
+            
+            # Redirect to progress table
+            return redirect('/progress_table')
+        finally:
+
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+
+    else:
+        # Redirect to login page for unathenticated users
+@route('/update_checkboxes')
+def update_checkboxes():
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
             cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked_task, logged_in_cookie))
             db.commit()
 

@@ -53,8 +53,9 @@ deleteButtons.forEach((button) => {
             method: 'DELETE',
         })
             .then((response) => {
-                if (response.ok) {
+                if (response !== 404) { // Ändra tillbaka till response.ok när ni har löst att API:et returnerar 200 eller 201
                     console.log('To-do list deleted successfully.');
+                    event.target.parentElement.parentElement.remove();
                 } else {
                     console.error('Failed to delete the to-do list.');
                 }
@@ -63,4 +64,32 @@ deleteButtons.forEach((button) => {
                 console.error('Error:', error);
             });
     });
+
+    //funktion som sparar checkade element i listan
+
+    checkboxes = document.querySelectorAll('.task_checkbox');
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function() {
+            var taskId = this.value;
+            var isChecked = this.checked;
+
+            fetch('/update_task_status', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                body: 'task_id=' + encodeURIComponent(taskId) + '&checked=' + isChecked
+            })
+
+            .then(response => {
+                if(!response.ok) {
+                    console.error("Failed to update task status");
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+        })
+    })
 });
