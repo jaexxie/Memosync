@@ -87,6 +87,51 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
+    //funktion som raderar task (uppgifter) från databasen
+    //välj alla delete-task-btn
+    document.querySelectorAll('.delete-task-btn').forEach(button => {
+        // Lägg till händelselyssnare för varje raderingsknapp
+        button.addEventListener("click", function () {
+            var taskId = this.dataset.taskId;
+            deleteTask(taskId);
+        });
+    });
+
+    function deleteTask(taskId) {
+        fetch('/delete_task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'task_id=' + encodeURIComponent(taskId)
+        })
+        
+        .then(response => {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to delete task");
+
+                //alert("Failed to delete task. Please try again later.");
+                
+            } 
+
+            //I annat fall (om svaret lyckas) hämtar hanteraren svaret
+            var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
+
+            // Ta bort motsvarande rad från tabellen
+            row.remove();
+
+        })
+
+        .catch((error) => {
+            console.error('Error', error);
+            poemDisplay.textContent =document.createTextNode('Could not fetch verse: ' + error);
+
+            //alert("An error occurred while deleting the task.");
+        });
+
+    }
+     
 });
 
 
