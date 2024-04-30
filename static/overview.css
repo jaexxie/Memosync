@@ -3,7 +3,7 @@ body {
   background-color: #F0E7D8;
 }
 
-#calendar{
+#calendar {
   border: 1px solid black;
   margin: 7px;
   border-radius: 15px;
@@ -26,9 +26,9 @@ div a {
   color: black;
 }
 
-div > #left > a > h3,
-div > #right > a > h3,
-#bottom > a > h3 {
+div>#left>a>h3,
+div>#right>a>h3,
+#bottom>a>h3 {
   font-family: "Montserrat", sans-serif;
   font-size: 20px;
   padding-bottom: 5px;
@@ -69,7 +69,7 @@ div a {
   margin-right: 20px;
 }
 
-.fc .fc-scrollgrid-section-liquid > td {
+.fc .fc-scrollgrid-section-liquid>td {
   height: 100%;
   border-bottom-right-radius: 14px;
   border-bottom-left-radius: 14px;
@@ -95,13 +95,13 @@ div a {
   margin-bottom: 20px;
 }
 
-#top > #left {
+#top>#left {
   margin-right: 20px;
   margin-left: 20px;
   width: 40%;
 }
 
-#top > #left > a > #todo {
+#top>#left>a>#todo {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
@@ -127,17 +127,17 @@ div a {
   margin-left: 10px;
 }
 
-#top > #right {
+#top>#right {
   margin-left: 20px;
   margin-right: 20px;
   width: 60%;
 }
 
-#todo ul > li::marker {
+#todo ul>li::marker {
   color: #a63a50;
 }
 
-#todo ul > li {
+#todo ul>li {
   font-family: "Montserrat", sans-serif;
   color: black;
   text-decoration: none;
@@ -149,7 +149,7 @@ div a {
   margin-left: 10px;
 }
 
-#top > #left > a > #todo {
+#top>#left>a>#todo {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
@@ -158,13 +158,13 @@ div a {
   background-color: #fbf9f5;
 }
 
-#top > #right {
+#top>#right {
   margin-left: 20px;
   margin-right: 20px;
   width: 60%;
 }
 
-#top > #right > a > #calendar {
+#top>#right>a>#progress {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
@@ -267,8 +267,6 @@ div a {
 }
 
 select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   text-indent: 1px;
   text-overflow: "";
 }
@@ -281,12 +279,12 @@ select {
     margin-bottom: 20px;
   }
 
-  #top > #right {
+  #top>#right {
     margin: 20px;
     width: 90%;
   }
 
-  #top > #left {
+  #top>#left {
     margin: 20px;
     width: 90%;
   }
@@ -309,15 +307,16 @@ select {
 
   }
 }
-  .fc .fc-scrollgrid-section-liquid > td {
-    height: 100%;
-    border-bottom-right-radius: 14px;
-    border-bottom-left-radius: 14px;
-  }
 
-  .fc .fc-scrollgrid {
-    border-bottom-width: 0px;
-    border-collapse: separate;
-    border-right-width: 0px;
-    border-left: none;
-  }
+.fc .fc-scrollgrid-section-liquid>td {
+  height: 100%;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+
+.fc .fc-scrollgrid {
+  border-bottom-width: 0px;
+  border-collapse: separate;
+  border-right-width: 0px;
+  border-left: none;
+}
