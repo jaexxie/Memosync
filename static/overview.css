@@ -171,6 +171,92 @@ div a {
   background-color: #fbf9f5;
 }
 
+#progress_container {
+  margin: 20px auto;
+  border-radius: 10px;
+  padding: 10px 50px;
+  width: auto;
+}
+
+#progress_container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#progress_container th {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  font-family: monospace;
+  font-size: 19px;
+  font-weight: 500;
+  padding: 8px;
+}
+
+/*change the width of cells in HTML table*/
+.task {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.description {
+  width: 40%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.date {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.status {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+#progress_container td {
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 6px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Detta tar bort höger border på sista elementet i <tr> */
+#progress_container td:last-child,
+#progress_container th:last-child {
+  border-right: none;
+}
+
+.status-selector {
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+  padding: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/*Ta bor fokusram */
+.status-selector:focus {
+  outline: none;
+}
+
+.status-selector option {
+  background-color: rgba(251, 249, 245, 0.6);
+  text-align: center;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+}
+
 @media only screen and (max-width: 600px) {
   #top {
     height: 50%;
@@ -219,4 +305,3 @@ div a {
     border-right-width: 0px;
     border-left: none;
   }
-}

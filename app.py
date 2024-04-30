@@ -114,7 +114,10 @@ def overview():
             cursor.execute('SELECT * FROM to_do_list WHERE user_id = %s', (logged_in_cookie))
             todos = cursor.fetchall()
 
-            return template('overview', todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
+            cursor.execute("SELECT id, project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
+            pbs = cursor.fetchall()
+
+            return template('overview', pbs=pbs, todos=todos, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
             # Closing Database connection after it's been used
             cursor.close()
@@ -335,9 +338,12 @@ def update_task_status():
             db.close()
 
     else:
-        # Redirect to login page for unathenticated users
+        return redirect('/')
+         
 @route('/update_checkboxes')
 def update_checkboxes():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
         try:
             # Database Connection
             db = make_db_connection()
