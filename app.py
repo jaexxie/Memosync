@@ -335,9 +335,12 @@ def update_task_status():
             db.close()
 
     else:
-        # Redirect to login page for unathenticated users
+        return redirect('/')
+    
 @route('/update_checkboxes')
 def update_checkboxes():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
         try:
             # Database Connection
             db = make_db_connection()
