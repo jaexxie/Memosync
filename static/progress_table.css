@@ -125,7 +125,7 @@ body {
     text-align: center;
   }
   
-  @media only screen and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     #progress_container table {
       width: 100%;
       border-collapse: collapse;
@@ -157,7 +157,7 @@ body {
     }
   }
   
-  @media only screen and (max-width: 480px) {
+  @media screen and (max-width: 480px) {
     #create-btn {
       margin-top: 40px;
       margin-left: 50px;

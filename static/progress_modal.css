@@ -142,13 +142,14 @@ form> fieldset>* {
 /*Create button for adding the task to table*/
 .add-task-btn {
     border-radius: 5px;
-    padding: 5px 30;
+    padding: 6px 14px;
     background-color: #a63a50;
+    border: none;
     color: white;
     cursor: pointer;
 }
 
 .add-task-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9);
+    background-color: rgba(166, 58, 80, 0.5);
     /* Change background color on hover */
 }
