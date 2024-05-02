@@ -65,6 +65,10 @@ element.style {
 }
 
 /* create event */
+#all_day:checked ~ #start_time,
+#all_day:checked ~ #end_time {
+  display: none;
+}
 
 .create_event>button {
   display: block;
