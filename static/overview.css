@@ -98,7 +98,7 @@ div a {
 #top>#left {
   margin-right: 20px;
   margin-left: 20px;
-  width: 40%;
+  width: 50%;
 }
 
 #top>#left>a>#todo {
@@ -130,7 +130,7 @@ div a {
 #top>#right {
   margin-left: 20px;
   margin-right: 20px;
-  width: 60%;
+  width: 50%;
 }
 
 #todo ul>li::marker {
@@ -161,16 +161,7 @@ div a {
 #top>#right {
   margin-left: 20px;
   margin-right: 20px;
-  width: 60%;
-}
-
-#top>#right>a>#progress {
-  border: 1px solid black;
-  margin: 10px;
-  border-radius: 15px;
-  box-shadow: 0 0 3px black;
-  background-color: #fbf9f5;
-  min-height: 150px;
+  width: 50%;
 }
 
 #bottom {
@@ -182,9 +173,10 @@ div a {
   border: 1px solid black;
   margin: 10px;
   border-radius: 15px;
-  min-height: 300px;
+  min-height: 150px;
   box-shadow: 0 0 3px black;
-  background-color: #fbf9f5;
+  background-color: #FBF9F5;
+  padding: 15px;
 }
 
 #progress_container {
