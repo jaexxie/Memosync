@@ -185,18 +185,16 @@ element.style {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  z-index: 4;
-  pointer-events: none;
-  visibility: hidden;
+  padding: 50px;
+  background-color: #f0e7d8;
+  border-radius: 15px;
   opacity: 0;
-  transition: 0.5s all;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+  font-family: "Montserrat", sans-serif;
+  z-index: 4;
+  height: 600px;
+  width: 300px;
 }
 
 .container_view_event.show {
@@ -207,6 +205,47 @@ element.style {
 
 .container_create_event {
   background-color: #f0e7d8;
+}
+
+/*calendar container 1 header */
+.container_view_event #calendar_1_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.container_view_event #calendar_1_header h3 {
+  font-family: "Montserrat", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  margin: 0;
+
+}
+
+/* "X" in modal header to close the modal*/
+.container_view_event #calendar_1_header .close {
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 20px;
+}
+
+.container_view_event #calendar_1_header .close:hover,
+.container_view_event #calendar_1_header .close:focus {
+  color: #A63A50;
+  text-decoration: none;
+
+}
+
+.container_view_event>form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 form>fieldset>* {
@@ -231,19 +270,37 @@ form>fieldset>label {
 input[type="text"] {
   width: 100%;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px;
+  border: none;
 }
 
 input[type="date"] {
   width: 100%;
   border-radius: 5px;
   padding: 5px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 input[type="time"] {
   width: 100%;
   border-radius: 5px;
   padding: 5px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+#submit {
+  border-radius: 5px;
+  padding: 6px 14px;
+  background-color: #a63a50;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+#submit:hover {
+  background-color: rgba(166, 58, 80, 0.5);
 }
 
 #create {
@@ -255,24 +312,6 @@ input[type="time"] {
 
 #create:hover {
   background-color: rgba(166, 58, 80, 0.9);
-}
-
-.container_view_event>p>a {
-  background-color: transparent;
-  border: 1px solid #a63a50;
-  padding: 8px;
-  border-radius: 5px;
-  color: black;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: 0.5s all;
-  text-decoration: none;
-}
-
-.container_view_event>p>a:hover {
-  background-color: #a63a50;
-  color: white;
 }
 
 @media only screen and (max-width: 768px) {
