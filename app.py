@@ -389,36 +389,65 @@ def add_event():
 
         title = request.forms.get('event_name')
         description = request.forms.get('event_description')
+        all_day = request.forms.get('all_day')
         start_date = request.forms.get('start_date')
-        start_time = request.forms.get('start_time')
         end_date = request.forms.get('end_date')
-        end_time = request.forms.get('end_time')
 
-        # open Json FIle
-        with open('static/json/events.json', 'r') as file:
-            events = json.load(file)['events']
+        if all_day:
+            # open Json FIle
+            with open('static/json/events.json', 'r') as file:
+                events = json.load(file)['events']
 
-        # This creates incroment for id:s
-        for event in events:
-            max_id = int(event.get('id', 0))
-            id_for_new_event = max_id + 1
+            # This creates incroment for id:s
+            for event in events:
+                max_id = int(event.get('id', 0))
+                id_for_new_event = max_id + 1
 
-        add_event = {
-            "id": str(id_for_new_event),
-            "user_id": str(logged_in_cookie),
-            "title": title,
-            "description": description,
-            "start": f"{start_date}T{start_time}",
-            "end": f"{end_date}T{end_time}"
-        }
+            add_event = {
+                "id": str(id_for_new_event),
+                "user_id": str(logged_in_cookie),
+                "title": title,
+                "description": description,
+                "start": start_date,
+                "end": end_date
+            }
 
-        events.append(add_event)
+            events.append(add_event)
 
-        # Write updated events back to the JSON file
-        with open('static/json/events.json', 'w') as file:
-            json.dump({"events": events}, file, indent=4)
+            # Write updated events back to the JSON file
+            with open('static/json/events.json', 'w') as file:
+                json.dump({"events": events}, file, indent=4)
 
-        return redirect('/calendar') 
+            return redirect('/calendar')
+        else:
+            start_time = request.forms.get('start_time')
+            end_time = request.forms.get('end_time')
+
+            # open Json FIle
+            with open('static/json/events.json', 'r') as file:
+                events = json.load(file)['events']
+
+            # This creates incroment for id:s
+            for event in events:
+                max_id = int(event.get('id', 0))
+                id_for_new_event = max_id + 1
+
+            add_event = {
+                "id": str(id_for_new_event),
+                "user_id": str(logged_in_cookie),
+                "title": title,
+                "description": description,
+                "start": f"{start_date}T{start_time}",
+                "end": f"{end_date}T{end_time}"
+            }
+
+            events.append(add_event)
+
+            # Write updated events back to the JSON file
+            with open('static/json/events.json', 'w') as file:
+                json.dump({"events": events}, file, indent=4)
+
+            return redirect('/calendar') 
 
     else:
         return redirect('/')
