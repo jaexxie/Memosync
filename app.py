@@ -331,8 +331,6 @@ def update_checkbox():
             task_id = request.forms.get("task_id")
             checked = request.forms.get("checked")
 
-            # return new_status
-
             cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked, task_id))
             db.commit()
             
