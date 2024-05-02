@@ -217,6 +217,7 @@ def to_do_list():
     else:
         return redirect('/')
 
+"""
 @route('/delete_to_do_list', method=['GET', 'POST'])
 def delete_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -240,7 +241,7 @@ def delete_to_do_list():
             db.close()
     else:
         return redirect('/')
-
+"""
 @route('/create_to_do_list', method='POST')
 def create_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -264,8 +265,8 @@ def create_to_do_list():
     else:
         return redirect('/')
 
-@delete('/delete_to_do_list/<to_do_list_id:int>', method="DELETE")
-def delete_to_do_list(to_do_list_id):
+@delete('/delete_to_do_list', method="DELETE")
+def delete_to_do_list():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -273,10 +274,16 @@ def delete_to_do_list(to_do_list_id):
             db = make_db_connection()
             cursor = db.cursor()
 
+            to_do_list_id = request.forms.get("to_do_list_id")
+
+
             cursor.execute('DELETE FROM to_do_lists_task WHERE category_id = %s;', (to_do_list_id,))
             db.commit()
-            cursor.execute('DELETE FROM to_do_list WHERE id = %s', (to_do_list_id,))
+            cursor.execute('DELETE FROM to_do_list WHERE id = %s  AND user_id = %s', (to_do_list_id, logged_in_cookie))
             db.commit()
+
+            print("todolist id:", to_do_list_id)
+
             return template('/to_do_list')
         
         finally:
