@@ -1,143 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/static/overview.css" rel="stylesheet" type="text/css" />
-    <link href="/static/reset.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var calendarEl = document.getElementById("calendar");
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          // this code shows the diffrent views
-          initialView: "dayGridMonth",
-          headerToolbar: {
-            right: "dayGridMonth", // user can switch between the two
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/static/overview.css" rel="stylesheet" type="text/css" />
+  <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var calendarEl = document.getElementById("calendar");
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        // this code shows the diffrent views
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          right: "dayGridMonth", // user can switch between the two
+        },
+
+        // You can select days with selectable true
+        selectable: true,
+
+        eventSources: [
+          // your event source
+          {
+            url: "/get_events", // use the `url` property
+            color: "#A63A50", // an option!
+            textColor: "white", // an option!
           },
+        ],
 
-          // You can select days with selectable true
-          selectable: true,
-
-          eventSources: [
-            // your event source
-            {
-              url: "/get_events", // use the `url` property
-              color: "#A63A50", // an option!
-              textColor: "white", // an option!
-            },
-          ],
-
-                // this code shows the diffrent views
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    right: 'dayGridMonth' // user can switch between the two
-                },
+        // this code shows the diffrent views
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          right: 'dayGridMonth' // user can switch between the two
+        },
 
 
-          eventClick: function (info) {
-            background_view_event.classList.add("show");
-            container_view_event.classList.add("show");
-            paragraphs[0].innerText = "Event Name: " + info.event.title;
-            paragraphs[2].innerHTML =
-              '<a href="delete/event/' +
-              info.event.id +
-              '" id="delete_event_link">Delete Event</a>';
-            // change the border color just for fun
-            info.el.style.border = "1.5px solid #2c3e50";
-          },
-        });
-        calendar.render();
+        eventClick: function (info) {
+          background_view_event.classList.add("show");
+          container_view_event.classList.add("show");
+          paragraphs[0].innerText = "Event Name: " + info.event.title;
+          paragraphs[2].innerHTML =
+            '<a href="delete/event/' +
+            info.event.id +
+            '" id="delete_event_link">Delete Event</a>';
+          // change the border color just for fun
+          info.el.style.border = "1.5px solid #2c3e50";
+        },
       });
-    </script>
-    <title>MemoSync - Overview</title>
-  </head>
+      calendar.render();
+    });
+  </script>
+  <title>MemoSync - Overview</title>
+</head>
 
-  <body>
-    % include('header_base.html')
-    <main>
-      <div id="top">
-        <section id="left">
-          <a href="/to_do_list">
-            <h3>To-Do List</h3>
-            <section id="todo">
-              <ul>
-                % for todo in todos:
-                <li>{{ todo[2]}}</li>
-                % end
-              </ul>
-            </section>
-          </a>
-        </section>
-        <section id="right">
-          <a href="/progress_table">
-            <h3>Progress Table</h3>
-            <section id="progress">
-              <div id="progress_container">
-                <table>
-                  <thead>
-                      <tr>
-    
-                          <th class="task">Task</th>
-    
-                          <th class="status">Status</th>
-    
-                      </tr>
-                  </thead>
-                  <tbody>
-                      % if pbs:
-                          % for pb in pbs:
-                          <tr>
-                              <!--<th class="task">Task</th>-->
-                              <td>
-                                  <span></span>
-                                  {{pb[1]}}
-                              </td>
-                              <!--<th class="description">Description</th>-->
-                              <td>
-                                  <form action="/update_status" method="POST" class="status-update-form">
-                                      <input type="hidden" name="task_id" value="{{ pb[0] }}">
-                                      <select name="new_status" class="status-selector">
-                                          % if pb[4] == 'not_started': 
-                                              <option selected value="not_started">Not Started</option>
-                                              <option value="in_progress">In Progress</option>
-                                              <option value="completed">Completed</option>
-                                          % end
-                                          % if pb[4] == 'in_progress': 
-                                              <option value="not_started">Not Started</option>
-                                              <option selected value="in_progress">In Progress</option>
-                                              <option value="completed">Completed</option>
-                                          % end
-                                          % if pb[4] == 'completed': 
-                                              <option value="not_started">Not Started</option>
-                                              <option value="in_progress">In Progress</option>
-                                              <option selected value="completed">Completed</option>
-                                          % end
-                                      </select>
-                                  </form>                                
-                              </td>
-                          </tr>
-                          %end
-                      %end
-                  </tbody>
-              </table>
-              </div>
-            </section>
-          </a>
-        </section>
-      </div>
-      <div id="bottom">
-        <a href="/calendar">
-          <h3>Calendar</h3>
-          <section id="calendar"></section>
+<body>
+  % include('header_base.html')
+  <main>
+    <div id="top">
+      <section id="left">
+        <a href="/to_do_list">
+          <h3>To-Do List</h3>
+          <section id="todo">
+            % if not todos:
+            <p>You have no to-do lists yet. Create one to get started!</p>
+            % else:
+            <ul>
+              % for todo in todos:
+              <li>{{ todo[2]}}</li>
+              % end
+            </ul>
+          </section>
         </a>
-      </div>
-    </main>
-  </body>
+      </section>
+      <section id="right">
+        <a href="/progress_table">
+          <h3>Progress Table</h3>
+          <section id="progress">
+            % if not pbs:
+            <p>You have no tasks yet. Create one to get started!</p>
+            % else:
+            <div id="progress_container">
+              % if pbs:
+              % for pb in pbs:
+              <table>
+                <thead>
+                  <tr>
+                    <th class="task">Task</th>
+                    <th class="status">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <!--<th class="task">Task</th>-->
+                    <td>
+                      <span></span>
+                      {{pb[1]}}
+                    </td>
+                    <!--<th class="description">Description</th>-->
+                    <td>
+                      <form action="/update_status" method="POST" class="status-update-form">
+                        <input type="hidden" name="task_id" value="{{ pb[0] }}">
+                        <select name="new_status" class="status-selector">
+                          % if pb[4] == 'not_started':
+                          <option selected value="not_started">Not Started</option>
+                          <option value="in_progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                          % end
+                          % if pb[4] == 'in_progress':
+                          <option value="not_started">Not Started</option>
+                          <option selected value="in_progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                          % end
+                          % if pb[4] == 'completed':
+                          <option value="not_started">Not Started</option>
+                          <option value="in_progress">In Progress</option>
+                          <option selected value="completed">Completed</option>
+                          % end
+                        </select>
+                      </form>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              % end
+              % end
+            </div>
+            % end
+          </section>
+        </a>
+      </section>
+    </div>
+    <div id="bottom">
+      <a href="/calendar">
+        <h3>Calendar</h3>
+        <section id="calendar"></section>
+      </a>
+    </div>
+  </main>
+</body>
+
 </html>
