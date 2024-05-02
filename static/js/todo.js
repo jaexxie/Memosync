@@ -46,8 +46,8 @@ taskCheckboxes.forEach(checkbox => {
     });
 });
 
-//funktion som raderar task (uppgifter) från databasen
-//välj alla delete-task-btn
+//funktion som raderar task todolist med alla tillhörande uppgifter från databasen
+//hämta alla delete-list-btn
 document.querySelectorAll('.delete_list_btn').forEach(button => {
     // Lägg till händelselyssnare för varje raderingsknapp
     button.addEventListener("click", function () {
@@ -59,7 +59,7 @@ document.querySelectorAll('.delete_list_btn').forEach(button => {
     });
 });
 
-
+//Delete todo list
 function deleteToDoList(toDoListId, buttonElement) {
     fetch('/delete_to_do_list', {
         method: 'DELETE',
@@ -97,43 +97,16 @@ function deleteToDoList(toDoListId, buttonElement) {
 
 }
 
-/*
-// delete todo
-deleteButtons = document.querySelectorAll('.delete_todo');
-
-deleteButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        toDoListId = button.id;
-
-        fetch(`/delete_to_do_list/${toDoListId}`, {
-            method: 'DELETE',
-        })
-            .then((response) => {
-                if (response !== 404) { // Ändra tillbaka till response.ok när ni har löst att API:et returnerar 200 eller 201
-                    console.log('To-do list deleted successfully.');
-                    event.target.parentElement.parentElement.remove();
-                } else {
-                    console.error('Failed to delete the to-do list.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    });
-*/
-
 //funktion som sparar checkade element i listan
 checkboxes = document.querySelectorAll('.task_checkbox');
 
 checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function() {
-        var taskId = this.value;
+        var taskId = this.dataset.taskId;
         var isChecked = this.checked;
 
-        fetch('/update_task_status', {
-            method: 'POST',
+        fetch('/update_checkbox', {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             },

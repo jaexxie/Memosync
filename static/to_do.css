@@ -286,9 +286,8 @@ input[type="submit"] {
 .delete_list_btn {
   color: #eee;
   font-size: 26px;
-  font-weight: bold;
-  cursor: pointer;
   background: none;
+  cursor: pointer;
   border: none;
 }
 

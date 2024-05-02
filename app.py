@@ -319,8 +319,8 @@ def add_task_to_do_list():
     else:
         return redirect('/')
 
-@route('/update_task_status', method='POST')
-def update_task_status():
+@route('/update_checkbox', method='PUT')
+def update_checkbox():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
         try:
@@ -333,36 +333,18 @@ def update_task_status():
 
             # return new_status
 
-            cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (checked, task_id))
+            cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked, task_id))
             db.commit()
             
+            print("task id:", task_id)
             # Redirect to progress table
-            return redirect('/progress_table')
-        finally:
-
-            # Closing Database connection after it's been used
-            cursor.close()
-            db.close()
-
-    else:
-        return redirect('/')
-
-@route('/update_checkboxes')
-def update_checkboxes():
-    logged_in_cookie = request.get_cookie('loggedIn')
-    if logged_in_cookie:
-        try:
-            # Database Connection
-            db = make_db_connection()
-            cursor = db.cursor()
-            cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked_task, logged_in_cookie))
-            db.commit()
-
             return redirect('/to_do_list')
         finally:
+
             # Closing Database connection after it's been used
             cursor.close()
             db.close()
+
     else:
         return redirect('/')
             
