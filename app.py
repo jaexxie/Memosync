@@ -359,6 +359,8 @@ def update_checkboxes():
     else:
         return redirect('/')
             
+# Calendar Start
+
 @route('/calendar')
 def calendar():
     logged_in_cookie = request.get_cookie('loggedIn')
@@ -375,6 +377,7 @@ def calendar():
             db.close()
     else:
         return redirect('/')
+        
     
 @route('/add_event', method=['GET', 'POST'])
 def add_event():
@@ -385,6 +388,7 @@ def add_event():
     if logged_in_cookie:
 
         title = request.forms.get('event_name')
+        description = request.forms.get('event_description')
         start_date = request.forms.get('start_date')
         start_time = request.forms.get('start_time')
         end_date = request.forms.get('end_date')
@@ -403,6 +407,7 @@ def add_event():
             "id": str(id_for_new_event),
             "user_id": str(logged_in_cookie),
             "title": title,
+            "description": description,
             "start": f"{start_date}T{start_time}",
             "end": f"{end_date}T{end_time}"
         }
@@ -417,20 +422,22 @@ def add_event():
 
     else:
         return redirect('/')
-
-@route('/add_event', method=['GET', 'POST'])
-def add_event():
+    
+@route('/edit/event', method=['GET', 'POST'])
+def edit_event():
     '''
-        This function adds events to the events.json file
+        This function edits events
     '''
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
 
-        title = request.forms.get('event_name')
-        start_date = request.forms.get('start_date')
-        start_time = request.forms.get('start_time')
-        end_date = request.forms.get('end_date')
-        end_time = request.forms.get('end_time')
+        id = request.forms.get('edit_event_id')
+        title = request.forms.get('title')
+        description = request.forms.get('description')
+        start_date = request.forms.get('start_date_edit')
+        start_time = request.forms.get('start_time_edit')
+        end_date = request.forms.get('end_date_edit')
+        end_time = request.forms.get('end_time_edit')
 
         # open Json FIle
         with open('static/json/events.json', 'r') as file:
@@ -438,18 +445,11 @@ def add_event():
 
         # This creates incroment for id:s
         for event in events:
-            max_id = int(event.get('id', 0))
-            id_for_new_event = max_id + 1
-
-        add_event = {
-            "id": str(id_for_new_event),
-            "user_id": str(logged_in_cookie),
-            "title": title,
-            "start": f"{start_date}T{start_time}",
-            "end": f"{end_date}T{end_time}"
-        }
-
-        events.append(add_event)
+            if event["id"] == id:
+                event["title"] = title
+                event["description"] = description
+                event["start"] = f"{start_date}T{start_time}"
+                event["end"] = f"{end_date}T{end_time}"
 
         # Write updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:
@@ -504,6 +504,8 @@ def get_events():
         return json.dumps(filtered_events)
     else:
         return redirect('/')
+    
+# Calendar End
     
 @route('/progress_table')
 def progress_table():
