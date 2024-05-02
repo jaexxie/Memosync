@@ -32,9 +32,12 @@
   <section id="popup_background_1"></section>
   <div id="dialog" class="hidden_dialog">
     <div id="popup_container_1">
+      <section id="popup-1-header">
+        <h3>Create New To-Do List</h3>
+        <span class="close">&times;</span>
+      </section>
       <form action="/create_to_do_list" method="POST">
         <fieldset>
-          <legend>Create New To-Do List</legend>
           <label for="title">Enter a category for your to-do list:</label>
           <input type="text" name="title" id="title" required placeholder="e.g grocery list">
           <label for="description">Enter a description:</label>

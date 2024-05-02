@@ -109,6 +109,40 @@ body>h2 {
   pointer-events: all;
 }
 
+/*Modal header */
+#popup-1-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#popup-1-header h3 {
+  font-family: "Montserrat", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  margin: 0;
+
+}
+
+/* "X" in modal header to close the modal*/
+#popup-1-header .close {
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+#popup-1-header .close:hover,
+#popup-1-header .close:focus {
+  color: var(--btn-color);
+  text-decoration: none;
+
+}
+
 #popup_container_1>form {
   display: flex;
   flex-direction: column;
@@ -144,6 +178,7 @@ input[type="text"] {
   width: 100%;
   border-radius: 5px;
   padding: 5px;
+  border: none;
 }
 
 select[name="choice"] {
