@@ -38,7 +38,7 @@
       </section>
       <form action="/create_to_do_list" method="POST">
         <fieldset>
-          <label for="title">Enter a category for your to-do list:</label>
+          <label for="title">Enter a title for your to-do list:</label>
           <input type="text" name="title" id="title" required placeholder="e.g grocery list">
           <label for="description">Enter a description:</label>
           <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
@@ -60,7 +60,7 @@
           <label for="task">Enter task:</label>
           <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
           <label for="choice">Select To-Do List:</label>
-          <select name="choice" id="choice">
+          <select name="choice" id="choice" required>
             % if category:
             % for cate in category:
             <option>{{cate[2]}}</option>
