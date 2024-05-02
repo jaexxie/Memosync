@@ -5,16 +5,22 @@ popup_container = document.querySelector('.popup_container')
 open_popup_btn_1 = document.querySelector('#open_popup_btn_1')
 popup_container_1 = document.querySelector('#popup_container_1')
 popup_background_1 = document.querySelector('#popup_background_1')
+closeBtn = document.querySelector(".close");
 
 open_popup_btn_1.addEventListener('click', function () {
     popup_container_1.classList.add('show')
     popup_background_1.classList.add('show')
-})
+});
 
 popup_background_1.addEventListener('click', function () {
     popup_container_1.classList.remove('show')
     popup_background_1.classList.remove('show')
-})
+});
+
+closeBtn.addEventListener('click', function() {
+    popup_container_1.classList.remove('show')
+    popup_background_1.classList.remove('show')
+});
 
 // add new task
 open_popup_btn_2 = document.querySelector('#open_popup_btn_2')
@@ -40,6 +46,58 @@ taskCheckboxes.forEach(checkbox => {
     });
 });
 
+//funktion som raderar task (uppgifter) från databasen
+//välj alla delete-task-btn
+document.querySelectorAll('.delete_list_btn').forEach(button => {
+    // Lägg till händelselyssnare för varje raderingsknapp
+    button.addEventListener("click", function () {
+        toDoListId = this.dataset.taskId;
+
+        var buttonElement = this;
+
+        deleteToDoList(toDoListId, buttonElement);
+    });
+});
+
+
+function deleteToDoList(toDoListId, buttonElement) {
+    fetch('/delete_to_do_list', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'to_do_list_id=' + encodeURIComponent(toDoListId)
+    })
+    
+    .then(response => {
+        if(!response.ok) {
+            //ge ett felmeddelande om begäran inte lyckades
+            console.error("Failed to delete List");
+
+            //alert("Failed to delete task. Please try again later.");
+            
+        }
+
+        var parentElement = buttonElement.closest(".to_do_lists");
+        if(parentElement) {
+            parentElement.remove();
+        } else {
+            console.error("List not found")
+        }
+        
+
+    })
+
+    .catch((error) => {
+        console.error('Error', error);
+        //poemDisplay.textContent =document.createTextNode('Could not fetch verse: ' + error);
+
+        //alert("An error occurred while deleting the List.");
+    });
+
+}
+
+/*
 // delete todo
 deleteButtons = document.querySelectorAll('.delete_todo');
 
@@ -64,32 +122,31 @@ deleteButtons.forEach((button) => {
                 console.error('Error:', error);
             });
     });
+*/
 
-    //funktion som sparar checkade element i listan
+//funktion som sparar checkade element i listan
+checkboxes = document.querySelectorAll('.task_checkbox');
 
-    checkboxes = document.querySelectorAll('.task_checkbox');
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function() {
+        var taskId = this.value;
+        var isChecked = this.checked;
 
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function() {
-            var taskId = this.value;
-            var isChecked = this.checked;
-
-            fetch('/update_task_status', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },
-                body: 'task_id=' + encodeURIComponent(taskId) + '&checked=' + isChecked
-            })
-
-            .then(response => {
-                if(!response.ok) {
-                    console.error("Failed to update task status");
-                }
-            })
-            .catch(error => {
-                console.error('Error', error);
-            });
+        fetch('/update_task_status', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            body: 'task_id=' + encodeURIComponent(taskId) + '&checked=' + isChecked
         })
+
+        .then(response => {
+            if(!response.ok) {
+                console.error("Failed to update task status");
+            }
+        })
+        .catch(error => {
+            console.error('Error', error);
+        });
     })
-});
+})
