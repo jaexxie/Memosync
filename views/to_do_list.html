@@ -32,10 +32,13 @@
   <section id="popup_background_1"></section>
   <div id="dialog" class="hidden_dialog">
     <div id="popup_container_1">
+      <section id="popup_1_header">
+        <h3>Create New To-Do List</h3>
+        <span class="close">&times;</span>
+      </section>
       <form action="/create_to_do_list" method="POST">
         <fieldset>
-          <legend>Create New To-Do List</legend>
-          <label for="title">Enter a category for your to-do list:</label>
+          <label for="title">Enter a title for your to-do list:</label>
           <input type="text" name="title" id="title" required placeholder="e.g grocery list">
           <label for="description">Enter a description:</label>
           <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
@@ -57,7 +60,7 @@
           <label for="task">Enter task:</label>
           <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
           <label for="choice">Select To-Do List:</label>
-          <select name="choice" id="choice">
+          <select name="choice" id="choice" required>
             % if category:
             % for cate in category:
             <option>{{cate[2]}}</option>
@@ -69,7 +72,34 @@
     </div>
   </div>
 
+  <div class="to_do_container">
+    % for cate in category:
+      <div class="to_do_lists">
+        <section class="to_do_header">
+          <h3>{{ cate [2] }}</h3>
+          <button data-task-id="{{ cate[0] }}" class="delete_list_btn">&times;</button>
+        </section>
+        <section class="to_do_body">
+
+          <h4> {{ cate[3] }}</h4>
+          %for task in tasks:
+          % if task[2] == cate[0]:
+          <label>
+            <input type="checkbox" class="task_checkbox" name="checkbox_todo" value="{{ task[3] }}">
+            {{ task[3] }}
+          </label>
+          % end
+          % end
+
+        </section>
+
+      </div>
+    %end
+
+  </div>
+
   <!--Display to-do lists -->
+  <!--
   <div id="to_do_container">
     % for cate in category:
     <div id="to_do_lists">
@@ -91,6 +121,8 @@
       </form>
     </div>
     % end
+
+  -->
 
 
 
