@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   container_create_event = document.querySelector('.container_create_event')
   background_view_event = document.querySelector('.background_view_event')
   container_view_event = document.querySelector('.container_view_event')
+  closeBtn = document.querySelector(".close");
 
   add_event_btn.addEventListener('click', function() {
     background_create_event.classList.add('show')
@@ -21,6 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
     background_view_event.classList.remove('show')
     container_view_event.classList.remove('show')
   });
+
+  closeBtn.addEventListener('click', function() {
+    background_create_event.classList.remove('show')
+    container_create_event.classList.remove('show')
+  });
+
+  closeBtn.addEventListener('click', function() {
+    background_view_event.classList.remove('show')
+    container_view_event.classList.remove('show')
+  });
+
 
   // this creates a default datestamp for the input valeus
   var currentDate = new Date().toISOString().split('T')[0];
