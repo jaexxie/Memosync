@@ -85,8 +85,8 @@
         %for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" >
-          <span> {{ task[3] }}</span>
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4] else '' }}>
+          <span class="task_text {{ 'completed' if task[4] else '' }}"> {{ task[3] }}</span>
          
         </label>
         % end

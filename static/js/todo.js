@@ -117,6 +117,8 @@ checkboxes.forEach(function (checkbox) {
             if(!response.ok) {
                 console.error("Failed to update task status");
             }
+
+            
         })
         .catch(error => {
             console.error('Error', error);
