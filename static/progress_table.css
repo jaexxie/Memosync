@@ -102,7 +102,11 @@ body {
     left: -5px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 24px;
+  }
+
+  td .delete-task-btn:hover{
+    color: #a63a50;
   }
   
   .status-selector {

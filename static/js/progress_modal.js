@@ -35,9 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modalOverlay.classList.contains("show")) {
             modal.classList.remove("show");
             modalOverlay.classList.remove("show");
-            //lösningen funkar ej 
-            modal.style.display = "none";
-            modalOverlay.style.display = "none";
 
             form.reset();
         }
