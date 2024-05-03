@@ -225,7 +225,8 @@ element.style {
 }
 
 /* "X" in modal header to close the modal*/
-.container_view_event #calendar_1_header .close {
+.container_view_event #calendar_1_header .close,
+.container_create_event #calendar_1_header .close {
   color: black;
   font-size: 28px;
   font-weight: bold;
@@ -236,7 +237,9 @@ element.style {
 }
 
 .container_view_event #calendar_1_header .close:hover,
-.container_view_event #calendar_1_header .close:focus {
+.container_view_event #calendar_1_header .close:focus,
+.container_create_event #calendar_1_header .close:hover,
+.container_create_event #calendar_1_header .close:focus {
   color: #A63A50;
   text-decoration: none;
 
