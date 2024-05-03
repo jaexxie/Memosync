@@ -5,7 +5,7 @@ popup_container = document.querySelector('.popup_container')
 open_popup_btn_1 = document.querySelector('#open_popup_btn_1')
 popup_container_1 = document.querySelector('#popup_container_1')
 popup_background_1 = document.querySelector('#popup_background_1')
-closeBtn = document.querySelector(".close");
+closeBtn_1 = document.querySelector(".close_1");
 
 open_popup_btn_1.addEventListener('click', function () {
     popup_container_1.classList.add('show')
@@ -17,15 +17,18 @@ popup_background_1.addEventListener('click', function () {
     popup_background_1.classList.remove('show')
 });
 
-closeBtn.addEventListener('click', function() {
-    popup_container_1.classList.remove('show')
-    popup_background_1.classList.remove('show')
+closeBtn_1.addEventListener('click', function() {
+    popup_container_1.classList.remove('show');
+    popup_background_1.classList.remove('show');
+
 });
 
 // add new task
 open_popup_btn_2 = document.querySelector('#open_popup_btn_2')
 popup_container_2 = document.querySelector('#popup_container_2')
 popup_background_2 = document.querySelector('#popup_background_2')
+closeBtn_2 = document.querySelector(".close_2");
+
 
 open_popup_btn_2.addEventListener('click', function () {
     popup_container_2.classList.add('show')
@@ -37,14 +40,13 @@ popup_background_2.addEventListener('click', function () {
     popup_background_2.classList.remove('show')
 })
 
-// checkbox strikthrough
-taskCheckboxes = document.querySelectorAll('.task_checkbox');
+closeBtn_2.addEventListener('click', function() {
+    popup_container_2.classList.remove('show');
+    popup_background_2.classList.remove('show');
 
-taskCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-        this.parentNode.classList.toggle('completed');
-    });
 });
+
+
 
 //funktion som raderar task todolist med alla tillhörande uppgifter från databasen
 //hämta alla delete-list-btn
@@ -106,7 +108,7 @@ checkboxes.forEach(function (checkbox) {
         var isChecked = this.checked;
 
         fetch('/update_checkbox', {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
@@ -119,6 +121,16 @@ checkboxes.forEach(function (checkbox) {
             }
 
             
+            var span = document.querySelector('[data-task-id="' + taskId + '"]').nextElementSibling;
+            if (isChecked) {
+                span.classList.add("checked")
+            } else {
+                span.classList.remove("checked")
+            }
+            
+            
+
+
         })
         .catch(error => {
             console.error('Error', error);

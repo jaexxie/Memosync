@@ -319,7 +319,7 @@ def add_task_to_do_list():
     else:
         return redirect('/')
 
-@route('/update_checkbox', method='PUT')
+@route('/update_checkbox', method='POST')
 def update_checkbox():
     logged_in_cookie = request.get_cookie('loggedIn')
     if logged_in_cookie:
