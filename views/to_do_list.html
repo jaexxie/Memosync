@@ -20,40 +20,90 @@
 
   <h2>To-Do Lists</h2>
   <div class="create">
-    <button id="open_popup_btn">Create</button>
-  </div>
-
-  <!-- popup -->
-  <div class="popup_background"></div>
-  <div class="popup_container">
-    <form action="/create_to_do_list" method="POST">
-      <fieldset>
-        <legend>Create New To-Do List</legend>
-        <label for="title">Enter a category for your to-do list:</label>
-        <input type="text" name="title" id="title" required placeholder="e.g grocery list">
-        <label for="description">Enter a description:</label>
-        <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
-        <label for="colour">Select colour for your to-do list:</label>
-        <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
-        <input type="submit" id="submit" value="Create">
-      </fieldset>
-    </form>
-  </div>
-
-  <!-- Display To-Do Lists -->
-  <div id="to_do_container">
-    % if to_dos:
-    % for to_do in to_dos:
-    <div id="to_do_lists">
-      <div id="to_do_title">
-        <h3>{{to_do[0]}}</h3>
-      </div>
-      <p>{{to_do[1]}}</p>
+    <button id="open_popup_options_btn">Create</button>
+    <div class="dropdown-content">
+      <a id="open_popup_btn_1">Create To-Do List</a>
+      <a id="open_popup_btn_2">Add Task to List</a>
     </div>
-    % end
-    % end
   </div>
+
+
+  <!-- create to-do popup -->
+  <section id="popup_background_1"></section>
+  <div id="dialog" class="hidden_dialog">
+    <div id="popup_container_1">
+      <section id="popup_1_header">
+        <h3>Create New To-Do List</h3>
+        <span class="close_1">&times;</span>
+      </section>
+      <form action="/create_to_do_list" method="POST">
+        <fieldset>
+          <label for="title">Enter a title for your to-do list:</label>
+          <input type="text" name="title" id="title" required placeholder="e.g grocery list">
+          <label for="description">Enter a description:</label>
+          <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
+          <label for="colour">Select colour for your to-do list:</label>
+          <input type="text" name="colour" id="colour" placeholder="green or #A63A50">
+          <input type="submit" id="submit" value="Create">
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <!-- add task popup -->
+  <section id="popup_background_2"></section>
+  <div id="dialog" class="hidden_dialog">
+    <div id="popup_container_2">
+      <section id="popup_2_header">
+        <h3>Add task to To-Do List</h3>
+        <span class="close_2">&times;</span>
+      </section>
+      <form action="/add_task_to_do_list" method="POST">
+        <fieldset>
+          <label for="task">Enter task:</label>
+          <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
+          <label for="choice">Select To-Do List:</label>
+          <select name="choice" id="choice" required>
+            % if category:
+            % for cate in category:
+            <option>{{cate[2]}}</option>
+            % end
+            % end
+            <input type="submit" id="add" value="Add">
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <!--todo lists-->
+  <div class="to_do_container">
+    % for cate in category:
+    <div class="to_do_lists">
+      <section class="to_do_header">
+        <h3>{{ cate [2] }}</h3>
+        <button data-task-id="{{ cate[0] }}" class="delete_list_btn">&times;</button>
+      </section>
+      <section class="to_do_body">
+
+        <h4> {{ cate[3] }}</h4>
+        %for task in tasks:
+        % if task[2] == cate[0]:
+        <label>
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4] == 'true' else ''}}>
+          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}" > {{ task[3] }}</span>
+         
+        </label>
+        % end
+        % end
+
+      </section>
+
+    </div>
+    %end
+
+  </div>
+
 </body>
 
 </html>
-<script src="/static/js/popup.js"></script>
+<script src="/static/js/todo.js"></script>

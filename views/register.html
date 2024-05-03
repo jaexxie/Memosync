@@ -17,10 +17,13 @@
   <body>
     <form action="/register/add/user" method="post" class="register">
       <h2>Register</h2>
+      % if message:
+        <p>Detta Kontor Finns Redan</p>
+      % end
       <label for="name-field"></label>
       <input type="text" name="first_name" class="form-control" required placeholder="Name" />
       <label for="lastname-field"></label>
-      <input type="text" name="last_name" class="form-control" required placeholder="Lastname" />
+      <input type="text" name="last_name" class="form-control" required placeholder="Last Name" />
       <label for="email"></label>
       <input type="email" name="email" class="form-control" required placeholder="E-mail" />
       <label for="password"></label>

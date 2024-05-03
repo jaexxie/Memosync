@@ -1,32 +1,43 @@
-:root{
-    --body-color:rgba(240, 231, 216);
+:root {
+    --body-color: rgba(240, 231, 216);
     --container-background: rgba(251, 249, 245);
-    --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    --light-grey-border:  1px solid #ccc;
-    --btn-color:#a63a50;
-    --border:  border: 1px solid #111111;
-    
+    --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    --light-grey-border: 1px solid #ccc;
+    --btn-color: #a63a50;
+    --border: 1px solid black;
+
 }
 
 
 /* give container fixed position and z-index to move it to the top */
 .modal-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
-    margin: auto;
-    padding: 0;
     width: 100%;
     height: 100%;
     z-index: 999;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.537);
+    background-color: rgba(0, 0, 0, 0.441);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/*Show class is to the overlay, its visibility changes with JS*/
+.modal-overlay.show {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/*hide modal overlay with 1 second delay*/
+.modal-overlay:not(.show){
+    transition-duration: 2s;
 }
 
 /*modal container*/
 .modal-container {
-    display: none;
     width: 300px;
     position: fixed;
     top: 50%;
@@ -37,27 +48,37 @@
     padding: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-  }
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
 
+/*Show class is to the .modal-container, its visibility changes with JS*/
+.modal-container.show {
+    visibility: visible;
+    pointer-events: all;
+    opacity: 1;
+}
 
-.modal-header{
+/*Modal header */
+.modal-header {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     margin-bottom: 15px;
 }
 
-.modal-header h3{
+.modal-header h3 {
     font-family: "Montserrat", sans-serif;
     text-decoration: underline;
     text-underline-offset: 3px;
-    font-size: 24px;
+    font-size: 18px;
     margin: 0;
 
 }
 
-.close{
-    color: #a63a50;
+/* "X" in modal header to close the modal*/
+.close {
+    color: black;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -65,62 +86,70 @@
     border: none;
 }
 
-.close:hover, .close:focus{
-    color: black;
+.close:hover,
+.close:focus {
+    color: var(--btn-color);
     text-decoration: none;
 
 }
 
-.modal-form-box{
+/*the part of the modal, container that contains the form and submit button*/
+.modal-form-container {
     margin-top: 5px;
 }
 
-.modal-form-box > form {
+/* Styling for the form*/
+.modal-form-container>form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
+    gap: 40px;
+}
+
+form> fieldset>* {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
 }
 
 /*syling form labels*/
-.modal-form-box > form label{
+.modal-form-container>form label {
     font-size: 12pt;
     font-family: "Montserrat", sans-serif;
-    
 }
 
-.modal-form-box form input[type="text"] {
+/*Styling form inputs with type="text"*/
+.modal-form-container form input[type="text"] {
     width: 100%;
-    padding: 8px; 
-    border: var(--light-grey-border);
     border-radius: 5px;
+    padding: 8px;
+    border: none;
 }
 
+.modal-form-container form input[type="date"] {
+    width: 100%;
+    border-radius: 5px;
+    padding: 8px;
+    border: none;
+}
 
-.modal-form-box form input[type="text"]:focus{
+/*give the input field border bottom in focus*/
+.modal-form-container form input[type="text"]:focus,
+.modal-form-container form input[type="date"]:focus {
     outline: none;
-    border-color: var(--btn-color);
+    border-bottom: 1px solid var(--btn-color);
 }
 
-.modal-form-box form input[type="text"]::placeholder {
-    color: #ccc;
-}
-
-.add-task-btn{
-    max-width: 30%;
-    background-color: var(--btn-color);
-    border: 0.8px solid black;
-    border-radius: 10px;
+/*Create button for adding the task to table*/
+.add-task-btn {
+    border-radius: 5px;
+    padding: 6px 14px;
+    background-color: #a63a50;
+    border: none;
+    color: white;
     cursor: pointer;
-    padding: 10px 15px;
-    font-family: "Montserrat", sans-serif;
 }
 
 .add-task-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9); /* Change background color on hover */
-  }
-
-
-
-
-
+    background-color: rgba(166, 58, 80, 0.5);
+    /* Change background color on hover */
+}

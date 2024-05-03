@@ -2,7 +2,7 @@
 <html lang="en">
 
 
-    <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/static/progress_table.css" rel="stylesheet" type="text/css" />
@@ -10,86 +10,109 @@
     <link href="/static/reset.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="/static/js/progress_modal.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
         rel="stylesheet" />
     <title>MemoSync Register</title>
-    </head>
+</head>
 
-    <body>
+<body>
 
     % include('header_base.html')
 
-
     <div id="container">
-        <h2>Tasks</h2>
+
+        <h2>Progress Table</h2>
 
         <!--Create button for opening modal-->
 
         <button id="create-btn">Create</button>
 
         <!--modal overlay prevents the user from interacting with the content below the modal-->
-        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-overlay"></div>
 
 
         <!--Modal for create/add new task-->
+
         <div class="modal-container">
             <section class="modal-header">
-            <h3>
-                Create New Task
-            </h3>
-            <span class="close">&times;</span>
-
-
+                <h3>Create New Task</h3>
+                <span class="close">&times;</span>
             </section>
-            <section class="modal-form-box">
 
-                <form action="/" id="task-form" method="post">
+            <section class="modal-form-container">
 
-                    <label for="task">Enter a task:</label>
-                    <input type="text" id="task" name="task" placeholder="e.g meeting" required>
-
-                    <label for="description">Enter a description:</label>
-                    <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
-
-                    <label for="deadline_date">Enter a deadline (date):</label>
-                    <input type="text" id="deadline_date" name="deadline_date" placeholder="e.g april 13, 2024" required>
-
-                    <button  type="submit" class="add-task-btn">Create</button>
-
+                <form action="/add_project" id="task-form" method="post">
+                    <fieldset>
+                        <label for="task">Enter a task:</label>
+                        <input type="text" id="task" name="task" placeholder="e.g meeting" required>
+                        <label for="description">Enter a description:</label>
+                        <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
+                        <label for="deadline_date">Enter a deadline (date):</label>
+                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23"
+                            required>
+                        <button type="submit" value="create" class="add-task-btn">Create</button>
+                    </fieldset>
                 </form>
 
             </section>
 
         </div>
-        
+
         <!--Container that shows all task in a tabell-->
         <div id="progress_container">
-        <table>
-            <thead>
-            <tr>
-                <th class="task">Task</th>
-                <th class="description">Description</th>
-                <th class="date">Date</th>
-                <th class="status">Status</th>
-                
-            </tr>
-            </thead>
-            <tbody>
+            <table>
+                <thead>
+                    <tr>
 
+                        <th class="task">Task</th>
 
-            <tr></tr>
+                        <th class="description">Description</th>
 
-            </tbody>
-        </table>
+                        <th class="date">Date</th>
+
+                        <th class="status">Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    % if pbs:
+                        % for pb in pbs:
+                        <tr>
+                            <!--<th class="task">Task</th>-->
+                            <td>
+                                <span data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</span>
+                                {{pb[1]}}
+                            </td>
+                            <!--<th class="description">Description</th>-->
+                            <td>{{pb[2]}}</td>
+                            <!--<th class="date">Date</th>-->
+                            <td id="deadline-date">{{pb[3]}}</td>
+                            <!--<th class="status">Status</th>-->
+                            <td>
+                                <form action="/update_status" method="POST" class="status-update-form">
+                                    <input type="hidden" name="task_id" value="{{ pb[0] }}">
+                                    <select name="new_status" class="status-selector">
+                                        <option value="not_started" {{ 'selected' if pb[4] == 'not_started' else '' }}>Not Started</option>
+                                        <option value="in_progress" {{ 'selected' if pb[4] == 'in_progress' else '' }}>In Progress</option>
+                                        <option value="completed" {{ 'selected' if pb[4] == 'completed' else '' }}>Completed</option>
+                                       
+                                    </select>
+                                </form>                                
+                            </td>
+                        </tr>
+                        %end
+                    %end
+                </tbody>
+            </table>
 
         </div>
 
 
 
     </div>
-    <script src="/static/js/progress-modal.js"></script>
-    <script src="/static/js/add-task.js"></script>
-    </body>
+
+</body>
 
 </html>

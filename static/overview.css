@@ -1,89 +1,330 @@
 body {
-    margin: 0;
-    background-color: #F0E7D8;
+  margin: 0;
+  background-color: #F0E7D8;
+}
+
+#calendar {
+  border: 1px solid black;
+  margin: 7px;
+  border-radius: 15px;
+  min-height: 300px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
 }
 
 main {
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-div h2 {
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-    padding-bottom: 5px;
-    text-decoration: underline black;
+div a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+div>#left>a>h3,
+div>#right>a>h3,
+#bottom>a>h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: underline black;
+  color: black;
+  margin-left: 15px;
+}
+
+div a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.75em;
+  margin: 0px;
+  margin-left: 20px;
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.fc .fc-button {
+  margin-top: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.4em 0.65em;
+  text-align: center;
+  user-select: none;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.fc .fc-scrollgrid-section-liquid>td {
+  height: 100%;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+
+.fc .fc-scrollgrid {
+  border-bottom-width: 0px;
+  border-collapse: separate;
+  border-right-width: 0px;
+  border-left: none;
+}
+
+.fc .fc-daygrid-day-top {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 25px;
 }
 
 #top {
-    height: 50%;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
 #top>#left {
-    margin-right: 20px;
-    margin-left: 20px;
-    width: 40%;
+  margin-right: 20px;
+  margin-left: 20px;
+  width: 50%;
 }
 
-#top>#left>#todo {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 300px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
+#top>#left>a>#todo {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 150px;
+  box-shadow: 0 0 3px black;
+  background-color: #FBF9F5;
+  padding: 15px;
+}
+
+#todo ul>li::marker {
+  color: #a63a50;
+}
+
+#todo ul>li {
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  text-decoration: none;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  font-size: 12pt;
+  border-bottom: 1px solid #bfbfbf;
+  list-style-type: disc;
+  margin-left: 10px;
 }
 
 #top>#right {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 60%;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 50%;
 }
 
-#top>#right>#calendar {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 300px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
+#todo ul>li::marker {
+  color: #a63a50;
+}
+
+#todo ul>li {
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  text-decoration: none;
+  padding: 6px;
+  margin-bottom: 5px;
+  font-size: 12pt;
+  border-bottom: 1px solid #bfbfbf;
+  list-style-type: disc;
+  margin-left: 10px;
+}
+
+#top>#left>a>#todo {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 150px;
+  box-shadow: 0 0 3px black;
+  background-color: #fbf9f5;
+}
+
+#todo>p {
+  margin: auto;
+  align-self: center;
+}
+
+#top>#right {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 50%;
 }
 
 #bottom {
-    height: 50%;
-    margin: 20px;
+  height: 50%;
+  margin: 20px;
 }
 
 #progress {
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 15px;
-    min-height: 300px;
-    box-shadow: 0 0 3px black;
-    background-color: #FBF9F5;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+  min-height: 150px;
+  box-shadow: 0 0 3px black;
+  background-color: #FBF9F5;
+  padding: 15px;
 }
 
+#progress_container {
+  margin: auto;
+  border-radius: 10px;
+  padding: 0 30px;
+  width: auto;
+}
+
+#progress_container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#progress_container th {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px;
+}
+
+#progress_container td {
+  font-size: 12pt;
+}
+
+/*change the width of cells in HTML table*/
+.task {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.description {
+  width: 40%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.date {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.status {
+  width: 20%;
+  font-family: "Montserrat", sans-serif;
+}
+
+#progress_container td {
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 6px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Detta tar bort höger border på sista elementet i <tr> */
+#progress_container td:last-child,
+#progress_container th:last-child {
+  border-right: none;
+}
+
+.status-selector {
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+  padding: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/*Ta bor fokusram */
+.status-selector:focus {
+  outline: none;
+}
+
+.status-selector option {
+  background-color: rgba(251, 249, 245, 0.6);
+  text-align: center;
+}
+
+select {
+  text-indent: 1px;
+  text-overflow: "";
+}
+
+
+
+.fc-toolbar-chunk>button {
+  visibility: hidden;
+}
+
+
 @media only screen and (max-width: 600px) {
+  #top {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-    #top {
-        height: 50%;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
+  #top>#right {
+    margin: 20px;
+    width: 90%;
+  }
 
-    #top>#right {
-        margin: 20px;
-        width: 90%;
-    }
+  #top>#left {
+    margin: 20px;
+    width: 90%;
+  }
 
-    #top>#left {
-        margin: 20px;
-        width: 90%;
+  #top {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-    }
+  #top>#right {
+    margin: 20px;
+    width: 90%;
+  }
+
+  #top>#left {
+    margin: 20px;
+    width: 90%;
+
+  }
+}
+
+.fc .fc-scrollgrid-section-liquid>td {
+  height: 100%;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+
+.fc .fc-scrollgrid {
+  border-bottom-width: 0px;
+  border-collapse: separate;
+  border-right-width: 0px;
+  border-left: none;
 }
