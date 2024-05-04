@@ -16,15 +16,11 @@ body>h2 {
 
 .create button {
   display: block;
-  margin-top: 20px;
-  margin-left: 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   border-radius: 10px;
-  padding: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
-  margin-bottom: 20px;
+  padding: 13px 30px;
+  margin: 20px 30px;
   width: 110px;
   box-sizing: border-box;
 }
@@ -39,12 +35,13 @@ body>h2 {
   display: none;
   position: fixed;
   background-color: #f1f1f1;
-  width: 140px;
-  left: 20px;
-  top: 190px;
+  width: 130px;
+  left: 30px;
+  top: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .dropdown-content a {
@@ -261,16 +258,20 @@ input[type="submit"] {
 .to_do_container {
   display: flex;
   flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 20px 30px;
 
 }
 
 .to_do_lists {
+  width: 25%;
+  box-shadow: 0 0 5px #999;
   background-color: #f8f8f8;
   border: 1px solid black;
-  width: 250px;
-  min-height: 50px;
   border-radius: 5px;
-  margin: 10px;
+  min-height: 50px;
   overflow: hidden;
 }
 

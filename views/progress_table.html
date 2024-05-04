@@ -81,16 +81,16 @@
                         % for pb in pbs:
                         <tr>
                             <!--<th class="task">Task</th>-->
-                            <td>
+                            <td data-cell="task">
                                 <span data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</span>
                                 {{pb[1]}}
                             </td>
                             <!--<th class="description">Description</th>-->
-                            <td>{{pb[2]}}</td>
+                            <td data-cell="description">{{pb[2]}}</td>
                             <!--<th class="date">Date</th>-->
-                            <td id="deadline-date">{{pb[3]}}</td>
+                            <td data-cell="date">{{pb[3]}}</td>
                             <!--<th class="status">Status</th>-->
-                            <td>
+                            <td data-cell="status">
                                 <form action="/update_status" method="POST" class="status-update-form">
                                     <input type="hidden" name="task_id" value="{{ pb[0] }}">
                                     <select name="new_status" class="status-selector">
