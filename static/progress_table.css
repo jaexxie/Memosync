@@ -20,8 +20,7 @@ body {
   }
   
   #create-btn {
-    margin-top: 20px;
-    margin-left: 30px;
+    margin: 20px 30px;
     background-color: #a63a50;
     border: 0.8px solid black;
     border-radius: 10px;
@@ -32,17 +31,18 @@ body {
   }
   
   #create-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9);
+    background-color: rgba(166, 58, 80, 0.7);
     /* Change background color on hover */
   }
   
   #progress_container {
+    width: 75%;
+    margin: 0px auto 20px auto;
     border: 1px solid black;
     background-color: #f8f8f8;
-    margin: 20px auto;
     border-radius: 10px;
     padding: 10px 50px;
-    width: 80%;
+    box-sizing: border-box;
   }
   
   #progress_container table {
@@ -57,6 +57,7 @@ body {
     font-size: 18px;
     padding: 8px;
   }
+
   
   /*change the width of cells in HTML table*/
   .task {
@@ -102,7 +103,11 @@ body {
     left: -5px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 24px;
+  }
+
+  td .delete-task-btn:hover{
+    color: #a63a50;
   }
   
   .status-selector {
@@ -125,75 +130,47 @@ body {
     text-align: center;
   }
   
-  @media screen and (max-width: 768px) {
-    #progress_container table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-left: revert-layer;
+  @media screen and (max-width: 770px) {
+    #progress_container {
+      width: 90%;
+      margin: 0px auto;
+      padding: 10px 30px;
     }
   
-    td .delete-task-btn {
-      display: block;
-      position: absolute;
-      text-align: center;
-      cursor: pointer;
-      left: -12px;
-      top: 18px;
-      transform: translateY(-50%);
-      font-size: 24px;
-    }
   
     #create-btn {
-      margin-top: 40px;
-      margin-left: 40px;
-      background-color: #a63a50;
-      border: 0.8px solid black;
-      border-radius: 10px;
-      padding: 13px 30px;
-      font-family: "Montserrat", sans-serif;
-      cursor: pointer;
-      color: white;
       width: 90%;
+      margin: 20px auto;
     }
   }
   
-  @media screen and (max-width: 480px) {
-    #create-btn {
-      margin-top: 40px;
-      margin-left: 50px;
-      background-color: #a63a50;
-      border: 0.8px solid black;
-      border-radius: 10px;
-      padding: 13px 30px;
-      font-family: "Montserrat", sans-serif;
-      cursor: pointer;
-      color: white;
-      width: 80%;
+  @media screen and (max-width: 500px) {
+    #progress_container table th {
+      display: none;
+    }
+
+    #progress_container table td {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 30px auto;
+      padding: 8px 14px;
+      border-right: none;
+      text-align: end;
+      
+    }
+
+    #progress_container table td:first-child {
+      padding-top: 10px;
+      border-top: 1px solid black;
+    }
+
+    #progress_container table td:last-child {
+      padding-bottom: 20px;
+    }
+
+    #progress_container table td::before{
+      content: attr(data-cell) ": ";
     }
   
-    #progress_container {
-      border: 1px solid black;
-      background-color: #f8f8f8;
-      margin: 20px auto;
-      border-radius: 10px;
-      padding: 10px 50px;
-      width: 63%;
-    }
-  
-    #progress_container table {
-      width: 70%;
-      border-collapse: collapse;
-      margin-left: -35px;
-    }
-  
-    td .delete-task-btn {
-      display: block;
-      position: absolute;
-      text-align: center;
-      cursor: pointer;
-      left: -12px;
-      top: 18px;
-      transform: translateY(-50%);
-      font-size: 24px;
-    }
+
   }
