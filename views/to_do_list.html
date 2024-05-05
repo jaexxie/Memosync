@@ -34,7 +34,7 @@
     <div id="popup_container_1">
       <section id="popup_1_header">
         <h3>Create New To-Do List</h3>
-        <span class="close">&times;</span>
+        <span class="close_1">&times;</span>
       </section>
       <form action="/create_to_do_list" method="POST">
         <fieldset>
@@ -54,9 +54,12 @@
   <section id="popup_background_2"></section>
   <div id="dialog" class="hidden_dialog">
     <div id="popup_container_2">
+      <section id="popup_2_header">
+        <h3>Add task to To-Do List</h3>
+        <span class="close_2">&times;</span>
+      </section>
       <form action="/add_task_to_do_list" method="POST">
         <fieldset>
-          <legend>Add Task to To-Do List</legend>
           <label for="task">Enter task:</label>
           <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
           <label for="choice">Select To-Do List:</label>
@@ -72,6 +75,7 @@
     </div>
   </div>
 
+  <!--todo lists-->
   <div class="to_do_container">
     % for cate in category:
     <div class="to_do_lists">
@@ -85,8 +89,9 @@
         %for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" value="{{ task[3] }}">
-          {{ task[3] }}
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4] == 'true' else ''}}>
+          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}" > {{ task[3] }}</span>
+         
         </label>
         % end
         % end

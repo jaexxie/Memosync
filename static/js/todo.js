@@ -5,7 +5,7 @@ popup_container = document.querySelector('.popup_container')
 open_popup_btn_1 = document.querySelector('#open_popup_btn_1')
 popup_container_1 = document.querySelector('#popup_container_1')
 popup_background_1 = document.querySelector('#popup_background_1')
-closeBtn = document.querySelector(".close");
+closeBtn_1 = document.querySelector(".close_1");
 
 open_popup_btn_1.addEventListener('click', function () {
     popup_container_1.classList.add('show')
@@ -17,15 +17,18 @@ popup_background_1.addEventListener('click', function () {
     popup_background_1.classList.remove('show')
 });
 
-closeBtn.addEventListener('click', function() {
-    popup_container_1.classList.remove('show')
-    popup_background_1.classList.remove('show')
+closeBtn_1.addEventListener('click', function() {
+    popup_container_1.classList.remove('show');
+    popup_background_1.classList.remove('show');
+
 });
 
 // add new task
 open_popup_btn_2 = document.querySelector('#open_popup_btn_2')
 popup_container_2 = document.querySelector('#popup_container_2')
 popup_background_2 = document.querySelector('#popup_background_2')
+closeBtn_2 = document.querySelector(".close_2");
+
 
 open_popup_btn_2.addEventListener('click', function () {
     popup_container_2.classList.add('show')
@@ -37,17 +40,16 @@ popup_background_2.addEventListener('click', function () {
     popup_background_2.classList.remove('show')
 })
 
-// checkbox strikthrough
-taskCheckboxes = document.querySelectorAll('.task_checkbox');
+closeBtn_2.addEventListener('click', function() {
+    popup_container_2.classList.remove('show');
+    popup_background_2.classList.remove('show');
 
-taskCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-        this.parentNode.classList.toggle('completed');
-    });
 });
 
-//funktion som raderar task (uppgifter) från databasen
-//välj alla delete-task-btn
+
+
+//funktion som raderar task todolist med alla tillhörande uppgifter från databasen
+//hämta alla delete-list-btn
 document.querySelectorAll('.delete_list_btn').forEach(button => {
     // Lägg till händelselyssnare för varje raderingsknapp
     button.addEventListener("click", function () {
@@ -59,7 +61,7 @@ document.querySelectorAll('.delete_list_btn').forEach(button => {
     });
 });
 
-
+//Delete todo list
 function deleteToDoList(toDoListId, buttonElement) {
     fetch('/delete_to_do_list', {
         method: 'DELETE',
@@ -97,42 +99,15 @@ function deleteToDoList(toDoListId, buttonElement) {
 
 }
 
-/*
-// delete todo
-deleteButtons = document.querySelectorAll('.delete_todo');
-
-deleteButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        toDoListId = button.id;
-
-        fetch(`/delete_to_do_list/${toDoListId}`, {
-            method: 'DELETE',
-        })
-            .then((response) => {
-                if (response !== 404) { // Ändra tillbaka till response.ok när ni har löst att API:et returnerar 200 eller 201
-                    console.log('To-do list deleted successfully.');
-                    event.target.parentElement.parentElement.remove();
-                } else {
-                    console.error('Failed to delete the to-do list.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    });
-*/
-
 //funktion som sparar checkade element i listan
 checkboxes = document.querySelectorAll('.task_checkbox');
 
 checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function() {
-        var taskId = this.value;
+        var taskId = this.dataset.taskId;
         var isChecked = this.checked;
 
-        fetch('/update_task_status', {
+        fetch('/update_checkbox', {
             method: 'POST',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
@@ -144,6 +119,18 @@ checkboxes.forEach(function (checkbox) {
             if(!response.ok) {
                 console.error("Failed to update task status");
             }
+
+            
+            var span = document.querySelector('[data-task-id="' + taskId + '"]').nextElementSibling;
+            if (isChecked) {
+                span.classList.add("checked")
+            } else {
+                span.classList.remove("checked")
+            }
+            
+            
+
+
         })
         .catch(error => {
             console.error('Error', error);
