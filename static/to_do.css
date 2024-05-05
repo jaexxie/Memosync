@@ -86,7 +86,7 @@ body>h2 {
 
 /* Close background with 1 second delay*/
 #popup_background_1:not(.show),
-#popup_background_2:not(.show){
+#popup_background_2:not(.show) {
   transition-duration: 2s;
 }
 
@@ -146,7 +146,7 @@ body>h2 {
 .close_1:hover,
 .close_1:focus,
 .close_2:hover,
-.close_2:focus  {
+.close_2:focus {
   color: #A63A50;
   text-decoration: none;
 
@@ -197,7 +197,7 @@ select[name="choice"] {
   border: none;
 }
 
-input[type="text"]:focus{
+input[type="text"]:focus {
   outline: none;
   border-bottom: 1px solid #A63A50;
 }
@@ -259,20 +259,17 @@ input[type="submit"] {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  justify-content: center;
-  align-items: flex-end;
   margin: 20px 30px;
-
+  justify-content: flex-start;
 }
 
 .to_do_lists {
-  width: 25%;
-  box-shadow: 0 0 5px #999;
   background-color: #f8f8f8;
   border: 1px solid black;
   border-radius: 5px;
-  min-height: 50px;
-  overflow: hidden;
+  width: 18%;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .to_do_header {
@@ -284,7 +281,7 @@ input[type="submit"] {
 
 }
 
-.to_do_header >h3 {
+.to_do_header>h3 {
   font-family: "Montserrat", sans-serif;
   font-size: 14pt;
   color: white;
@@ -311,7 +308,7 @@ input[type="submit"] {
   padding: 10px;
 }
 
-.to_do_body >h4 {
+.to_do_body>h4 {
   font-family: monospace;
   font-size: 11pt;
   padding-top: 5px;
