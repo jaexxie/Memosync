@@ -3,7 +3,8 @@ from bottle import route, run, template, static_file, request, redirect, respons
 import json
 import os
 from db import make_db_connection
-import requests
+
+# HOME PAGE
 
 @route('/')
 def index():
@@ -22,6 +23,8 @@ def index():
     else:
         # user is not logged in and remains on the home page
         return template('index')
+
+# REGISTER
 
 @route('/register')
 def register():
@@ -111,6 +114,8 @@ def add_user():
             cursor.close()
             db.close()
 
+# LOGIN
+
 @route('/login', method=['GET', 'POST'])
 def login():
     '''
@@ -158,6 +163,30 @@ def login():
             # close database connection
             cursor.close()
             db.close()
+
+@route('/logout', method=['GET', 'POST'])
+def logout():
+    '''
+    Route for logging out users
+
+    If the user is logged in, it clears the 'loggedIn' cookie to log
+    the user out and redirects them to the home page. If the user is
+    not logged in, it still redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        # if logged in, clear the 'loggedIn' cookie to log the user out
+        response.set_cookie('loggedIn', '', expires=0)
+        # redirects to the home page after logging out
+        return redirect('/')
+    else:
+        # if not logged in, redirects to the home page
+        return redirect('/')
+
+# OVERVIEW PAGE
 
 @route('/overview')
 def overview():
@@ -256,27 +285,7 @@ def get_user_info(id, cursor):
     # returns the first row from the result set
     return cursor.fetchone()
 
-@route('/logout', method=['GET', 'POST'])
-def logout():
-    '''
-    Route for logging out users
-
-    If the user is logged in, it clears the 'loggedIn' cookie to log
-    the user out and redirects them to the home page. If the user is
-    not logged in, it still redirects to the home page.
-    '''
-
-    # checks if the user is already logged in by checking the 'loggedIn' cookie
-    logged_in_cookie = request.get_cookie('loggedIn')
-
-    if logged_in_cookie:
-        # if logged in, clear the 'loggedIn' cookie to log the user out
-        response.set_cookie('loggedIn', '', expires=0)
-        # redirects to the home page after logging out
-        return redirect('/')
-    else:
-        # if not logged in, redirects to the home page
-        return redirect('/')
+# TO DO LIST PAGE
 
 @route('/to_do_list')
 def to_do_list():
@@ -470,10 +479,18 @@ def update_checkbox():
     else:
         # if the user is not logged in, redirect to the home page
         return redirect('/')
-            
+
+# CALENDAR PAGE
+          
 @route('/calendar')
 def calendar():
+    '''
+    Route for the calendar page.
 
+    If the user is logged in, it renders teh calendar page with the
+    user's information. If not logged in the user is redirected to the
+    home page.
+    '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
 
@@ -483,38 +500,48 @@ def calendar():
             db = make_db_connection()
             cursor = db.cursor()
 
+            # render the 'calendar' template, providing the logged-in user's information
             return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
         finally:
         # close database connection
             cursor.close()
             db.close()
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
     
 @route('/add_event', method=['GET', 'POST'])
 def add_event():
     '''
-        This function adds events to the events.json file
-    '''
-    logged_in_cookie = request.get_cookie('loggedIn')
-    if logged_in_cookie:
+    Route for adding events to events.json file.
 
+    If not logged in the user is redirected to the
+    home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        # retrives event information from the form data
         title = request.forms.get('event_name')
         description = request.forms.get('event_description')
         all_day = request.forms.get('all_day')
         start_date = request.forms.get('start_date')
         end_date = request.forms.get('end_date')
 
+        # creates a new all-day event
         if all_day:
-            # open Json FIle
+            # open the JSON file to read existing events
             with open('static/json/events.json', 'r') as file:
                 events = json.load(file)['events']
 
-            # This creates incroment for id:s
             for event in events:
+                # determine the new event ID by increamenting the maximum existing ID
                 max_id = int(event.get('id', 0))
                 id_for_new_event = max_id + 1
 
+            # add form data to variable add_event
             add_event = {
                 "id": str(id_for_new_event),
                 "user_id": str(logged_in_cookie),
@@ -524,26 +551,30 @@ def add_event():
                 "end": end_date
             }
 
+            # append the new event to the list of events
             events.append(add_event)
 
-            # Write updated events back to the JSON file
+            # write updated events back to the JSON file
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
+            # redirects to the calendar page after adding the event
             return redirect('/calendar')
         else:
+            # retrieves time from form data if the event is not all-day
             start_time = request.forms.get('start_time')
             end_time = request.forms.get('end_time')
 
-            # open Json FIle
+            # open the JSON file to read existing events
             with open('static/json/events.json', 'r') as file:
                 events = json.load(file)['events']
 
-            # This creates incroment for id:s
+            # determine the new event ID by increamenting the maximum existing ID
             for event in events:
                 max_id = int(event.get('id', 0))
                 id_for_new_event = max_id + 1
 
+            # add form data to variable add_event
             add_event = {
                 "id": str(id_for_new_event),
                 "user_id": str(logged_in_cookie),
@@ -553,25 +584,35 @@ def add_event():
                 "end": f"{end_date}T{end_time}"
             }
 
+            # write updated events back to the JSON file
             events.append(add_event)
 
-            # Write updated events back to the JSON file
+            # write updated events back to the JSON file
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
+            # redirects to the calendar page after adding the event
             return redirect('/calendar') 
-
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
     
 @route('/edit/event', method=['GET', 'POST'])
 def edit_event():
     '''
-        This function edits events
-    '''
-    logged_in_cookie = request.get_cookie('loggedIn')
-    if logged_in_cookie:
+    Route for editing events in the events.json file.
 
+    Retrieves the event ID and updated information from the form data.
+    Opens the event.json file, finds the event by ID and updates the
+    the relevant event. If the user is not logged, the user is
+    redirected to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    
+    if logged_in_cookie:
+        # retrives event information from the form data
         id = request.forms.get('edit_event_id')
         title = request.forms.get('title')
         description = request.forms.get('description')
@@ -580,11 +621,11 @@ def edit_event():
         end_date = request.forms.get('end_date_edit')
         end_time = request.forms.get('end_time_edit')
 
-        # open Json FIle
+        # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
             events = json.load(file)['events']
 
-        # This creates incroment for id:s
+        # finds the event by ID and update the relevant details
         for event in events:
             if event["id"] == id:
                 event["title"] = title
@@ -592,88 +633,120 @@ def edit_event():
                 event["start"] = f"{start_date}T{start_time}"
                 event["end"] = f"{end_date}T{end_time}"
 
-        # Write updated events back to the JSON file
+        # writes the updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:
             json.dump({"events": events}, file, indent=4)
 
+        # redirects to the calendar page after adding the event
         return redirect('/calendar') 
-
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
 @route('/delete/event/<id>')
 def delete_event(id):
     '''
-        This function deltes specifik events
+        Route for deleting events from the events.json file.
+
+        Deletes an event by finding the index of the event to be
+        deleted by using the provided ID. If the event ID is found,
+        the event is removed from the lsit of events and the updated
+        list of events is written back to the events.json file. The
+        user is then redirected to the calendar page.
     '''
+
+    # open the JSON file to read existing events
     with open('static/json/events.json', 'r') as file:
         events = json.load(file)['events']
     
-    # Find the index of the event to be deleted
+    # find the index of the event to be deleted
     index_to_delete = None
     for i, event in enumerate(events):
         if event.get('id') == id:
             index_to_delete = i
             break
 
-    # If event ID is found, delete the event
+    # if event ID is found, delete the event
     if index_to_delete is not None:
         del events[index_to_delete]
     
     with open('static/json/events.json', 'w') as file:
         json.dump({"events": events}, file, indent=4)
     
+    # redirects to the calendar page after deleting the event
     return redirect("/calendar")
     
 @route('/get_events')
 def get_events():
-    """Return a JSON object with all events that matches the users ID"""
-    # Read events from the JSON file
+    '''
+    Route to retrieve all events for the logged-in user in JSON format.
+
+    Returns all the events matching the logged-in user's ID. If the
+    user is not logged in, it redirects the user to the home page-
+    '''
+    
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    
     if logged_in_cookie:
+        # open tje JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
             all_events = json.load(file)['events']
 
+        # filters events to include only those matching the user's ID
         filtered_events = []
         for event in all_events:
             if event.get('user_id') == logged_in_cookie:
                 filtered_events.append(event)
 
+        # set the content type to JSON
         response.content_type = 'application/json'
         
-        # Return the JSON-encoded event data
+        # returns the JSON filtered events
         return json.dumps(filtered_events)
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
-    
-# Calendar End
 
-# Chat bot Start
+# CHATBOT
 
 @route('/ask_anything', method=['GET', 'POST'])
 def ask_anything():
+    '''
+    Route for asking questions.
+
+    Retrieves the question from the data form and provides a response
+    using the question() function. If the user is not logged in, it
+    redirects to the home page.
+    '''
+    
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    
     if logged_in_cookie:
         try:
-            # Database Connection
+            # database connection
             db = make_db_connection()
             cursor = db.cursor()
 
             if request.method == 'POST':
-
+                # retrieves the question from the form data
                 ask = request.forms.get('question')
 
+                # render the template with the question response
                 return template('ask_questions', response=question(ask), user_info=get_user_info(logged_in_cookie, cursor))
             
+            # render the template without a reponse
             return template('ask_questions', response=None, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
-            # Closing Database connection after it's been used
+            # close database connection
             cursor.close()
             db.close()
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
-def question(qeustion):
+def question(question):
     url = "https://chat-gpt26.p.rapidapi.com/"
 
     payload = {
@@ -681,7 +754,7 @@ def question(qeustion):
         "messages": [
             {
                 "role": "user",
-                "content": qeustion
+                "content": question
             }
         ]
     }
@@ -696,125 +769,165 @@ def question(qeustion):
     response = requests.post(url, json=payload, headers=headers)
 
     return response.json()
-    
+
+# PROGRESS TABLE PAGE
+
 @route('/progress_table')
 def progress_table():
+    '''
+    Route for the progress page.
+
+    Displays a progress table for the logged-in user by fetching data
+    from the progress_bar table in the database. If the user is not
+    logged in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    
     if logged_in_cookie:
         try:
-            # Database Connection
+            # database connection
             db = make_db_connection()
             cursor = db.cursor()
 
+            # retrieve progress bar data fro the logged-in user
             cursor.execute("SELECT id, project, description, spb_date, status FROM progress_bar WHERE user_id = %s;", (logged_in_cookie,))
             pbs = cursor.fetchall()
 
+            # render the progresss table page with the fetched data
             return template('progress_table', pbs=pbs, user_info=get_user_info(logged_in_cookie, cursor))
-
         finally:
-            # Closing Database connection after it's been used
+            # close database connection
             cursor.close()
             db.close()
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
 @route('/add_project', method='POST')
 def add_project():
+    '''
+    Route for adding a new project to the progress bar.
+
+    If the user is logged in, project information is retrieved from
+    the form data and inserted into the database. If the user is not
+    logged in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    
     if logged_in_cookie:
         try:
-
-            # Database Connection
+            # database connection
             db = make_db_connection()
             cursor = db.cursor()
 
-            
+            # retrieves project information from the form data
             project = request.forms.get("task")
             description = request.forms.get("description")
             spb_date = request.forms.get("deadline_date")
             status = 'not_started'
 
-
+            # inserts the new project into progress_table in the database
             cursor.execute('INSERT INTO progress_bar(user_id, project, description, spb_date, status) VALUES (%s, %s, %s, %s, %s)', (logged_in_cookie, project, description, spb_date, status))
             db.commit()
 
-            # Redirect to progress table
+            # redirects to progress table
             return redirect('/progress_table')
         
         finally:
-            # Closing Database connection after it's been used
+            # close database connection
             cursor.close()
             db.close()
     else:
-
-        # Redirect to login page for unathenticated users
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
     
 @route ('/update_status', method='POST')
 def update_status():
-        logged_in_cookie = request.get_cookie('loggedIn')
-        if logged_in_cookie:
-            try:
-                # Database Connection
-                db = make_db_connection()
-                cursor = db.cursor()
+    '''
+    Route for updating status of a task in the progress table.
 
-                task_id = request.forms.get("task_id")
-                new_status = request.forms.get("new_status")
+    If the user is logged in, it retrieves the task ID and the new
+    status from the form data and updates the database. If the user
+    is not logged in, it redirects to the home page.
+    '''
 
-                # return new_status
-
-                cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (new_status, task_id))
-                db.commit()
-                
-                # Redirect to progress table
-                return redirect('/progress_table')
-            finally:
-
-                # Closing Database connection after it's been used
-                cursor.close()
-                db.close()
-
-        else:
-            # Redirect to login page for unathenticated users
-            return redirect('/')
-
-@route ('/delete_task', method='POST')
-def delete_task():
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    
     if logged_in_cookie:
         try:
-            #Database Connection
+            # database Connection
             db = make_db_connection()
             cursor = db.cursor()
 
-            # Extract task ID from the request body
+            # retrieves teh task ID and new status from the form data
+            task_id = request.forms.get("task_id")
+            new_status = request.forms.get("new_status")
+
+            # updates the status of the specified task in the progress bar
+            cursor.execute('UPDATE progress_bar SET status = %s WHERE id = %s', (new_status, task_id))
+            db.commit()
+            
+            # redirect to progress table
+            return redirect('/progress_table')
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+
+@route ('/delete_task', method='POST')
+def delete_task():
+    '''
+    Route for deleting tasks from the progress table.
+
+    If the user is logged in, retrived the task ID from the request
+    and deletes the task from the database. If the user is not logged
+    in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    
+    if logged_in_cookie:
+        try:
+            #database connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # extracts task ID from the request body
             task_id = request.forms.get("task_id")
 
+            # deletes task from the progress_bar table
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
             
             print("task_id:", task_id)
-            # Redirect to progress table after deletion
+
+            # redirect to progress table after deleting the task
             return redirect('/progress_table')
         finally:
-            # Closing Database connection after it's been used
+            # close database connection
             cursor.close()
             db.close()
     else:
-        # Redirect to login page for unauthenticated users
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
      
 @route('/static/<filepath:path>')
 def server_static(filepath):
     '''
-        returns static files from the folder
-        "static"
+        Route for returning static files.
     '''
     print(filepath)
     return static_file(filepath, root='static')
-
-
 
 if __name__ == '__main__':
     run(host='localhost', port=8080, debug=True)

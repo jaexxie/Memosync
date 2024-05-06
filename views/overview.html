@@ -70,9 +70,9 @@
             % if not todos:
             <p>You have no to-do lists yet. Create one to get started!</p>
             % else:
+            % if todos:
+            % for todo in todos:
             <ul>
-              % if todos:
-              % for todo in todos:
               <li>{{ todo[2]}}</li>
             </ul>
             % end
