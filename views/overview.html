@@ -71,10 +71,13 @@
             <p>You have no to-do lists yet. Create one to get started!</p>
             % else:
             <ul>
+              % if todos:
               % for todo in todos:
               <li>{{ todo[2]}}</li>
-              % end
             </ul>
+            % end
+            % end
+            % end
           </section>
         </a>
       </section>
