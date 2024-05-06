@@ -260,16 +260,17 @@ input[type="submit"] {
   flex-wrap: wrap;
   gap: 14px;
   margin: 20px 30px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .to_do_lists {
+  width: 22%;
+  min-width: 220px;
+  box-sizing: border-box;
   background-color: #f8f8f8;
   border: 1px solid black;
   border-radius: 5px;
-  width: 18%;
-  margin-right: 10px;
-  margin-bottom: 10px;
+
 }
 
 .to_do_header {
@@ -344,188 +345,51 @@ input[type="submit"] {
   visibility: visible;
 }
 
-@media screen and (max-width: 768px) {
-  #open_popup_options_btn {
-    font-family: "Montserrat", sans-serif;
-    cursor: pointer;
-  }
+@media screen and (max-width: 770px) {
 
   .create button {
-    display: block;
-    margin-top: 40px;
-    margin-left: 95px;
-    background-color: #a63a50;
-    border: 0.8px solid black;
-    border-radius: 10px;
-    padding: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 20px;
-    width: 75%;
-    box-sizing: border-box;
+    width: 90%;
+    margin: 20px auto;
+    z-index: 999;
   }
 
   .dropdown-content {
-    display: none;
-    position: fixed;
-    background-color: #f1f1f1;
-    width: 70%;
-    left: 114px;
-    top: 216px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
+    width: 90%;
+    left: 24px;
+    top: 210px;
+    text-align: center;
   }
 
   .dropdown-content a {
-    color: black;
     padding: 20px 30px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
-  }
-
-  #popup_container_1.show,
-  #popup_container_2.show {
-    padding: 50px;
-    padding-left: 70px;
-    padding-right: 80px;
-    border-radius: 15px;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
-
-  #popup_container_1,
-  #popup_container_2 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0px;
-    background-color: #f0e7d8;
-    border-radius: 0px;
-    transition: 0.5s all;
-    pointer-events: none;
   }
 
   #submit {
-    border-radius: 5px;
-    padding: 10px 130px 10px 135px;
-    background-color: #a63a50;
-    cursor: pointer;
+    padding: 10px 130px;
     width: 104%;
     margin-top: 20px;
   }
 
-  #to_do_container {
-    margin: 50px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  #to_do_title {
-    padding: 10px;
-    background-color: #a63a50;
-    margin-top: 0;
-  }
-
-  #to_do_lists {
-    background-color: #f8f8f8;
-    border: 1px solid black;
-    width: 40%;
-    min-height: 50px;
-    border-radius: 5px;
-    margin-top: 20px;
-    margin-left: 40px;
+  .to_do_lists {
+    width: 48%;
+    min-width: 160px;
   }
 }
 
-@media screen and (max-width: 480px) {
-  #open_popup_options_btn {
-    font-family: "Montserrat", sans-serif;
-    cursor: pointer;
-  }
-
-  .create button {
-    display: block;
-    margin-top: 30px;
-    margin-left: 60px;
-    background-color: #a63a50;
-    border: 0.8px solid black;
-    border-radius: 10px;
-    padding: 13px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 20px;
-    width: 75%;
-    box-sizing: border-box;
-  }
+@media screen and (max-width: 500px) {
 
   .dropdown-content {
-    display: none;
-    position: fixed;
-    background-color: #f1f1f1;
-    width: 75%;
-    left: 60px;
-    top: 202px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
+    right: auto;
+    text-align: center;
   }
-
-  #popup_container_1.show,
-  #popup_container_2.show {
-    padding: 50px;
-    padding-left: 70px;
-    padding-right: 70px;
-    border-radius: 15px;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
-
   #popup_container_1,
   #popup_container_2 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0px;
-    background-color: #f0e7d8;
-    border-radius: 0px;
-    transition: 0.5s all;
-    pointer-events: none;
+    width: 200px;
   }
 
-  #submit {
-    border-radius: 5px;
-    padding: 10px 130px 10px 135px;
-    background-color: #a63a50;
-    cursor: pointer;
+
+  .to_do_lists {
     width: 100%;
-    margin-top: 20px;
-  }
 
-  #to_do_container {
-    margin: 50px;
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  #to_do_title {
-    padding: 10px;
-    background-color: #a63a50;
-    margin-top: 0;
-  }
-
-  #to_do_lists {
-    background-color: #f8f8f8;
-    border: 1px solid black;
-    width: 100%;
-    min-height: 50px;
-    border-radius: 5px;
-    margin: 10px;
   }
 }

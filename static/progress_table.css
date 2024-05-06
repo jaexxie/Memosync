@@ -94,15 +94,20 @@ body {
   #progress_container th:last-child {
     border-right: none;
   }
+
+  #progress_container td [data-cell= "task"] {
+    display: flex;
+  }
   
   td .delete-task-btn {
     display: block;
     position: absolute;
-    text-align: center;
     cursor: pointer;
-    left: -5px;
+    border: none;
+    left: -18px;
     top: 50%;
     transform: translateY(-50%);
+    border-radius: 50%;
     font-size: 24px;
   }
 
@@ -153,24 +158,34 @@ body {
       display: grid;
       gap: 10px;
       grid-template-columns: 30px auto;
-      padding: 8px 14px;
+      padding: 8px 5px;
       border-right: none;
       text-align: end;
       
     }
 
     #progress_container table td:first-child {
-      padding-top: 10px;
+      padding-top: 30px;
       border-top: 1px solid black;
     }
 
     #progress_container table td:last-child {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
     }
 
     #progress_container table td::before{
       content: attr(data-cell) ": ";
     }
+
+    td .delete-task-btn {
+    display: block;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    left: -14px;
+    transform: translateY(-65%);
+    font-size: 24px;
+  }
   
 
   }
