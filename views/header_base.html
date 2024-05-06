@@ -19,9 +19,10 @@
     <aside>
       <a href="/overview"><span>M</span>EMO<span>S</span>YNC</a>
       <ul>
-        <li><a href="/calendar">Calendar</a></li>
         <li><a href="/to_do_list">To-Do List</a></li>
         <li><a href="/progress_table">Progress Table</a></li>
+        <li><a href="/calendar">Calendar</a></li>
+        <li><a href="/ask_anything">Ask Memosync Expert</a></li>
       </ul>
     </aside>
     <div>
@@ -34,9 +35,10 @@
   <section class="header_slide_in_container">
     <h2>Menu</h2>
     <ul>
-      <li><a href="/calendar">Calendar</a></li>
       <li><a href="/to_do_list">To-Do List</a></li>
       <li><a href="/progress_table">Progress Table</a></li>
+      <li><a href="/calendar">Calendar</a></li>
+      <li><a href="/ask_anything">Ask Memosync Expert</a></li>
     </ul>
   </section>
   <!-- Slide in Profile -->
@@ -51,7 +53,9 @@
       <input type="text" name="last_name" id="last_name" value="{{ user_info[2] }}" placeholder="Last Name">
       <input type="email" name="email" id="email" value="{{ user_info[3] }}" placeholder="Email">
       <input type="password" name="password" id="password" value="{{ user_info[4] }}" placeholder="Password">
+      <label for="pic" class="custom-pic">Change Picture</label>
       <input type="file" name="pic" id="pic">
+      <a href="/delete/profile/picture">Delete My Profile Picture</a>
       <button type="submit">Submit Changes</button>
     </form>
     <a href="/logout">Logout</a>

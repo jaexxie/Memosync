@@ -36,15 +36,15 @@
         <!--Modal for create/add new task-->
 
         <div class="modal-container">
-            <span class="close">&times;</span>
-
+            <section class="modal-header">
+                <h3>Create New Task</h3>
+                <span class="close">&times;</span>
             </section>
 
             <section class="modal-form-container">
 
                 <form action="/add_project" id="task-form" method="post">
                     <fieldset>
-                        <legend>Create New Task</legend>
                         <label for="task">Enter a task:</label>
                         <input type="text" id="task" name="task" placeholder="e.g meeting" required>
                         <label for="description">Enter a description:</label>
@@ -52,7 +52,7 @@
                         <label for="deadline_date">Enter a deadline (date):</label>
                         <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23"
                             required>
-                        <button type="submit" id="submit" value="create" class="add-task-btn">Create</button>
+                        <button type="submit" value="create" class="add-task-btn">Create</button>
                     </fieldset>
                 </form>
 
@@ -81,16 +81,16 @@
                         % for pb in pbs:
                         <tr>
                             <!--<th class="task">Task</th>-->
-                            <td>
-                                <span data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</span>
+                            <td data-cell="task">
+                                <button data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</button>
                                 {{pb[1]}}
                             </td>
                             <!--<th class="description">Description</th>-->
-                            <td>{{pb[2]}}</td>
+                            <td data-cell="description">{{pb[2]}}</td>
                             <!--<th class="date">Date</th>-->
-                            <td id="deadline-date">{{pb[3]}}</td>
+                            <td data-cell="date">{{pb[3]}}</td>
                             <!--<th class="status">Status</th>-->
-                            <td>
+                            <td data-cell="status">
                                 <form action="/update_status" method="POST" class="status-update-form">
                                     <input type="hidden" name="task_id" value="{{ pb[0] }}">
                                     <select name="new_status" class="status-selector">

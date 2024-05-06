@@ -21,7 +21,7 @@
 <body>
 
   % include('header_base.html')
-  <h2>Calender</h2>
+  <h2>Calendar</h2>
   <div class="create_event">
     <button id="add_event_btn">Add event</button>
   </div>
@@ -29,11 +29,22 @@
   <!-- popup for creating event -->
   <div class="background_create_event"></div>
   <div class="container_create_event">
+    <div id="calendar_container_1">
+      <section id="calendar_1_header">
+        <h3>Edit Event</h3>
+        <span class="close">&times;</span>
+      </section>
+    </div>
     <form action="/add_event" method="post">
       <fieldset>
-        <legend>Create New Event</legend>
         <label for="event_name">Event Name</label>
         <input type="text" name="event_name" id="event_name" placeholder="e.g. doctor's appoinment">
+
+        <label for="event_description">Event Description</label>
+        <textarea name="event_description" id="event_description" cols="30" rows="10"></textarea>
+
+        <label for="all_day">All Day Event</label>
+        <input type="checkbox" name="all_day" id="all_day">
 
         <label for="start_date">Start Date</label>
         <input type="date" name="start_date" id="start_date">
@@ -52,15 +63,51 @@
     </form>
   </div>
 
-  <!-- popup for event info -->
+  <!-- popup for editing event -->
   <div class="background_view_event"></div>
   <div class="container_view_event">
-    <p id="event_info"></p>
-    <p id="event_info"></p>
-    <p id="event_info"></p>
+    <div id="calendar_container_1">
+      <section id="calendar_1_header">
+        <h3>Edit Event</h3>
+        <span class="close_2">&times;</span>
+      </section>
+      <form action="edit/event" method="post">
+        <fieldset>
+          <label for="edit_event_id">Event ID</label>
+          <input readonly type="text" name="edit_event_id" id="edit_event_id">
+
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title">
+
+          <label for="description">Description</label>
+          <input type="text" name="description" id="description">
+
+          <label for="start_date_edit">Start Date</label>
+          <input type="date" name="start_date_edit" id="start_date_edit">
+
+          <label for="end_date_edit">End Date</label>
+          <input type="date" name="end_date_edit" id="end_date_edit">
+
+          <label for="start_time_edit">Start Time</label>
+          <input type="time" name="start_time_edit" id="start_time_edit">
+
+          <label for="end_time_edit">End Time</label>
+          <input type="time" name="end_time_edit" id="end_time_edit">
+
+          <input type="submit" value="Save Changes">
+          <p id="delete_event"></p>
+        </fieldset>
+      </form>
+    </div>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
     <!-- <form action="" method="post">
-      <button id="delete_event_btn">Delete Event</button>
-    </form> -->
+        <button id="delete_event_btn">Delete Event</button>
+      </form> -->
   </div>
 
   <div id='calendar'></div>
@@ -68,3 +115,5 @@
 </body>
 
 </html>
+
+<script src="/static/js/calendar.js"></script>
