@@ -3,6 +3,7 @@ from bottle import route, run, template, static_file, request, redirect, respons
 import json
 import os
 from db import make_db_connection
+import requests
 
 # HOME PAGE
 
