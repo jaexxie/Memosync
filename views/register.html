@@ -18,7 +18,7 @@
     <form action="/register/add/user" method="post" class="register">
       <h2>Register</h2>
       % if message:
-        <p>Detta Kontor Finns Redan</p>
+        {{ message }}
       % end
       <label for="name-field"></label>
       <input type="text" name="first_name" class="form-control" required placeholder="Name" />

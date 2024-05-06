@@ -1,4 +1,5 @@
 #from crypt import methods
+import re
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
@@ -95,21 +96,34 @@ def add_user():
                 email = request.forms.get('email')
                 password = request.forms.get('password')
 
-                # ensures the email does not already exist in the database
-                cursor.execute('SELECT * FROM user_info WHERE email=%s', (email,))
-                does_mail_already_exist = cursor.fetchall()
-                
-                if does_mail_already_exist:
-                    # if email arlreayd exists, redirect with the message
-                    return redirect('/register/Email already exists')
+                # Makes Sure That the firstname only includes Alphabetic characters
+                if first_name.isalpha():
+                    if last_name.isalpha():
+                        if len(first_name) <= 50:
+                            if len(last_name) <= 50:
+                                # ensures the email does not already exist in the database
+                                cursor.execute('SELECT * FROM user_info WHERE email=%s', (email,))
+                                does_mail_already_exist = cursor.fetchall()
+                                
+                                if does_mail_already_exist:
+                                    # if email arlreayd exists, redirect with the message
+                                    return redirect('/register/Email already exists')
 
-                # inserts the new user into the ddatabase
-                cursor.execute('INSERT INTO user_info (name, lastname, email, password) VALUES (%s, %s, %s, %s)', (first_name, last_name, email, password))
-                # commits the transaction
-                db.commit()
+                                # inserts the new user into the ddatabase
+                                cursor.execute('INSERT INTO user_info (name, lastname, email, password) VALUES (%s, %s, %s, %s)', (first_name, last_name, email, password))
+                                # commits the transaction
+                                db.commit()
 
-                # redirects the user to the login page after successful registration
-                return redirect('/login')
+                                # redirects the user to the login page after successful registration
+                                return redirect('/login')
+                            else:
+                                return redirect('/register/Lastname Can Not Be Longer Than 50 Characters')
+                        else:
+                            return redirect('/register/Firstname Can Not Be Longer Than 50 Characters')
+                    else:
+                        return redirect('/register/Lastname Can Not Include Any Non Alphabetic Characters')
+                else:
+                    return redirect('/register/Firstname Can Not Include Any Non Alphabetic Characters')
         finally:
             # close database connection
             cursor.close()
