@@ -3,6 +3,7 @@ from bottle import route, run, template, static_file, request, redirect, respons
 import json
 import os
 from db import make_db_connection
+import requests
 
 @route('/')
 def index():
@@ -646,6 +647,55 @@ def get_events():
         return redirect('/')
     
 # Calendar End
+
+# Chat bot Start
+
+@route('/ask_anything', method=['GET', 'POST'])
+def ask_anything():
+    logged_in_cookie = request.get_cookie('loggedIn')
+    if logged_in_cookie:
+        try:
+            # Database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            if request.method == 'POST':
+
+                ask = request.forms.get('question')
+
+                return template('ask_questions', response=question(ask), user_info=get_user_info(logged_in_cookie, cursor))
+            
+            return template('ask_questions', response=None, user_info=get_user_info(logged_in_cookie, cursor))
+        finally:
+            # Closing Database connection after it's been used
+            cursor.close()
+            db.close()
+    else:
+        return redirect('/')
+
+def question(qeustion):
+    url = "https://chat-gpt26.p.rapidapi.com/"
+
+    payload = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {
+                "role": "user",
+                "content": qeustion
+            }
+        ]
+    }
+
+    headers = {
+        "content-type": "application/json",
+        "Content-Type": "application/json",
+        "X-RapidAPI-Key": "d60350b2f2mshd12f8ff9e0a36afp1c99b7jsnc6d483cf34d9",
+        "X-RapidAPI-Host": "chat-gpt26.p.rapidapi.com"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+
+    return response.json()
     
 @route('/progress_table')
 def progress_table():
@@ -763,6 +813,7 @@ def server_static(filepath):
     '''
     print(filepath)
     return static_file(filepath, root='static')
+
 
 
 if __name__ == '__main__':
