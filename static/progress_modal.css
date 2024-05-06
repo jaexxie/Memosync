@@ -32,7 +32,7 @@
 }
 
 /*hide modal overlay with 1 second delay*/
-.modal-overlay:not(.show) {
+.modal-overlay:not(.show){
     transition-duration: 2s;
 }
 
@@ -55,7 +55,7 @@
 /*Show class is to the .modal-container, its visibility changes with JS*/
 .modal-container.show {
     visibility: visible;
-    pointer-events: auto;
+    pointer-events: all;
     opacity: 1;
 }
 
@@ -71,7 +71,7 @@
     font-family: "Montserrat", sans-serif;
     text-decoration: underline;
     text-underline-offset: 3px;
-    font-size: 24px;
+    font-size: 18px;
     margin: 0;
 
 }
@@ -111,14 +111,6 @@ form> fieldset>* {
     margin-bottom: 10px;
 }
 
-form>fieldset>legend {
-    font-size: 16pt;
-    margin-bottom: 15px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-family: "Montserrat", sans-serif;
-}
-
 /*syling form labels*/
 .modal-form-container>form label {
     font-size: 12pt;
@@ -150,12 +142,14 @@ form>fieldset>legend {
 /*Create button for adding the task to table*/
 .add-task-btn {
     border-radius: 5px;
-    padding: 5px 10px 5px 10px;
+    padding: 6px 14px;
     background-color: #a63a50;
+    border: none;
+    color: white;
     cursor: pointer;
 }
 
 .add-task-btn:hover {
-    background-color: rgba(166, 58, 80, 0.9);
+    background-color: rgba(166, 58, 80, 0.5);
     /* Change background color on hover */
 }

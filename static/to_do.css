@@ -16,15 +16,11 @@ body>h2 {
 
 .create button {
   display: block;
-  margin-top: 20px;
-  margin-left: 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   border-radius: 10px;
-  padding: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
-  margin-bottom: 20px;
+  padding: 13px 30px;
+  margin: 20px 30px;
   width: 110px;
   box-sizing: border-box;
 }
@@ -39,12 +35,13 @@ body>h2 {
   display: none;
   position: fixed;
   background-color: #f1f1f1;
-  width: 140px;
-  left: 20px;
-  top: 185px;
+  width: 130px;
+  left: 30px;
+  top: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .dropdown-content a {
@@ -75,38 +72,84 @@ body>h2 {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.441);
-  visibility: hidden;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
 #popup_background_1.show,
 #popup_background_2.show {
   visibility: visible;
-  pointer-events: all;
+  pointer-events: auto;
+  opacity: 1;
 }
+
+/* Close background with 1 second delay*/
+#popup_background_1:not(.show),
+#popup_background_2:not(.show) {
+  transition-duration: 2s;
+}
+
 
 #popup_container_1,
 #popup_container_2 {
   position: fixed;
+  width: 300px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 0px;
+  padding: 50px;
   background-color: #f0e7d8;
-  border-radius: 0px;
-  /* opacity: 0; */
-  transition: 0.5s all;
-  /* visibility: hidden; */
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
   pointer-events: none;
 }
 
 #popup_container_1.show,
 #popup_container_2.show {
-  padding: 50px;
-  border-radius: 15px;
   opacity: 1;
   visibility: visible;
   pointer-events: all;
+}
+
+/*popup container 1 header */
+#popup_container_1 #popup_1_header,
+#popup_container_2 #popup_2_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#popup_container_1 #popup_1_header h3,
+#popup_container_2 #popup_2_header h3 {
+  font-family: "Montserrat", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 18px;
+  margin: 0;
+
+}
+
+/* "X" in modal header to close the modal*/
+.close_1,
+.close_2 {
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.close_1:hover,
+.close_1:focus,
+.close_2:hover,
+.close_2:focus {
+  color: #A63A50;
+  text-decoration: none;
+
 }
 
 #popup_container_1>form {
@@ -143,30 +186,40 @@ form>fieldset>label {
 input[type="text"] {
   width: 100%;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px;
+  border: none;
 }
 
 select[name="choice"] {
   width: 100%;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px;
+  border: none;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-bottom: 1px solid #A63A50;
 }
 
 #submit {
   border-radius: 5px;
-  padding: 5px 10px 5px 10px;
+  padding: 6px 14px;
   background-color: #a63a50;
+  color: white;
   cursor: pointer;
+  border: none;
 }
 
 #submit:hover {
-  background-color: rgba(166, 58, 80, 0.9);
+  background-color: rgba(166, 58, 80, 0.5);
 }
 
 #add {
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   background-color: #A63A50;
+  color: white;
   cursor: pointer;
 }
 
@@ -202,82 +255,72 @@ input[type="submit"] {
   border-bottom: #312822;
 }
 
-#to_do_container {
-  margin: 20px;
+.to_do_container {
   display: flex;
   flex-wrap: wrap;
+  gap: 14px;
+  margin: 20px 30px;
+  justify-content: flex-start;
 }
 
-.delete_todo {
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  border: none;
-  cursor: pointer;
-  font-size: 1em
-}
-
-#to_do_lists {
+.to_do_lists {
   background-color: #f8f8f8;
   border: 1px solid black;
-  width: 250px;
-  min-height: 50px;
   border-radius: 5px;
-  margin: 10px;
+  width: 18%;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
-#to_do_title {
-  padding: 10px;
-  background-color: #a63a50;
-  margin-top: 0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  justify-content: space-between;
-  align-items: center;
+.to_do_header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #a63a50;
+  padding: 10px;
+
 }
 
-#to_do_title>h3 {
+.to_do_header>h3 {
   font-family: "Montserrat", sans-serif;
-  font-size: 12pt;
+  font-size: 14pt;
   color: white;
 }
 
-#to_do_tasks {
-  padding: 0 10px 10px 10px;
+.delete_list_btn {
+  color: #eee;
+  font-size: 26px;
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+
+.delete_list_btn:hover,
+.delete_list_btn:focus {
+  color: black;
+  text-decoration: none;
+
+}
+
+.to_do_body {
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 
-#to_do_tasks>button {
-  padding: 5px 10px;
-  box-sizing: border-box;
-  background-color: #A63A50;
-  color: #312822;
-  font-weight: lighter;
-  border: 0;
-  border-radius: 15px;
-  margin: 10px 0px;
-  cursor: pointer;
-  color: white;
-  font-family: monospace;
-  width: 60%;
-  align-self: center;
-}
-
-#to_do_tasks>h4 {
+.to_do_body>h4 {
   font-family: monospace;
   font-size: 11pt;
   padding-top: 5px;
 }
 
-#to_do_tasks label {
+.to_do_body label {
   padding: 5px 0 5px 0;
   font-family: "Montserrat", sans-serif;
   font-size: 10pt;
 }
 
-.completed {
+.checked {
   text-decoration: line-through;
   color: #bfbfbf;
 }
@@ -301,7 +344,7 @@ input[type="submit"] {
   visibility: visible;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   #open_popup_options_btn {
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
@@ -398,7 +441,7 @@ input[type="submit"] {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   #open_popup_options_btn {
     font-family: "Montserrat", sans-serif;
     cursor: pointer;

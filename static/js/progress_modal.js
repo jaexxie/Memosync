@@ -12,14 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.classList.remove("show");
             modalOverlay.classList.remove("show");
             //modalen finns fortfarande i backgrunden (osynlig)
-            modal.style.display = "none";
-            modalOverlay.style.display = "none";
+
         } else {
             modal.classList.add("show");
             modalOverlay.classList.add("show");
             //modalen finns fortfarande i backgrunden (osynlig)
-            modal.style.display = "block";
-            modalOverlay.style.display = "block";
+
         }
     });
 
@@ -27,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.classList.remove("show");
         modalOverlay.classList.remove("show");
         //modalen finns fortfarande i backgrunden (osynlig)
-        modal.style.display = "none";
-        modalOverlay.style.display = "none";
-        alert("Are you sure you want to leave this page? you have unsaved changes!")
+        //modal.style.display = "none";
+        //modalOverlay.style.display = "none";
+        //alert("Are you sure you want to leave this page? you have unsaved changes!")
         form.reset();
     });
 
@@ -37,9 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modalOverlay.classList.contains("show")) {
             modal.classList.remove("show");
             modalOverlay.classList.remove("show");
-            //lösningen funkar ej 
-            modal.style.display = "none";
-            modalOverlay.style.display = "none";
 
             form.reset();
         }

@@ -32,10 +32,13 @@
   <section id="popup_background_1"></section>
   <div id="dialog" class="hidden_dialog">
     <div id="popup_container_1">
+      <section id="popup_1_header">
+        <h3>Create New To-Do List</h3>
+        <span class="close_1">&times;</span>
+      </section>
       <form action="/create_to_do_list" method="POST">
         <fieldset>
-          <legend>Create New To-Do List</legend>
-          <label for="title">Enter a category for your to-do list:</label>
+          <label for="title">Enter a title for your to-do list:</label>
           <input type="text" name="title" id="title" required placeholder="e.g grocery list">
           <label for="description">Enter a description:</label>
           <input type="text" name="description" id="description" placeholder="e.g. items for current week's groceries">
@@ -51,13 +54,16 @@
   <section id="popup_background_2"></section>
   <div id="dialog" class="hidden_dialog">
     <div id="popup_container_2">
+      <section id="popup_2_header">
+        <h3>Add task to To-Do List</h3>
+        <span class="close_2">&times;</span>
+      </section>
       <form action="/add_task_to_do_list" method="POST">
         <fieldset>
-          <legend>Add Task to To-Do List</legend>
           <label for="task">Enter task:</label>
           <input type="text" name="task" id="task" required placeholder="e.g meeting tomorrow">
           <label for="choice">Select To-Do List:</label>
-          <select name="choice" id="choice">
+          <select name="choice" id="choice" required>
             % if category:
             % for cate in category:
             <option>{{cate[2]}}</option>
@@ -69,30 +75,33 @@
     </div>
   </div>
 
-  <!--Display to-do lists -->
-  <div id="to_do_container">
+  <!--todo lists-->
+  <div class="to_do_container">
     % for cate in category:
-    <div id="to_do_lists">
-      <div id="to_do_title">
-        <h3>{{ cate[2] }}</h3>
-        <button class="delete_todo" id="{{ cate[0] }}">✖</button>
-      </div>
-      <form action="/delete_to_do_list" method="post" id="to_do_tasks">
-        <h4>{{ cate[3]}}</h4>
-        % for task in tasks:
+    <div class="to_do_lists">
+      <section class="to_do_header">
+        <h3>{{ cate [2] }}</h3>
+        <button data-task-id="{{ cate[0] }}" class="delete_list_btn">&times;</button>
+      </section>
+      <section class="to_do_body">
+
+        <h4> {{ cate[3] }}</h4>
+        %for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" value="{{ task[3] }}">
-          {{ task[3] }}
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4] == 'true' else ''}}>
+          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}" > {{ task[3] }}</span>
+         
         </label>
         % end
         % end
-        <button type="submit" id="update">Update</button>
-      </form>
+
+      </section>
+
     </div>
-    % end
+    %end
 
-
+  </div>
 
 </body>
 
