@@ -27,7 +27,7 @@
             <h1>Memosync Expert</h1>
             <textarea readonly name="" id="">
                 % if response:
-                    {{ response['choices'][0]['message']['content'] }}
+                    {{ response['text'] }}
                 % end
             </textarea>
             <input type="text" name="question" id="question" placeholder="Ask...">

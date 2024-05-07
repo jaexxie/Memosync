@@ -810,24 +810,27 @@ def ask_anything():
         # if the user is not logged in, redirect to the home page
         return redirect('/')
 
-def question(question):
-    url = "https://chat-gpt26.p.rapidapi.com/"
+def question(ask):
+
+    url = "https://chat-gtp-free.p.rapidapi.com/v1/chat/completions"
 
     payload = {
-        "model": "gpt-3.5-turbo",
+        "chatId": "92d97036-3e25-442b-9a25-096ab45b0525",
         "messages": [
             {
+                "role": "system",
+                "content": "You are a virtual assistant. Your name is Karen and you would like to be a firefighter."
+            },
+            {
                 "role": "user",
-                "content": question
+                "content": ask
             }
         ]
     }
-
     headers = {
         "content-type": "application/json",
-        "Content-Type": "application/json",
         "X-RapidAPI-Key": "d60350b2f2mshd12f8ff9e0a36afp1c99b7jsnc6d483cf34d9",
-        "X-RapidAPI-Host": "chat-gpt26.p.rapidapi.com"
+        "X-RapidAPI-Host": "chat-gtp-free.p.rapidapi.com"
     }
 
     response = requests.post(url, json=payload, headers=headers)
