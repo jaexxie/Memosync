@@ -7,6 +7,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    margin-bottom: 30px;
   }
   
   #container h2 {
@@ -37,7 +38,7 @@ body {
   
   #progress_container {
     width: 75%;
-    margin: 0px auto 20px auto;
+    margin: 0px auto;
     border: 1px solid black;
     background-color: #f8f8f8;
     border-radius: 10px;
@@ -97,6 +98,8 @@ body {
 
   #progress_container td [data-cell= "task"] {
     display: flex;
+    align-items: center;
+    position: relative;
   }
   
   td .delete-task-btn {
@@ -104,11 +107,18 @@ body {
     position: absolute;
     cursor: pointer;
     border: none;
-    left: -18px;
+    left: -28px;
     top: 50%;
     transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     font-size: 24px;
+    color: white;
+    background-color: #cf7a74;
+    padding: 0;
+    line-height: 50%;
+    text-align: center;
   }
 
   td .delete-task-btn:hover{
@@ -147,6 +157,14 @@ body {
       width: 90%;
       margin: 20px auto;
     }
+
+    td [data-cell="task"] {
+      position: relative;
+    }
+
+    td .delete-task-btn {
+      left: -22px;
+    }
   }
   
   @media screen and (max-width: 500px) {
@@ -156,11 +174,13 @@ body {
 
     #progress_container table td {
       display: grid;
+      grid-template-columns: 90px auto;
+      align-items: center;
       gap: 10px;
-      grid-template-columns: 30px auto;
       padding: 8px 5px;
       border-right: none;
-      text-align: end;
+      text-align: start;
+      position: relative;
       
     }
 
@@ -178,13 +198,8 @@ body {
     }
 
     td .delete-task-btn {
-    display: block;
-    position: absolute;
-    text-align: center;
-    cursor: pointer;
-    left: -14px;
-    transform: translateY(-65%);
-    font-size: 24px;
+      left: -25px;
+      top: 65%;
   }
   
 
