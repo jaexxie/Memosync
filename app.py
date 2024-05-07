@@ -1,10 +1,16 @@
 #from crypt import methods
+from datetime import date
+import datetime
+from random import random
 import re
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
-from db import make_db_connection
+
+from pymysql import Date
+from db import make_db_connection, does_the_token_match_the_users_token
 import requests
+from passlib.hash import pbkdf2_sha256
 
 # HOME PAGE
 
@@ -78,8 +84,14 @@ def add_user():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
@@ -108,9 +120,11 @@ def add_user():
                                 if does_mail_already_exist:
                                     # if email arlreayd exists, redirect with the message
                                     return redirect('/register/Email already exists')
-
+                                
+                                hash_password = pbkdf2_sha256.hash(password)
+                                token = f"{hash_password}RAYANN{datetime}"
                                 # inserts the new user into the ddatabase
-                                cursor.execute('INSERT INTO user_info (name, lastname, email, password) VALUES (%s, %s, %s, %s)', (first_name, last_name, email, password))
+                                cursor.execute('INSERT INTO user_info (name, lastname, email, password, token) VALUES (%s, %s, %s, %s, %s)', (first_name, last_name, email, hash_password, token))
                                 # commits the transaction
                                 db.commit()
 
@@ -160,12 +174,15 @@ def login():
                 password = request.forms.get('password')
 
                 # checks if the user exists with the given email and password
-                cursor.execute('select * from user_info where email=%s and password=%s', (email, password))
+                cursor.execute('select * from user_info where email=%s', (email))
                 user = cursor.fetchone()
 
-                if user:
+                hash = str(user[4])
+
+                if pbkdf2_sha256.verify(password, hash):
                     # if the user exists, sets a cookie indicating they are logged in
                     response.set_cookie('loggedIn', str(user[0]))
+                    response.set_cookie('token', str(user[6]))
 
                     # redirects the user to the overview page after successful login
                     return redirect('/overview')
@@ -195,6 +212,7 @@ def logout():
     if logged_in_cookie:
         # if logged in, clear the 'loggedIn' cookie to log the user out
         response.set_cookie('loggedIn', '', expires=0)
+        response.set_cookie('token', '', expires=0)
         # redirects to the home page after logging out
         return redirect('/')
     else:
@@ -214,8 +232,14 @@ def overview():
     '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -249,8 +273,14 @@ def update_user_info():
     '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -260,7 +290,6 @@ def update_user_info():
             first_name = request.forms.get('first_name')
             last_name = request.forms.get('last_name')
             email = request.forms.get('email')
-            password = request.forms.get('password')
             image = request.files.get('pic')
 
             if image:
@@ -295,8 +324,14 @@ def update_user_info():
 def delete_profile_picture():
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # connect to the database
             db = make_db_connection()
@@ -318,8 +353,14 @@ def delete_profile_picture():
 def delete_my_account():
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # connect to the database
             db = make_db_connection()
@@ -361,7 +402,14 @@ def to_do_list():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -397,7 +445,14 @@ def create_to_do_list():
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -443,7 +498,14 @@ def delete_to_do_list():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -482,7 +544,14 @@ def add_task_to_do_list():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -523,8 +592,14 @@ def update_checkbox():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -563,8 +638,14 @@ def calendar():
     '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -591,8 +672,14 @@ def add_event():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
 
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         # retrives event information from the form data
         title = request.forms.get('event_name')
         description = request.forms.get('event_description')
@@ -680,8 +767,14 @@ def edit_event():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         # retrives event information from the form data
         id = request.forms.get('edit_event_id')
         title = request.forms.get('title')
@@ -757,8 +850,14 @@ def get_events():
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         # open tje JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
             all_events = json.load(file)['events']
@@ -792,8 +891,14 @@ def ask_anything():
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -857,8 +962,14 @@ def progress_table():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -890,8 +1001,14 @@ def add_project():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database connection
             db = make_db_connection()
@@ -930,8 +1047,14 @@ def update_status():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             # database Connection
             db = make_db_connection()
@@ -968,8 +1091,14 @@ def delete_task():
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
-    
+    token = request.get_cookie('token')
+
     if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
         try:
             #database connection
             db = make_db_connection()
