@@ -264,14 +264,17 @@ def update_user_info():
             image = request.files.get('pic')
 
             if image:
+
+                # update the user's profile picture in the database
+                cursor.execute("UPDATE memosync.user_info SET profile_picture = %s WHERE id = %s", (filename, logged_in_cookie))
+                db.commit()
+
                 # save the image to the specified directory
                 filename = image.filename
                 filepath = os.path.join('static/pic/user_profile_pictures', filename)
                 image.save(filepath)
 
-                # update the user's profile picture in the database
-                cursor.execute("UPDATE memosync.user_info SET profile_picture = %s WHERE id = %s", (filename, logged_in_cookie))
-                db.commit()
+                
 
             # update the user's information in the database
             cursor.execute("UPDATE memosync.user_info SER name = %s, lastname = %s, email = %s, password = %s WHERE id = %s", (first_name, last_name, email, password, logged_in_cookie))
@@ -281,6 +284,52 @@ def update_user_info():
             return redirect(request.get_header('Referer'))
         except:
             # handle any errors by redirecting back to the referring page
+            return redirect(request.get_header('Referer'))
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+    
+@route('/delete/profile/picture', method=['GET', 'POST'])
+def delete_profile_picture():
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        try:
+            # connect to the database
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('update user_info set profile_picture = %s where id = %s', ('default.jpeg', logged_in_cookie))
+            db.commit()
+
+            return redirect(request.get_header('Referer'))
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+    
+@route('/delete/my/account', method=['GET', 'POST'])
+def delete_my_account():
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        try:
+            # connect to the database
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('delete from user_info where id = %s', (logged_in_cookie))
+            db.commit()
+
             return redirect(request.get_header('Referer'))
         finally:
             # close database connection
@@ -761,24 +810,27 @@ def ask_anything():
         # if the user is not logged in, redirect to the home page
         return redirect('/')
 
-def question(question):
-    url = "https://chat-gpt26.p.rapidapi.com/"
+def question(ask):
+
+    url = "https://chat-gtp-free.p.rapidapi.com/v1/chat/completions"
 
     payload = {
-        "model": "gpt-3.5-turbo",
+        "chatId": "92d97036-3e25-442b-9a25-096ab45b0525",
         "messages": [
             {
+                "role": "system",
+                "content": "You are a virtual assistant. Your name is Karen and you would like to be a firefighter."
+            },
+            {
                 "role": "user",
-                "content": question
+                "content": ask
             }
         ]
     }
-
     headers = {
         "content-type": "application/json",
-        "Content-Type": "application/json",
         "X-RapidAPI-Key": "d60350b2f2mshd12f8ff9e0a36afp1c99b7jsnc6d483cf34d9",
-        "X-RapidAPI-Host": "chat-gpt26.p.rapidapi.com"
+        "X-RapidAPI-Host": "chat-gtp-free.p.rapidapi.com"
     }
 
     response = requests.post(url, json=payload, headers=headers)

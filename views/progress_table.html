@@ -14,7 +14,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
         rel="stylesheet" />
-    <title>MemoSync Register</title>
+    <link rel="icon" href="/static/pic/Memosync_Calendar_Tab.png">
+    <title>MemoSync - Progress Table</title>
 </head>
 
 <body>
@@ -78,31 +79,34 @@
                 </thead>
                 <tbody>
                     % if pbs:
-                        % for pb in pbs:
-                        <tr>
-                            <!--<th class="task">Task</th>-->
-                            <td data-cell="task">
-                                <button data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</button>
-                                {{pb[1]}}
-                            </td>
-                            <!--<th class="description">Description</th>-->
-                            <td data-cell="description">{{pb[2]}}</td>
-                            <!--<th class="date">Date</th>-->
-                            <td data-cell="date">{{pb[3]}}</td>
-                            <!--<th class="status">Status</th>-->
-                            <td data-cell="status">
-                                <form action="/update_status" method="POST" class="status-update-form">
-                                    <input type="hidden" name="task_id" value="{{ pb[0] }}">
-                                    <select name="new_status" class="status-selector">
-                                        <option value="not_started" {{ 'selected' if pb[4] == 'not_started' else '' }}>Not Started</option>
-                                        <option value="in_progress" {{ 'selected' if pb[4] == 'in_progress' else '' }}>In Progress</option>
-                                        <option value="completed" {{ 'selected' if pb[4] == 'completed' else '' }}>Completed</option>
-                                       
-                                    </select>
-                                </form>                                
-                            </td>
-                        </tr>
-                        %end
+                    % for pb in pbs:
+                    <tr>
+                        <!--<th class="task">Task</th>-->
+                        <td data-cell="task">
+                            <button data-task-id="{{ pb[0] }}" class="delete-task-btn">&times;</button>
+                            {{pb[1]}}
+                        </td>
+                        <!--<th class="description">Description</th>-->
+                        <td data-cell="description">{{pb[2]}}</td>
+                        <!--<th class="date">Date</th>-->
+                        <td data-cell="date">{{pb[3]}}</td>
+                        <!--<th class="status">Status</th>-->
+                        <td data-cell="status">
+                            <form action="/update_status" method="POST" class="status-update-form">
+                                <input type="hidden" name="task_id" value="{{ pb[0] }}">
+                                <select name="new_status" class="status-selector">
+                                    <option value="not_started" {{ 'selected' if pb[4]=='not_started' else '' }}>Not
+                                        Started</option>
+                                    <option value="in_progress" {{ 'selected' if pb[4]=='in_progress' else '' }}>In
+                                        Progress</option>
+                                    <option value="completed" {{ 'selected' if pb[4]=='completed' else '' }}>Completed
+                                    </option>
+
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                    %end
                     %end
                 </tbody>
             </table>
