@@ -205,7 +205,9 @@ div a {
   padding: 8px;
 }
 
-#progress_container td {
+#progress_container>table td {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
   font-size: 12pt;
 }
 
@@ -234,7 +236,7 @@ div a {
   position: relative;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  padding: 6px;
+  padding: 8px;
   text-align: center;
   font-family: "Montserrat", sans-serif;
 }
@@ -272,7 +274,23 @@ select {
   text-overflow: "";
 }
 
+#not_started {
+  background-color: #cf7a74;
+  border-radius: 14px;
+  padding: 3px;
+}
 
+#in_progress {
+  background-color: #f0eeb1;
+  border-radius: 14px;
+  padding: 3px;
+}
+
+#completed {
+  background-color: #db95bc;
+  border-radius: 14px;
+  padding: 3px;
+}
 
 .fc-toolbar-chunk>button {
   visibility: hidden;

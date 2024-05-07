@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
     rel="stylesheet" />
-  <title>MemoSync</title>
+  <title>MemoSync - To-Do Lists</title>
 </head>
 
 <body>
@@ -89,9 +89,10 @@
         %for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4] == 'true' else ''}}>
-          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}" > {{ task[3] }}</span>
-         
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if
+            task[4]=='true' else '' }}>
+          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }}</span>
+
         </label>
         % end
         % end
