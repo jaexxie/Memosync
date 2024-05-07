@@ -258,19 +258,19 @@ input[type="submit"] {
 .to_do_container {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
   margin: 20px 30px;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .to_do_lists {
-  width: 22%;
-  min-width: 220px;
-  box-sizing: border-box;
   background-color: #f8f8f8;
   border: 1px solid black;
   border-radius: 5px;
-
+  min-height: 50px;
+  overflow: hidden;
+  width: 23%;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .to_do_header {
