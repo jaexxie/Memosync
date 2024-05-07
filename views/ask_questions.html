@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,25 +15,27 @@
     <script src="
     https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js
     "></script>
-    <title>Memosync Chat</title>
+    <title>Memosync - Ask Chat</title>
 </head>
+
 <body>
-    
+
     % include('header_base.html')
 
     <section class="memosync_bot_section">
-       <form action="/ask_anything" method="post">
+        <form action="/ask_anything" method="post">
             <h1>Memosync Expert</h1>
             <textarea readonly name="" id="">
                 % if response:
-                    {{ response['choices'][0]['message']['content'] }}
+                    {{ response['text'] }}
                 % end
             </textarea>
             <input type="text" name="question" id="question" placeholder="Ask...">
             <input type="submit" value="send">
-        </form> 
+        </form>
     </section>
-    
+
 
 </body>
+
 </html>
