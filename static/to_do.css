@@ -298,7 +298,7 @@ input[type="submit"] {
 
 .delete_list_btn:hover,
 .delete_list_btn:focus {
-  color: black;
+  color: red;
   text-decoration: none;
 
 }
@@ -382,6 +382,7 @@ input[type="submit"] {
     right: auto;
     text-align: center;
   }
+
   #popup_container_1,
   #popup_container_2 {
     width: 200px;
