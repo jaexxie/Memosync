@@ -284,6 +284,14 @@ input[type="file"] {
     border-bottom: 2px solid #A63A50;
     font-size: 14px;
     font-family: "Montserrat", sans-serif;
+    width: 100%;
+}
+
+.header_slide_in_profile_container>form>a {
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #A63A50;
 }
 
 .header_slide_in_profile_container>form>button {

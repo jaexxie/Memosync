@@ -1,8 +1,10 @@
 #from crypt import methods
+import re
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
 from db import make_db_connection
+import requests
 
 # HOME PAGE
 
@@ -94,21 +96,34 @@ def add_user():
                 email = request.forms.get('email')
                 password = request.forms.get('password')
 
-                # ensures the email does not already exist in the database
-                cursor.execute('SELECT * FROM user_info WHERE email=%s', (email,))
-                does_mail_already_exist = cursor.fetchall()
-                
-                if does_mail_already_exist:
-                    # if email arlreayd exists, redirect with the message
-                    return redirect('/register/Email already exists')
+                # Makes Sure That the firstname only includes Alphabetic characters
+                if first_name.isalpha():
+                    if last_name.isalpha():
+                        if len(first_name) <= 50:
+                            if len(last_name) <= 50:
+                                # ensures the email does not already exist in the database
+                                cursor.execute('SELECT * FROM user_info WHERE email=%s', (email,))
+                                does_mail_already_exist = cursor.fetchall()
+                                
+                                if does_mail_already_exist:
+                                    # if email arlreayd exists, redirect with the message
+                                    return redirect('/register/Email already exists')
 
-                # inserts the new user into the ddatabase
-                cursor.execute('INSERT INTO user_info (name, lastname, email, password) VALUES (%s, %s, %s, %s)', (first_name, last_name, email, password))
-                # commits the transaction
-                db.commit()
+                                # inserts the new user into the ddatabase
+                                cursor.execute('INSERT INTO user_info (name, lastname, email, password) VALUES (%s, %s, %s, %s)', (first_name, last_name, email, password))
+                                # commits the transaction
+                                db.commit()
 
-                # redirects the user to the login page after successful registration
-                return redirect('/login')
+                                # redirects the user to the login page after successful registration
+                                return redirect('/login')
+                            else:
+                                return redirect('/register/Lastname Can Not Be Longer Than 50 Characters')
+                        else:
+                            return redirect('/register/Firstname Can Not Be Longer Than 50 Characters')
+                    else:
+                        return redirect('/register/Lastname Can Not Include Any Non Alphabetic Characters')
+                else:
+                    return redirect('/register/Firstname Can Not Include Any Non Alphabetic Characters')
         finally:
             # close database connection
             cursor.close()
@@ -249,14 +264,17 @@ def update_user_info():
             image = request.files.get('pic')
 
             if image:
+
+                # update the user's profile picture in the database
+                cursor.execute("UPDATE memosync.user_info SET profile_picture = %s WHERE id = %s", (filename, logged_in_cookie))
+                db.commit()
+
                 # save the image to the specified directory
                 filename = image.filename
                 filepath = os.path.join('static/pic/user_profile_pictures', filename)
                 image.save(filepath)
 
-                # update the user's profile picture in the database
-                cursor.execute("UPDATE memosync.user_info SET profile_picture = %s WHERE id = %s", (filename, logged_in_cookie))
-                db.commit()
+                
 
             # update the user's information in the database
             cursor.execute("UPDATE memosync.user_info SER name = %s, lastname = %s, email = %s, password = %s WHERE id = %s", (first_name, last_name, email, password, logged_in_cookie))
@@ -266,6 +284,52 @@ def update_user_info():
             return redirect(request.get_header('Referer'))
         except:
             # handle any errors by redirecting back to the referring page
+            return redirect(request.get_header('Referer'))
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+    
+@route('/delete/profile/picture', method=['GET', 'POST'])
+def delete_profile_picture():
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        try:
+            # connect to the database
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('update user_info set profile_picture = %s where id = %s', ('default.jpeg', logged_in_cookie))
+            db.commit()
+
+            return redirect(request.get_header('Referer'))
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+    
+@route('/delete/my/account', method=['GET', 'POST'])
+def delete_my_account():
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+
+    if logged_in_cookie:
+        try:
+            # connect to the database
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            cursor.execute('delete from user_info where id = %s', (logged_in_cookie))
+            db.commit()
+
             return redirect(request.get_header('Referer'))
         finally:
             # close database connection
