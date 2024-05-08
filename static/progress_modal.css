@@ -36,8 +36,9 @@
 
 /*modal container*/
 .modal-container {
-    width: 300px;
     position: fixed;
+    width: 300px;
+    max-width: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -150,4 +151,15 @@ form>fieldset>* {
 .add-task-btn:hover {
     background-color: rgba(166, 58, 80, 0.5);
     /* Change background color on hover */
+}
+
+@media screen and (max-width: 500px) {
+    .modal-container {
+        width: 60%; 
+        max-width: none;
+    }
+
+    .modal-header h3 {
+        line-height: 22px;
+    }
 }

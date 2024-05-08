@@ -44,12 +44,13 @@
             <section class="modal-form-container">
                 <form action="/add_project" id="task-form" method="post">
                     <fieldset>
-                        <label for="task">Enter a task:</label>
+                        <label for="task">Task:</label>
                         <input type="text" id="task" name="task" placeholder="e.g meeting" required>
-                        <label for="description">Enter a description:</label>
+                        <label for="description">Description:</label>
                         <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
-                        <label for="deadline_date">Enter a deadline (date):</label>
-                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23" required>
+                        <label for="deadline_date">Deadline:</label>
+                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23"
+                            required>
                         <button type="submit" value="create" class="add-task-btn">Create</button>
                     </fieldset>
                 </form>
