@@ -32,12 +32,12 @@
   <div class="container_create_event">
     <div id="calendar_container_1">
       <section id="calendar_1_header">
-        <h3>Edit Event</h3>
         <span class="close">&times;</span>
       </section>
     </div>
     <form action="/add_event" method="post">
       <fieldset>
+        <legend>Add Event</legend>
         <label for="event_name">Event Name</label>
         <input type="text" name="event_name" id="event_name" placeholder="e.g. doctor's appoinment">
 
@@ -59,7 +59,7 @@
         <label for="end_time">End Time</label>
         <input type="time" name="end_time" id="end_time">
 
-        <input type="submit" value="Create" id="create">
+        <input type="submit" value="Add" id="submit">
       </fieldset>
     </form>
   </div>
@@ -74,8 +74,6 @@
       </section>
       <form action="edit/event" method="post">
         <fieldset>
-          <label for="edit_event_id">Event ID</label>
-          <input readonly type="text" name="edit_event_id" id="edit_event_id">
 
           <label for="title">Title</label>
           <input type="text" name="title" id="title">
@@ -95,7 +93,7 @@
           <label for="end_time_edit">End Time</label>
           <input type="time" name="end_time_edit" id="end_time_edit">
 
-          <input type="submit" value="Save Changes">
+          <input type="submit" value="Save changes" id="submit">
           <p id="delete_event"></p>
         </fieldset>
       </form>
