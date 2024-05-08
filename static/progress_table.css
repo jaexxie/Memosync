@@ -98,25 +98,29 @@ body {
 #progress_container td [data-cell="task"] {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 td .delete-task-btn {
-  display: block;
+  display: inline-flex;
   position: absolute;
   cursor: pointer;
   border: none;
   left: -18px;
   top: 50%;
-  padding: 0;
+  padding: 4px;
   transform: translateY(-50%);
-  border-radius: 50%;
-  font-size: 24px;
+  border-radius: 5px;
   background-color: #f8f8f8;
+  transition: all 0.3s ease;
 }
 
 td .delete-task-btn:hover {
-  color: red;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+td .delete-task-btn img {
+  width: 22px;
+  height: 22px;
 }
 
 .status-selector {
@@ -183,5 +187,14 @@ td .delete-task-btn:hover {
     content: attr(data-cell) ": ";
   }
 
+  td .delete-task-btn {
+    padding: 2px;
+    
+  }
+
+  td .delete-task-btn img{
+    width: 18px;
+    height: 18px;
+  }
 
 }
