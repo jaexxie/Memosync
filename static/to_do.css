@@ -197,6 +197,16 @@ select[name="choice"] {
   border: none;
 }
 
+select[name="choice"]:focus {
+  outline: none;
+  border-bottom: 1px solid #A63A50;
+}
+
+option:focus {
+  outline: none;
+  border-bottom: 1px solid #A63A50;
+}
+
 input[type="text"]:focus {
   outline: none;
   border-bottom: 1px solid #A63A50;
@@ -217,14 +227,15 @@ input[type="text"]:focus {
 
 #add {
   border-radius: 5px;
-  padding: 5px 10px 5px 10px;
-  background-color: #A63A50;
+  padding: 6px 14px;
+  background-color: #a63a50;
   color: white;
   cursor: pointer;
+  border: none;
 }
 
 #add:hover {
-  background-color: rgba(166, 58, 80, 0.9);
+  background-color: rgba(166, 58, 80, 0.5);
 }
 
 input[type="submit"] {
