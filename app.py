@@ -613,7 +613,6 @@ def update_checkbox():
             cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked, task_id))
             db.commit()
             
-            print("task id:", task_id)
 
             # redirects to the to-do list page after updating the task
             return redirect('/to_do_list')
