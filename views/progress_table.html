@@ -33,7 +33,6 @@
         <!--modal overlay prevents the user from interacting with the content below the modal-->
         <div class="modal-overlay"></div>
 
-
         <!--Modal for create/add new task-->
 
         <div class="modal-container">
@@ -43,7 +42,6 @@
             </section>
 
             <section class="modal-form-container">
-
                 <form action="/add_project" id="task-form" method="post">
                     <fieldset>
                         <label for="task">Enter a task:</label>
@@ -51,12 +49,10 @@
                         <label for="description">Enter a description:</label>
                         <input type="text" id="description" name="description" placeholder="e.g team meeting" required>
                         <label for="deadline_date">Enter a deadline (date):</label>
-                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23"
-                            required>
+                        <input type="date" id="deadline_date" name="deadline_date" placeholder="e.g 2024-04-23" required>
                         <button type="submit" value="create" class="add-task-btn">Create</button>
                     </fieldset>
                 </form>
-
             </section>
 
         </div>
@@ -66,15 +62,10 @@
             <table>
                 <thead>
                     <tr>
-
                         <th class="task">Task</th>
-
                         <th class="description">Description</th>
-
                         <th class="date">Date</th>
-
                         <th class="status">Status</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -95,13 +86,9 @@
                             <form action="/update_status" method="POST" class="status-update-form">
                                 <input type="hidden" name="task_id" value="{{ pb[0] }}">
                                 <select name="new_status" class="status-selector">
-                                    <option value="not_started" {{ 'selected' if pb[4]=='not_started' else '' }}>Not
-                                        Started</option>
-                                    <option value="in_progress" {{ 'selected' if pb[4]=='in_progress' else '' }}>In
-                                        Progress</option>
-                                    <option value="completed" {{ 'selected' if pb[4]=='completed' else '' }}>Completed
-                                    </option>
-
+                                    <option value="not_started" {{ 'selected' if pb[4]=='not_started' else '' }}>Not Started</option>
+                                    <option value="in_progress" {{ 'selected' if pb[4]=='in_progress' else '' }}>In Progress</option>
+                                    <option value="completed" {{ 'selected' if pb[4]=='completed' else '' }}>Completed</option>
                                 </select>
                             </form>
                         </td>
