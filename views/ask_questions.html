@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/static/calendar.css" rel="stylesheet" type="text/css" />
+    <link href="/static/ask_questions.css" rel="stylesheet" type="text/css" />
+    <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" href="/static/pic/Memosync_Calendar_Tab.png">
+    <script src="
+    https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js
+    "></script>
+    <title>Memosync - Ask Chat</title>
+</head>
+
+<body>
+
+    % include('header_base.html')
+
+    <section class="memosync_bot_section">
+        <form action="/ask_anything" method="post">
+            <h1>Memosync Expert</h1>
+            <textarea readonly name="" id="">
+                % if response:
+                    {{ response['text'] }}
+                % end
+            </textarea>
+            <input type="text" name="question" id="question" placeholder="Ask...">
+            <input type="submit" value="send">
+        </form>
+    </section>
+
+
+</body>
+
+</html>

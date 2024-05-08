@@ -11,17 +11,18 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
     rel="stylesheet" />
+  <link rel="icon" href="/static/pic/Memosync_Calendar_Tab.png">
   <script src="
   https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js
   "></script>
   <script src="/static/js/calendar.js"></script>
-  <title>MemoSync Register</title>
+  <title>MemoSync - Calendar</title>
 </head>
 
 <body>
 
   % include('header_base.html')
-  <h2>Calender</h2>
+  <h2>Calendar</h2>
   <div class="create_event">
     <button id="add_event_btn">Add event</button>
   </div>
@@ -31,12 +32,12 @@
   <div class="container_create_event">
     <div id="calendar_container_1">
       <section id="calendar_1_header">
-        <h3>Edit Event</h3>
         <span class="close">&times;</span>
       </section>
     </div>
     <form action="/add_event" method="post">
       <fieldset>
+        <legend>Add Event</legend>
         <label for="event_name">Event Name</label>
         <input type="text" name="event_name" id="event_name" placeholder="e.g. doctor's appoinment">
 
@@ -58,7 +59,7 @@
         <label for="end_time">End Time</label>
         <input type="time" name="end_time" id="end_time">
 
-        <input type="submit" value="Create" id="create">
+        <input type="submit" value="Add" id="submit">
       </fieldset>
     </form>
   </div>
@@ -66,49 +67,47 @@
   <!-- popup for editing event -->
   <div class="background_view_event"></div>
   <div class="container_view_event">
-      <div id="calendar_container_1">
-        <section id="calendar_1_header">
-          <h3>Edit Event</h3>
-          <span class="close">&times;</span>
-        </section>
-        <form action="edit/event" method="post">
-          <fieldset>
-            <label for="edit_event_id">Event ID</label>
-            <input readonly type="text" name="edit_event_id" id="edit_event_id">
-    
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title">
-    
-            <label for="description">Description</label>
-            <input type="text" name="description" id="description">
-    
-            <label for="start_date_edit">Start Date</label>
-            <input type="date" name="start_date_edit" id="start_date_edit">
-    
-            <label for="end_date_edit">End Date</label>
-            <input type="date" name="end_date_edit" id="end_date_edit">
-    
-            <label for="start_time_edit">Start Time</label>
-            <input type="time" name="start_time_edit" id="start_time_edit">
-    
-            <label for="end_time_edit">End Time</label>
-            <input type="time" name="end_time_edit" id="end_time_edit">
-    
-            <input type="submit" value="Save Changes">
-            <p id="delete_event"></p>
-          </fieldset>
-        </form>
-      </div>
-      <p id="event_info"></p><br>
-      <p id="event_info"></p><br>
-      <p id="event_info"></p><br>
-      <p id="event_info"></p><br>
-      <p id="event_info"></p><br>
-      <p id="event_info"></p><br>
-      <!-- <form action="" method="post">
+    <div id="calendar_container_1">
+      <section id="calendar_1_header">
+        <h3>Edit Event</h3>
+        <span class="close_2">&times;</span>
+      </section>
+      <form action="edit/event" method="post">
+        <fieldset>
+
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title">
+
+          <label for="description">Description</label>
+          <input type="text" name="description" id="description">
+
+          <label for="start_date_edit">Start Date</label>
+          <input type="date" name="start_date_edit" id="start_date_edit">
+
+          <label for="end_date_edit">End Date</label>
+          <input type="date" name="end_date_edit" id="end_date_edit">
+
+          <label for="start_time_edit">Start Time</label>
+          <input type="time" name="start_time_edit" id="start_time_edit">
+
+          <label for="end_time_edit">End Time</label>
+          <input type="time" name="end_time_edit" id="end_time_edit">
+
+          <input type="submit" value="Save changes" id="submit">
+          <p id="delete_event"></p>
+        </fieldset>
+      </form>
+    </div>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <p id="event_info"></p><br>
+    <!-- <form action="" method="post">
         <button id="delete_event_btn">Delete Event</button>
       </form> -->
-    </div>
+  </div>
 
   <div id='calendar'></div>
 

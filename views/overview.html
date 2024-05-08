@@ -11,6 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap"
     rel="stylesheet" />
+  <link rel="icon" href="/static/pic/Memosync_Calendar_Tab.png">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -70,11 +71,14 @@
             % if not todos:
             <p>You have no to-do lists yet. Create one to get started!</p>
             % else:
+            % if todos:
+            % for todo in todos:
             <ul>
-              % for todo in todos:
               <li>{{ todo[2]}}</li>
-              % end
             </ul>
+            % end
+            % end
+            % end
           </section>
         </a>
       </section>
@@ -86,8 +90,6 @@
             <p>You have no tasks yet. Create one to get started!</p>
             % else:
             <div id="progress_container">
-              % if pbs:
-              % for pb in pbs:
               <table>
                 <thead>
                   <tr>
@@ -96,40 +98,24 @@
                   </tr>
                 </thead>
                 <tbody>
+                  % for pb in pbs:
                   <tr>
-                    <!--<th class="task">Task</th>-->
                     <td>
-                      <span></span>
                       {{pb[1]}}
                     </td>
-                    <!--<th class="description">Description</th>-->
                     <td>
-                      <form action="/update_status" method="POST" class="status-update-form">
-                        <input type="hidden" name="task_id" value="{{ pb[0] }}">
-                        <select name="new_status" class="status-selector">
-                          % if pb[4] == 'not_started':
-                          <option selected value="not_started">Not Started</option>
-                          <option value="in_progress">In Progress</option>
-                          <option value="completed">Completed</option>
-                          % end
-                          % if pb[4] == 'in_progress':
-                          <option value="not_started">Not Started</option>
-                          <option selected value="in_progress">In Progress</option>
-                          <option value="completed">Completed</option>
-                          % end
-                          % if pb[4] == 'completed':
-                          <option value="not_started">Not Started</option>
-                          <option value="in_progress">In Progress</option>
-                          <option selected value="completed">Completed</option>
-                          % end
-                        </select>
-                      </form>
+                      % if pb[4] == 'not_started':
+                      <span id="not_started">Not started</span>
+                      % elif pb[4] == 'in_progress':
+                      <span id="in_progress">In progress</span>
+                      % elif pb[4] == 'completed':
+                      <span id="completed">Completed</span>
+                      % end
                     </td>
                   </tr>
+                  % end
                 </tbody>
               </table>
-              % end
-              % end
             </div>
             % end
           </section>
