@@ -5,3 +5,9 @@ In order to use the application, you have to enter "Pip/pip3 install bottle" onc
 
 ## MySQL
 To connect to database enter "pip3 install pymysql" into the terminal
+
+## Ask Memosync Expert
+To ask our Memosync Expert enter "pip install requests" into the terminal
+
+## Password Hash
+To hash your password enter "pip install passlib" into the terminal
