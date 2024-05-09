@@ -83,13 +83,13 @@
         <button data-task-id="{{ cate[0] }}" class="delete_list_btn">&times;</button>
       </section>
       <section class="to_do_body">
-        <h4> {{ cate[3] }}</h4>
+        <h4>{{ cate[3] }}</h4>
+        
         %for task in tasks:
         % if task[2] == cate[0]:
         <label>
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if
-            task[4]=='true' else '' }}>
-          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }}</span>
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4]=="true" else ''}}>
+          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }} </span>
         </label>
         % end
         % end

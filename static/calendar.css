@@ -14,6 +14,10 @@ body>h2 {
   font-size: 20px;
 }
 
+#edit_event_id {
+  display: none;
+}
+
 #calendar {
   padding: 50px;
   font-family: "Montserrat", sans-serif;
@@ -67,6 +71,11 @@ element.style {
 /* create event */
 #all_day:checked~#start_time,
 #all_day:checked~#end_time {
+  display: none;
+}
+
+#all_day:checked~#start_time_label,
+#all_day:checked~#end_time_label {
   display: none;
 }
 

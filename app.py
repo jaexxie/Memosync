@@ -3,10 +3,10 @@ from datetime import date
 import datetime
 from random import random
 import re
+from unicodedata import category
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
-
 from pymysql import Date
 from db import make_db_connection, does_the_token_match_the_users_token
 import requests
@@ -293,24 +293,24 @@ def update_user_info():
             image = request.files.get('pic')
 
             if image:
+                
+                # save the image to the specified directory
+                filename = image.filename
 
                 # update the user's profile picture in the database
                 cursor.execute("UPDATE memosync.user_info SET profile_picture = %s WHERE id = %s", (filename, logged_in_cookie))
                 db.commit()
 
-                # save the image to the specified directory
-                filename = image.filename
                 filepath = os.path.join('static/pic/user_profile_pictures', filename)
+                if os.path.exists(filepath):
+                    os.remove(filepath)
                 image.save(filepath)
 
             # update the user's information in the database
-            cursor.execute("UPDATE memosync.user_info SET name = %s, lastname = %s, email = %s, password = %s WHERE id = %s", (first_name, last_name, email, password, logged_in_cookie))
+            cursor.execute("UPDATE memosync.user_info SET name = %s, lastname = %s, email = %s WHERE id = %s", (first_name, last_name, email, logged_in_cookie))
             db.commit()
             
             # redirects the user back to the referring page after a successful update
-            return redirect(request.get_header('Referer'))
-        except:
-            # handle any errors by redirecting back to the referring page
             return redirect(request.get_header('Referer'))
         finally:
             # close database connection
@@ -462,15 +462,7 @@ def create_to_do_list():
             to_do_list_title = request.forms.get("title")
             to_do_list_description = request.forms.get("description")
 
-            # checks if a to-do list with the same title already exists for the logged in user
-            cursor.execute('SELECT * FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s;', (to_do_list_title, logged_in_cookie,))
-            todo = cursor.fetchone()
-
-            if todo:
-                # if a to-do list with this title already exists, return error message
-                return template('to_do_list', error='A to-do list with this title already exists.')
-
-            # if to-do list does not exist, insert the new to-do list into the database with the user ID
+            # insert the new to-do list into the database with the user ID
             cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
     
@@ -613,7 +605,6 @@ def update_checkbox():
             cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked, task_id))
             db.commit()
             
-            print("task id:", task_id)
 
             # redirects to the to-do list page after updating the task
             return redirect('/to_do_list')
@@ -651,8 +642,12 @@ def calendar():
             db = make_db_connection()
             cursor = db.cursor()
 
+            # Get the current date
+            current_date = datetime.date.today()
+            formatted_date = current_date.isoformat()
+
             # render the 'calendar' template, providing the logged-in user's information
-            return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
+            return template('calendar', date=formatted_date, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
         # close database connection
             cursor.close()
@@ -715,7 +710,6 @@ def add_event():
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
-            # redirects to the calendar page after adding the event
             return redirect('/calendar')
         else:
             # retrieves time from form data if the event is not all-day
@@ -748,7 +742,6 @@ def add_event():
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
-            # redirects to the calendar page after adding the event
             return redirect('/calendar') 
     else:
         # if the user is not logged in, redirect to the home page
@@ -800,7 +793,6 @@ def edit_event():
         with open('static/json/events.json', 'w') as file:
             json.dump({"events": events}, file, indent=4)
 
-        # redirects to the calendar page after adding the event
         return redirect('/calendar') 
     else:
         # if the user is not logged in, redirect to the home page
@@ -836,7 +828,6 @@ def delete_event(id):
     with open('static/json/events.json', 'w') as file:
         json.dump({"events": events}, file, indent=4)
     
-    # redirects to the calendar page after deleting the event
     return redirect("/calendar")
     
 @route('/get_events')
