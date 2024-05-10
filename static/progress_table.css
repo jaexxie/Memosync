@@ -38,11 +38,12 @@ body {
 #progress_container {
   width: 75%;
   margin: 0px auto 20px auto;
-  border: 1px solid black;
+  border: 1px solid #ddd;
   background-color: #f8f8f8;
   border-radius: 10px;
-  padding: 10px 50px;
+  padding: 20px;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 #progress_container table {
@@ -51,33 +52,14 @@ body {
 }
 
 #progress_container th {
+  top: 0;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   font-family: monospace;
-  font-size: 18px;
   padding: 8px;
-}
-
-
-/*change the width of cells in HTML table*/
-.task {
-  width: 20%;
-  font-family: "Montserrat", sans-serif;
-}
-
-.description {
-  width: 40%;
-  font-family: "Montserrat", sans-serif;
-}
-
-.date {
-  width: 20%;
-  font-family: "Montserrat", sans-serif;
-}
-
-.status {
-  width: 20%;
-  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 #progress_container td {
@@ -89,65 +71,65 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-/* Detta tar bort höger border på sista elementet i <tr> */
-#progress_container td:last-child,
-#progress_container th:last-child {
+#progress_container th:last-child, 
+#progress_container td:last-child {
   border-right: none;
 }
 
-#progress_container td [data-cell="task"] {
-  display: flex;
-  align-items: center;
+#progress_container .status-selector {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
 }
 
-td .delete-task-btn {
+/*Ta bor fokusram */
+#progress_container .status-selector:focus {
+  outline: none;
+}
+
+#progress_container .status-selector option {
+  background-color: rgba(251, 249, 245, 0.6);
+  text-align: center;
+}
+
+#progress_container .delete-task-btn {
   display: inline-flex;
   position: absolute;
   cursor: pointer;
   border: none;
   left: -18px;
-  top: 50%;
-  padding: 4px;
-  transform: translateY(-50%);
-  border-radius: 5px;
-  background-color: #f8f8f8;
-  transition: all 0.3s ease;
+  background-color: transparent;
+  transition: transform 0.3s ease;
 }
 
-td .delete-task-btn:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+#progress_container .delete-task-btn:hover {
+  transform: scale(1.2);
 }
 
-td .delete-task-btn img {
-  width: 22px;
-  height: 22px;
+#progress_container .delete-task-btn img {
+  width: 20px;
+  height: 20px;
 }
 
-.status-selector {
-  background-color: #f8f8f8;
-  box-sizing: border-box;
-  padding: 3px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 14px;
+#progress_container th.active, 
+#progress_container td.active {
+  color: #cf7a74;
 }
 
-/*Ta bor fokusram */
-.status-selector:focus {
-  outline: none;
-}
-
-.status-selector option {
-  background-color: rgba(251, 249, 245, 0.6);
+#progress_container th span.icon-arrow {
+  display: inline-block;
+  position: relative;
   text-align: center;
+  font-size: 16px;
+
 }
 
 @media screen and (max-width: 770px) {
   #progress_container {
     width: 90%;
     margin: 0px auto;
-    padding: 10px 30px;
   }
 
 
@@ -158,6 +140,9 @@ td .delete-task-btn img {
 }
 
 @media screen and (max-width: 500px) {
+  #progress_container {
+    margin: 0;
+  }
   #progress_container table th {
     display: none;
   }

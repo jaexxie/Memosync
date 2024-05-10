@@ -125,8 +125,55 @@ document.addEventListener('DOMContentLoaded', function () {
             //alert("An error occurred while deleting the task.");
         });
 
+    };
+
+    //Funktionen nedan sorterar tabellen 
+
+    table_headings = document.querySelectorAll('thead th');
+    table_rows = document.querySelectorAll('tbody tr')
+
+    table_headings.forEach((head, i) => {
+
+        let sort_asc = true;
+        head.onclick = () => {
+
+            table_headings.forEach(h => {
+                
+                h.classList.remove('active', 'asc');
+                h.querySelector('span.icon-arrow').style.transform = "rotate(0deg)";
+            });
+
+            head.classList.add('active');
+
+            head.classList.toggle('asc', sort_asc);
+            head.querySelector('span.icon-arrow').style.transform = sort_asc ? "rotate(180deg)" : "rotate(0deg)";
+    
+            sort_asc = !sort_asc;
+
+            document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+        
+            table_rows.forEach(row => {
+                row.querySelectorAll('td')[i].classList.add('active');
+            });
+
+            sortTable(i, sort_asc);
+        };
+    });
+
+    function sortTable(column, sort_asc) {
+        [...table_rows].sort((a, b) => {
+            let first_row = a.querySelectorAll('td')[column].innerText.toLowerCase(),
+                second_row = b.querySelectorAll('td') [column].innerText.toLowerCase();
+
+            return sort_asc ? (first_row < second_row ? -1 : 1) : (first_row < second_row ? 1 : -1);
+
+        })
+
+        .forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+        
     }
      
+  
 });
 
 
