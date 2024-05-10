@@ -133,31 +133,39 @@ document.addEventListener('DOMContentLoaded', function () {
     table_rows = document.querySelectorAll('tbody tr')
 
     table_headings.forEach((head, i) => {
+        if (i !== 1) {
+            let sort_asc = true;
 
-        let sort_asc = true;
-        head.onclick = () => {
-
-            table_headings.forEach(h => {
+            head.onclick = () => {
+                table_headings.forEach(h => {
                 
-                h.classList.remove('active', 'asc');
-                h.querySelector('span.icon-arrow').style.transform = "rotate(0deg)";
-            });
+                    h.classList.remove('active', 'asc');
+                    if (h.querySelector('span.icon-arrow')) {
+                        h.querySelector('span.icon-arrow').style.transform = "rotate(0deg)";
+                    }
+                });
 
-            head.classList.add('active');
+                head.classList.add('active');
 
-            head.classList.toggle('asc', sort_asc);
-            head.querySelector('span.icon-arrow').style.transform = sort_asc ? "rotate(180deg)" : "rotate(0deg)";
+                if(head.querySelector('span.icon-arrow')) {
+                    head.classList.toggle('asc', sort_asc);
+                    head.querySelector('span.icon-arrow').style.transform = sort_asc ? "rotate(180deg)" : "rotate(0deg)";
+
+                }
+
+                sort_asc = !sort_asc;
+
+                document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+            
+                table_rows.forEach(row => {
+                    row.querySelectorAll('td')[i].classList.add('active');
+                });
     
-            sort_asc = !sort_asc;
+                sortTable(i, sort_asc);
+            };
 
-            document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
-        
-            table_rows.forEach(row => {
-                row.querySelectorAll('td')[i].classList.add('active');
-            });
-
-            sortTable(i, sort_asc);
-        };
+        }
+            
     });
 
     function sortTable(column, sort_asc) {
