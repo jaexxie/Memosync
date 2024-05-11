@@ -1151,7 +1151,7 @@ def update_task():
             new_content = request.forms.get("new_content")
             cell_type = request.forms.get("cell_type")
 
-            # Update the specific column based on the cell_type
+            # Updatera specifika columner utifrån cell_type
             if cell_type == "task":
                 cursor.execute('UPDATE progress_bar SET project = %s WHERE id = %s', (new_content, task_id))
             elif cell_type == "description":
