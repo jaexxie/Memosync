@@ -1113,6 +1113,57 @@ def delete_task():
     else:
         # if the user is not logged in, redirect to the home page
         return redirect('/')
+
+@route ('/update_task', method='POST')
+def update_task():
+    '''
+    Route for editing content of a task in the progress table.
+
+    If the user is logged in, it retrieves the task ID and the new
+    content and updates the database. If the user
+    is not logged in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
+    if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
+        try:
+            # database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # retrieve task ID and new content and cell type from the form data
+            task_id = request.forms.get("task_id")
+            new_content = request.forms.get("new_content")
+            cell_type = request.forms.get("cell_type")
+
+            # Updatera specifika columner utifrån cell_type
+            if cell_type == "task":
+                cursor.execute('UPDATE progress_bar SET project = %s WHERE id = %s', (new_content, task_id))
+            elif cell_type == "description":
+                cursor.execute('UPDATE progress_bar SET description = %s WHERE id = %s', (new_content, task_id))
+            elif cell_type == "date":
+                cursor.execute('UPDATE progress_bar SET spb_date = %s WHERE id = %s', (new_content, task_id))
+
+            db.commit()
+            # redirect to progress table
+            return redirect('/progress_table')
+        
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
      
 @route('/static/<filepath:path>')
 def server_static(filepath):
