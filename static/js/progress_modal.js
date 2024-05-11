@@ -212,12 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 //alert("Failed to delete task. Please try again later.");
                 
-            } 
-
-            //I annat fall (om svaret lyckas) hämtar hanteraren svaret
-            var cell = document.querySelector('[data-task-id="' + taskId + '"]');
-
-            cell.contentEditable = false;
+            }
 
         })
 
@@ -228,6 +223,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     }
+
+    //Nedan kod är för popovers 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.forEach( function (popoverTriggerEl) {
+        var popover = new bootstrap.Popover(popoverTriggerEl, {
+            trigger: 'hover'              
+        });
+
+        //Hide popover when clicked 
+        popoverTriggerEl.addEventListener('click', function () {
+            popover.hide();
+        
+        });
+
+    });
      
   
 });

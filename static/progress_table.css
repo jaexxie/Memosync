@@ -94,8 +94,16 @@ body {
   text-align: center;
 }
 
-#progress_container .delete-task-btn {
-  display: inline-flex;
+#progress_container .editable-cell {
+  position: relative;
+}
+
+#progress_container .editable-cell:focus {
+  outline: none;
+  border-bottom: 1px solid #a63a50;
+}
+
+#progress_container .editable-cell button {
   position: absolute;
   cursor: pointer;
   border: none;
@@ -104,14 +112,15 @@ body {
   transition: transform 0.3s ease;
 }
 
-#progress_container .delete-task-btn:hover {
+#progress_container .editable-cell button:hover {
   transform: scale(1.2);
 }
 
-#progress_container .delete-task-btn img {
+#progress_container .editable-cell img {
   width: 20px;
   height: 20px;
 }
+
 
 #progress_container th.active, 
 #progress_container td.active {
@@ -125,6 +134,8 @@ body {
   font-size: 16px;
 
 }
+
+
 
 @media screen and (max-width: 770px) {
   #progress_container {

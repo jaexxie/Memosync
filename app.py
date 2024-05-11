@@ -1160,17 +1160,9 @@ def update_task():
                 cursor.execute('UPDATE progress_bar SET spb_date = %s WHERE id = %s', (new_content, task_id))
 
             db.commit()
-            print("cell-type:", cell_type)
-            print("new_content:", new_content)
-            print("task_id:", task_id)
             # redirect to progress table
             return redirect('/progress_table')
         
-        except Exception as e:
-
-            # Handle database errors or any other exceptions
-            print("An error occurred:", e)
-
         finally:
             # close database connection
             cursor.close()
