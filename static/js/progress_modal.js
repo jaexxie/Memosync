@@ -8,36 +8,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     openModalBtn.addEventListener("click", function () {
-        if (modalOverlay.classList.contains("show")) {
-            modal.classList.remove("show");
-            modalOverlay.classList.remove("show");
-            //modalen finns fortfarande i backgrunden (osynlig)
 
-        } else {
-            modal.classList.add("show");
-            modalOverlay.classList.add("show");
-            //modalen finns fortfarande i backgrunden (osynlig)
+        modal.classList.add("show");
+        modalOverlay.classList.add("show");
 
-        }
     });
 
     modalOverlay.addEventListener("click", function () {
         modal.classList.remove("show");
         modalOverlay.classList.remove("show");
-        //modalen finns fortfarande i backgrunden (osynlig)
-        //modal.style.display = "none";
-        //modalOverlay.style.display = "none";
-        //alert("Are you sure you want to leave this page? you have unsaved changes!")
+
         form.reset();
     });
 
     closeModalBtn.addEventListener("click", function () {
-        if (modalOverlay.classList.contains("show")) {
-            modal.classList.remove("show");
-            modalOverlay.classList.remove("show");
+        modal.classList.remove("show");
+        modalOverlay.classList.remove("show");
 
-            form.reset();
-        }
+        form.reset();
+        
     });
 
     //Funktion som uppdaterar backgrundsfärgen på select (#status-col)
