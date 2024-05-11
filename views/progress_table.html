@@ -74,17 +74,17 @@
                     % for pb in pbs:
                     <tr>
                         <!--task name {{pb[1]}} -->
-                        <td data-cell="task"  class="editable-cell">
+                        <td data-cell="task"  class="editable-cell" contenteditable="true" data-task-id="{{ pb[0] }}">
                             <button data-task-id="{{ pb[0] }}" class="delete-task-btn"><img src="/static/pic/delete_bin_icon.png" alt="delete_bin_icon"></button>
                             <span class="editable-content">{{pb[1]}}</span>
                             
                         </td>
                         <!--description {{pb[2]}} -->
-                        <td data-cell="description">
+                        <td data-cell="description" class="editable-cell" contenteditable="true" data-task-id="{{ pb[0] }}">
                             {{pb[2]}}
                         </td>
                         <!--Date {{pb[3]}}-->
-                        <td data-cell="date">
+                        <td data-cell="date" class="editable-cell" contenteditable="true" data-task-id="{{ pb[0] }}">
                             {{pb[3]}}
                         </td>
                         <!--task status {{ pb[4] }}-->

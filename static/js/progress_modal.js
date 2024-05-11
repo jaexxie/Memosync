@@ -179,6 +179,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
         .forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
         
+    };
+
+
+    //funktion som gör data i tabellen redigerbar och sparar det nya värdet i databasen
+
+    document.querySelectorAll('.editable-cell').forEach(function(cell) {
+        cell.addEventListener('blur', function() {
+            var taskId = this.dataset.taskId;
+            var  newContent = this.textContent.trim();
+            var cellType = this.getAttribute('data-cell');
+
+            updateTask(taskId, cellType, newContent);
+        });
+
+    });
+
+    //function som skickar ny data till bottle som sparar det i databasen
+    function updateTask(taskId, cellType, newContent) {
+        fetch('/update_task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'task_id=' + encodeURIComponent(taskId) + '&cell_type=' + encodeURIComponent(cellType) + '&new_content=' + encodeURIComponent(newContent)
+        })
+        
+        .then(response => {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to update task");
+
+                //alert("Failed to delete task. Please try again later.");
+                
+            } 
+
+            //I annat fall (om svaret lyckas) hämtar hanteraren svaret
+            var cell = document.querySelector('[data-task-id="' + taskId + '"]');
+
+            cell.contentEditable = false;
+
+        })
+
+        .catch((error) => {
+            console.error('Error', error);
+
+            alert("An error occurred while updating the task:" + error.message);
+        });
+
     }
      
   
