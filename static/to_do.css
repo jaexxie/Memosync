@@ -304,6 +304,7 @@ input[type="submit"] {
   width: 22px;
   cursor: pointer;
   border: none;
+  /*du kan enkelt ge backgrundfärg nedan*/
   background-color: transparent;
   border-radius: 3px;
   display: flex;
