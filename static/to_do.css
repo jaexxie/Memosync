@@ -300,18 +300,25 @@ input[type="submit"] {
 }
 
 .delete_list_btn {
-  color: #eee;
-  font-size: 26px;
-  background: none;
+  height: 22px;
+  width: 22px;
   cursor: pointer;
   border: none;
+  background-color: transparent;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.delete_list_btn:hover,
-.delete_list_btn:focus {
-  color: red;
-  text-decoration: none;
+.delete_list_btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
 
+.delete_list_btn img:hover{
+  transform: scale(1.2);
 }
 
 .to_do_body {
