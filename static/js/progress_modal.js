@@ -8,36 +8,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     openModalBtn.addEventListener("click", function () {
-        if (modalOverlay.classList.contains("show")) {
-            modal.classList.remove("show");
-            modalOverlay.classList.remove("show");
-            //modalen finns fortfarande i backgrunden (osynlig)
 
-        } else {
-            modal.classList.add("show");
-            modalOverlay.classList.add("show");
-            //modalen finns fortfarande i backgrunden (osynlig)
+        modal.classList.add("show");
+        modalOverlay.classList.add("show");
 
-        }
     });
 
     modalOverlay.addEventListener("click", function () {
         modal.classList.remove("show");
         modalOverlay.classList.remove("show");
-        //modalen finns fortfarande i backgrunden (osynlig)
-        //modal.style.display = "none";
-        //modalOverlay.style.display = "none";
-        //alert("Are you sure you want to leave this page? you have unsaved changes!")
+
         form.reset();
     });
 
     closeModalBtn.addEventListener("click", function () {
-        if (modalOverlay.classList.contains("show")) {
-            modal.classList.remove("show");
-            modalOverlay.classList.remove("show");
+        modal.classList.remove("show");
+        modalOverlay.classList.remove("show");
 
-            form.reset();
-        }
+        form.reset();
+        
     });
 
     //Funktion som uppdaterar backgrundsfärgen på select (#status-col)
@@ -125,8 +114,121 @@ document.addEventListener('DOMContentLoaded', function () {
             //alert("An error occurred while deleting the task.");
         });
 
+    };
+
+    //Funktionen nedan sorterar tabellen 
+
+    table_headings = document.querySelectorAll('thead th');
+    table_rows = document.querySelectorAll('tbody tr')
+
+    table_headings.forEach((head, i) => {
+        if (i !== 1) {
+            let sort_asc = true;
+
+            head.onclick = () => {
+                table_headings.forEach(h => {
+                
+                    h.classList.remove('active', 'asc');
+                    if (h.querySelector('span.icon-arrow')) {
+                        h.querySelector('span.icon-arrow').style.transform = "rotate(0deg)";
+                    }
+                });
+
+                head.classList.add('active');
+
+                if(head.querySelector('span.icon-arrow')) {
+                    head.classList.toggle('asc', sort_asc);
+                    head.querySelector('span.icon-arrow').style.transform = sort_asc ? "rotate(180deg)" : "rotate(0deg)";
+
+                }
+
+                sort_asc = !sort_asc;
+
+                document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+            
+                table_rows.forEach(row => {
+                    row.querySelectorAll('td')[i].classList.add('active');
+                });
+    
+                sortTable(i, sort_asc);
+            };
+
+        }
+            
+    });
+
+    function sortTable(column, sort_asc) {
+        [...table_rows].sort((a, b) => {
+            let first_row = a.querySelectorAll('td')[column].innerText.toLowerCase(),
+                second_row = b.querySelectorAll('td') [column].innerText.toLowerCase();
+
+            return sort_asc ? (first_row < second_row ? -1 : 1) : (first_row < second_row ? 1 : -1);
+
+        })
+
+        .forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+        
+    };
+
+
+    //funktion som gör data i tabellen redigerbar och sparar det nya värdet i databasen
+
+    document.querySelectorAll('.editable-cell').forEach(function(cell) {
+        cell.addEventListener('blur', function() {
+            var taskId = this.dataset.taskId;
+            var  newContent = this.textContent.trim();
+            var cellType = this.getAttribute('data-cell');
+
+            updateTask(taskId, cellType, newContent);
+        });
+
+    });
+
+    //function som skickar ny data till bottle som sparar det i databasen
+    function updateTask(taskId, cellType, newContent) {
+        fetch('/update_task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'task_id=' + encodeURIComponent(taskId) + '&cell_type=' + encodeURIComponent(cellType) + '&new_content=' + encodeURIComponent(newContent)
+        })
+        
+        .then(response => {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to update task");
+
+                //alert("Failed to delete task. Please try again later.");
+                
+            }
+
+        })
+
+        .catch((error) => {
+            console.error('Error', error);
+
+            alert("An error occurred while updating the task:" + error.message);
+        });
+
     }
+
+    //Nedan kod är för popovers 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.forEach( function (popoverTriggerEl) {
+        var popover = new bootstrap.Popover(popoverTriggerEl, {
+            trigger: 'hover'              
+        });
+
+        //Hide popover when clicked 
+        popoverTriggerEl.addEventListener('click', function () {
+            popover.hide();
+        
+        });
+
+    });
      
+  
 });
 
 
