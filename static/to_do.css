@@ -334,7 +334,7 @@ input[type="submit"] {
   padding-top: 5px;
 }
 
-.to_do_body label {
+.to_do_body .task {
   padding: 5px 5px 5px 0;
   font-family: "Montserrat", sans-serif;
   font-size: 10pt;
@@ -344,7 +344,7 @@ input[type="submit"] {
 
 }
 
-.to_do_body label:hover{
+.to_do_body .task:hover{
   background-color: #A63A50;
 }
 
@@ -362,7 +362,7 @@ input[type="submit"] {
   display: none;
 }
 
-.to_do_body label:hover .delete_todo_task_btn{
+.to_do_body .task:hover .delete_todo_task_btn{
   display: inline-block;
   background-color: #A63A50;
   border: none;

@@ -149,9 +149,11 @@ document.addEventListener('DOMContentLoaded', function() {
     checkboxes = document.querySelectorAll('.task_checkbox');
 
     checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function() {
+        checkbox.addEventListener("change", function(event) {
+            event.preventDefault();
             var taskId = this.dataset.taskId;
             var isChecked = this.checked;
+            var span = event.target.nextElementSibling;
 
             fetch('/update_checkbox', {
                 method: 'POST',
@@ -166,19 +168,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error("Failed to update task status");
                 }
 
-                
-                var span = document.querySelector('[data-task-id="' + taskId + '"]').nextElementSibling;
-                if (isChecked) {
-                    span.classList.add("checked")
-                } else {
-                    span.classList.remove("checked")
-                } 
-
-
             })
             .catch(error => {
                 console.error('Error', error);
             });
+
+            if (isChecked) {
+                span.classList.add("checked")
+            } else {
+                span.classList.remove("checked")
+            } 
+            
         });
     });
 });
