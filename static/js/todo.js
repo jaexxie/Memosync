@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.delete_todo_task_btn').forEach(taskbutton => {
         // Lägg till händelselyssnare för varje raderingsknapp
         taskbutton.addEventListener("click", function () {
-             var taskId = this.dataset.taskId;
+             const taskId = this.dataset.taskId;
 
             deleteToDoTask(taskId, this.closest("label"));
         });

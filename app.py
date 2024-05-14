@@ -514,8 +514,6 @@ def delete_to_do_list():
             cursor.execute('DELETE FROM to_do_list WHERE id = %s  AND user_id = %s', (to_do_list_id, logged_in_cookie))
             db.commit()
 
-            print("todolist id:", to_do_list_id)
-
             # render the to-do list page after successful deletion
             return template('/to_do_list')
         finally:
@@ -598,13 +596,11 @@ def delete_to_do_task():
 
             # extracts task ID from the request body
             task_id = request.forms.get("task_id")
-            category_id = request.forms.get("category_id")
 
             # delete associated tasks from the to-do list
-            cursor.execute('DELETE FROM to_do_lists_task WHERE id = %s AND category_id = %s', ( task_id, category_id))
+            cursor.execute('DELETE FROM to_do_lists_task WHERE id = %s', ( task_id))
             db.commit()
             
-            print("task_id:", task_id)
 
             # redirect to to_do_list table after deleting the task
             return redirect('/to_do_list')
