@@ -101,6 +101,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
+    //funktion som raderar task i todo_listan
+    //det går att utöka den tidigare kod som raderar hela listan med alla task
+    //separat funktion håller koden mer läsbar och underhållbar 
+    document.querySelectorAll('.delete_todo_task_btn').forEach(taskbutton => {
+        // Lägg till händelselyssnare för varje raderingsknapp
+        taskbutton.addEventListener("click", function () {
+             var taskId = this.dataset.taskId;
+
+            deleteToDoTask(taskId, this.closest("label"));
+        });
+    });
+
+    //Delete todo task 
+    function deleteToDoTask(taskId, labelElement) {
+        fetch('/delete_to_do_task', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'task_id=' + encodeURIComponent(taskId)
+        })
+        
+        .then(response => {
+            if(!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to delete task");
+
+                //alert("Failed to delete task. Please try again later.");
+                
+            } else {
+                //tar bort uppgiften från DOM
+                labelElement.remove();
+            }
+            
+
+        })
+
+        .catch((error) => {
+            console.error('Error', error);
+            
+        });
+
+    };
+
     //funktion som sparar checkade element i listan
     checkboxes = document.querySelectorAll('.task_checkbox');
 

@@ -335,14 +335,53 @@ input[type="submit"] {
 }
 
 .to_do_body label {
-  padding: 5px 0 5px 0;
+  padding: 5px 5px 5px 0;
   font-family: "Montserrat", sans-serif;
   font-size: 10pt;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+
 }
+
+.to_do_body label:hover{
+  background-color: #A63A50;
+}
+
 
 .checked {
   text-decoration: line-through;
   color: #bfbfbf;
+}
+
+.task_checkbox:hover{
+  cursor: pointer;
+}
+
+.delete_todo_task_btn {
+  display: none;
+}
+
+.to_do_body label:hover .delete_todo_task_btn{
+  display: inline-block;
+  background-color: #A63A50;
+  border: none;
+  padding: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: transform 0.3s ease;  
+
+}
+
+.delete_todo_task_btn:hover{
+  transform: scale(1.2);
+}
+
+.delete_todo_task_btn img {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
 }
 
 #dialog {

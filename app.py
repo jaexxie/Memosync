@@ -571,6 +571,51 @@ def add_task_to_do_list():
         # if the user is not logged in, redirect to the home page
         return redirect('/')
 
+@route ('/delete_to_do_task', method='DELETE')
+def delete_to_do_task():
+    '''
+    Route for deleting tasks from todo lists .
+
+    If the user is logged in, retrived the task ID from the request
+    and deletes the task from the database. If the user is not logged
+    in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
+    if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
+        try:
+            #database connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # extracts task ID from the request body
+            task_id = request.forms.get("task_id")
+            category_id = request.forms.get("category_id")
+
+            # delete associated tasks from the to-do list
+            cursor.execute('DELETE FROM to_do_lists_task WHERE id = %s AND category_id = %s', ( task_id, category_id))
+            db.commit()
+            
+            print("task_id:", task_id)
+
+            # redirect to to_do_list table after deleting the task
+            return redirect('/to_do_list')
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+
 @route('/update_checkbox', method='POST')
 def update_checkbox():
     '''
@@ -1102,7 +1147,6 @@ def delete_task():
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
             
-            print("task_id:", task_id)
 
             # redirect to progress table after deleting the task
             return redirect('/progress_table')
