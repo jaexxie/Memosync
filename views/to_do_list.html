@@ -90,6 +90,7 @@
         <label>
           <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4]=="true" else ''}}>
           <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }} </span>
+          <button data-task-id="{{ cate[0] }}" class="_btn">&times;</button>
         </label>
         % end
         % end
