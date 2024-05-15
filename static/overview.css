@@ -13,7 +13,6 @@ body {
 }
 
 main {
-  margin: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -29,12 +28,20 @@ div a {
 div>#left>a>h3,
 div>#right>a>h3,
 #bottom>a>h3 {
-  font-family: "Montserrat", sans-serif;
+  font-family: monospace;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #312822;
+  letter-spacing: 1px;
   font-size: 20px;
-  padding-bottom: 5px;
-  text-decoration: underline black;
-  color: black;
-  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+div>#left>a>h3:hover,
+div>#right>a>h3:hover,
+#bottom>a>h3:hover {
+  text-underline-offset: 8px;
+  transition: .5s all;
 }
 
 div a {
@@ -92,18 +99,18 @@ div a {
   height: 50%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin: 30px;
 }
 
 #top>#left {
   margin-right: 20px;
-  margin-left: 20px;
   width: 50%;
 }
 
 #top>#left>a>#todo {
   border: 1px solid black;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
+  margin-left: 0;
   border-radius: 15px;
   min-height: 150px;
   box-shadow: 0 0 3px black;
@@ -128,8 +135,7 @@ div a {
 }
 
 #top>#right {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 30px;
   width: 50%;
 }
 
@@ -163,15 +169,9 @@ div a {
   align-self: center;
 }
 
-#top>#right {
-  margin-left: 20px;
-  margin-right: 20px;
-  width: 50%;
-}
-
 #bottom {
   height: 50%;
-  margin: 20px;
+  margin: 0 30px 30px 30px;
 }
 
 #progress {
