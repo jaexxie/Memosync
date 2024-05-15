@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   background-color: #f0e7d8;
 }
 
@@ -7,7 +8,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding-bottom: 20px;
+  margin: 30px;
 }
 
 #container h2 {
@@ -15,13 +16,12 @@ body {
   text-decoration: underline;
   text-underline-offset: 3px;
   color: #312822;
-  margin: 20px 0px 0px 30px;
   letter-spacing: 1px;
   font-size: 20px;
+  margin-bottom: 30px;
 }
 
 #create-btn {
-  margin: 20px 30px;
   background-color: #a63a50;
   border: 0.8px solid black;
   border-radius: 10px;
@@ -39,6 +39,7 @@ body {
 #progress_container {
   width: 75%;
   margin: 0px auto;
+  margin-bottom: 20px;
   border: 1px solid #ddd;
   background-color: #f8f8f8;
   border-radius: 10px;
@@ -72,7 +73,7 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-#progress_container th:last-child, 
+#progress_container th:last-child,
 #progress_container td:last-child {
   border-right: none;
 }
@@ -123,7 +124,7 @@ body {
 }
 
 
-#progress_container th.active, 
+#progress_container th.active,
 #progress_container td.active {
   color: #cf7a74;
 }
@@ -183,10 +184,10 @@ body {
 
   td .delete-task-btn {
     padding: 2px;
-    
+
   }
 
-  td .delete-task-btn img{
+  td .delete-task-btn img {
     width: 18px;
     height: 18px;
   }

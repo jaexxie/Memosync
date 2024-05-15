@@ -53,21 +53,6 @@ element.style {
   font-weight: 400;
 }
 
-.create_event>button {
-  display: block;
-  margin-top: 20px;
-  margin-left: 30px;
-  background-color: #a63a50;
-  border: 0.8px solid black;
-  color: white;
-  border-radius: 10px;
-  padding: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
-  font-family: "Montserrat", sans-serif;
-  cursor: pointer;
-}
-
 /* create event */
 #all_day:checked~#start_time,
 #all_day:checked~#end_time {
@@ -80,18 +65,18 @@ element.style {
 }
 
 .create_event>button {
-  display: block;
-  margin-top: 20px;
-  margin-left: 20px;
   background-color: #a63a50;
   border: 0.8px solid black;
-  color: white;
   border-radius: 10px;
-  padding: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 13px 30px;
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
+  color: white;
+  margin: 0 30px 30px 30px;
+}
+
+.create_event>button:hover {
+  background-color: rgba(166, 58, 80, 0.7);
 }
 
 .background_create_event {
