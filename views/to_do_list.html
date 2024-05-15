@@ -87,10 +87,12 @@
         
         %for task in tasks:
         % if task[2] == cate[0]:
-        <label>
+        
+        <div class="task">
           <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4]=="true" else ''}}>
-          <span data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }} </span>
-        </label>
+          <label data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }} </label>
+          <button data-task-id="{{ task[0] }}" class="delete_todo_task_btn"><img src="/static/pic/delete_bin_white_icon.png" alt="delete_bin_white_icon"></button>
+        </div>
         % end
         % end
 
