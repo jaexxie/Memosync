@@ -338,7 +338,7 @@ input[type="submit"] {
 .to_do_body>h4 {
   font-family: monospace;
   font-size: 11pt;
-  padding-top: 5px;
+  padding: 5px 0 5px 0;
 }
 
 .to_do_body .task {
@@ -348,13 +348,13 @@ input[type="submit"] {
   border-radius: 5px;
   display: flex;
   align-items: center;
-
+  cursor: pointer;
 }
 
 .to_do_body .task:hover {
   background-color: #A63A50;
+  cursor: pointer;
 }
-
 
 .checked {
   text-decoration: line-through;
