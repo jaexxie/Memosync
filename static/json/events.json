@@ -167,11 +167,7 @@
         },
         {
             "id": "25",
-            "user_id": "20",
-            "title": "New event",
-            "description": "This is description",
-            "start": "2024-05-22T03:00",
-            "end": "2024-05-22T04:00"
+
         }
     ]
 }
