@@ -9,6 +9,7 @@
 
 /* give container fixed position and z-index to move it to the top */
 .modal-overlay {
+    visibility: hidden;
     position: fixed;
     top: 0;
     left: 0;
@@ -19,7 +20,8 @@
     background-color: rgba(0, 0, 0, 0.441);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+   
 }
 
 /*Show class is to the overlay, its visibility changes with JS*/
@@ -30,31 +32,33 @@
 }
 
 /*hide modal overlay with 1 second delay*/
+
 .modal-overlay:not(.show) {
     transition-duration: 2s;
 }
 
 /*modal container*/
 .modal-container {
-    width: 300px;
+    visibility: hidden;
     position: fixed;
+    width: 400px;
+    max-width: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #F0E7D8;
     border-radius: 15px;
     padding: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
 }
 
-/*Show class is to the .modal-container, its visibility changes with JS*/
 .modal-container.show {
     visibility: visible;
-    pointer-events: all;
+    pointer-events: auto;
     opacity: 1;
+
 }
 
 /*Modal header */
@@ -150,4 +154,16 @@ form>fieldset>* {
 .add-task-btn:hover {
     background-color: rgba(166, 58, 80, 0.5);
     /* Change background color on hover */
+}
+
+@media screen and (max-width: 500px) {
+    .modal-container {
+        width: 80%; 
+        max-width: none;
+        padding: 30px;
+    }
+
+    .modal-header h3 {
+        line-height: 22px;
+    }
 }

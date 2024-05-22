@@ -14,6 +14,10 @@ def make_db_connection():
     return db
 
 def does_the_token_match_the_users_token(token, id):
+    '''
+    This function makes sure the token in the cookie matches the token that the user_id has in it's table,
+    it either returns true or false depending on if it matches or not. 
+    '''
     try:
         # database connection
         db = make_db_connection()
