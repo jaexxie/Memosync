@@ -86,7 +86,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Updating HTML elements with event data
     edit_event_id.value = event.id;
     title.value = event.title;
-    description.value = event.description;
+
+    if (event.extendedProps.description) {
+      description.value = event.extendedProps.description;
+    } else {
+        console.warn('Event description is undefined');
+        description.value = '';
+    }
+
     start_date.value = eventStart.toISOString().substring(0, 10);
     end_date.value = eventEnd.toISOString().substring(0, 10);
     start_time.value = eventStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
