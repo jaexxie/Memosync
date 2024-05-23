@@ -8,10 +8,15 @@ body>h2 {
   text-decoration: underline;
   text-underline-offset: 3px;
   color: #312822;
-  font-size: 26px;
   margin: 30px;
   letter-spacing: 1px;
   font-size: 20px;
+}
+
+.create {
+  position: relative;
+  margin: 20px 30px;
+  max-width: 130px;
 }
 
 .create button {
@@ -20,28 +25,25 @@ body>h2 {
   border: 0.8px solid black;
   border-radius: 10px;
   padding: 13px 30px;
-  margin: 20px 30px;
-  width: 110px;
   box-sizing: border-box;
-}
-
-#open_popup_options_btn {
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
   color: white;
+  width: 100%;
 }
 
 .dropdown-content {
   display: none;
-  position: fixed;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
   background-color: #f1f1f1;
-  width: 130px;
-  left: 30px;
-  top: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 0px 10px 10px;
   z-index: 1;
-  border-radius: 5px;
   overflow: hidden;
+  font-family: "Montserrat", sans-serif;
 }
 
 .dropdown-content a {
@@ -50,18 +52,21 @@ body>h2 {
   text-decoration: none;
   display: block;
   cursor: pointer;
+  font-size: 9pt;
 }
 
 .dropdown-content a:hover {
   background-color: #e3e3e3;
 }
 
-#open_popup_options_btn:hover+.dropdown-content {
-  display: block;
-}
-
+#open_popup_options_btn:hover+.dropdown-content,
 .dropdown-content:hover {
   display: block;
+
+}
+
+.create:hover #open_popup_options_btn {
+  border-radius: 10px 10px 0 0;
 }
 
 #popup_background_1,
@@ -268,8 +273,9 @@ input[type="submit"] {
 
 .to_do_container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: flex;
   margin: 20px 30px;
+  justify-content: flex-start;
   justify-content: space-around;
 }
 
@@ -300,18 +306,26 @@ input[type="submit"] {
 }
 
 .delete_list_btn {
-  color: #eee;
-  font-size: 26px;
-  background: none;
+  height: 22px;
+  width: 22px;
   cursor: pointer;
   border: none;
+  /*du kan enkelt ge backgrundfärg nedan*/
+  background-color: transparent;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.delete_list_btn:hover,
-.delete_list_btn:focus {
-  color: red;
-  text-decoration: none;
+.delete_list_btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
 
+.delete_list_btn img:hover {
+  transform: scale(1.2);
 }
 
 .to_do_body {
@@ -323,18 +337,57 @@ input[type="submit"] {
 .to_do_body>h4 {
   font-family: monospace;
   font-size: 11pt;
-  padding-top: 5px;
+  padding: 5px 0 5px 0;
 }
 
-.to_do_body label {
-  padding: 5px 0 5px 0;
+.to_do_body .task {
+  padding: 5px 5px 5px 0;
   font-family: "Montserrat", sans-serif;
   font-size: 10pt;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.to_do_body .task:hover {
+  background-color: #A63A50;
+  cursor: pointer;
 }
 
 .checked {
   text-decoration: line-through;
   color: #bfbfbf;
+}
+
+.task_checkbox:hover {
+  cursor: pointer;
+}
+
+.delete_todo_task_btn {
+  display: none;
+}
+
+.to_do_body .task:hover .delete_todo_task_btn {
+  display: inline-block;
+  background-color: #A63A50;
+  border: none;
+  padding: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: transform 0.3s ease;
+
+}
+
+.delete_todo_task_btn:hover {
+  transform: scale(1.2);
+}
+
+.delete_todo_task_btn img {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
 }
 
 #dialog {
@@ -358,16 +411,14 @@ input[type="submit"] {
 
 @media screen and (max-width: 770px) {
 
-  .create button {
+  .create {
     width: 90%;
     margin: 20px auto;
-    z-index: 999;
   }
 
+  .create button,
   .dropdown-content {
-    width: 90%;
-    left: 24px;
-    top: 210px;
+    width: 100%;
     text-align: center;
   }
 
@@ -385,14 +436,13 @@ input[type="submit"] {
     width: 48%;
     min-width: 160px;
   }
+
+  .create:hover #open_popup_options_btn {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 500px) {
-
-  .dropdown-content {
-    right: auto;
-    text-align: center;
-  }
 
   #popup_container_1,
   #popup_container_2 {

@@ -3,10 +3,10 @@ from datetime import date
 import datetime
 from random import random
 import re
+from unicodedata import category
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
 import os
-
 from pymysql import Date
 from db import make_db_connection, does_the_token_match_the_users_token
 import requests
@@ -462,15 +462,7 @@ def create_to_do_list():
             to_do_list_title = request.forms.get("title")
             to_do_list_description = request.forms.get("description")
 
-            # checks if a to-do list with the same title already exists for the logged in user
-            cursor.execute('SELECT * FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s;', (to_do_list_title, logged_in_cookie,))
-            todo = cursor.fetchone()
-
-            if todo:
-                # if a to-do list with this title already exists, return error message
-                return template('to_do_list', error='A to-do list with this title already exists.')
-
-            # if to-do list does not exist, insert the new to-do list into the database with the user ID
+            # insert the new to-do list into the database with the user ID
             cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
             db.commit()
     
@@ -522,8 +514,6 @@ def delete_to_do_list():
             cursor.execute('DELETE FROM to_do_list WHERE id = %s  AND user_id = %s', (to_do_list_id, logged_in_cookie))
             db.commit()
 
-            print("todolist id:", to_do_list_id)
-
             # render the to-do list page after successful deletion
             return template('/to_do_list')
         finally:
@@ -570,6 +560,49 @@ def add_task_to_do_list():
             db.commit()
 
             # redirects the user to the to-do list page after successfully adding the task
+            return redirect('/to_do_list')
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+
+@route ('/delete_to_do_task', method='DELETE')
+def delete_to_do_task():
+    '''
+    Route for deleting tasks from todo lists .
+
+    If the user is logged in, retrived the task ID from the request
+    and deletes the task from the database. If the user is not logged
+    in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
+    if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
+        try:
+            #database connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # extracts task ID from the request body
+            task_id = request.forms.get("task_id")
+
+            # delete associated tasks from the to-do list
+            cursor.execute('DELETE FROM to_do_lists_task WHERE id = %s', ( task_id))
+            db.commit()
+            
+
+            # redirect to to_do_list table after deleting the task
             return redirect('/to_do_list')
         finally:
             # close database connection
@@ -650,8 +683,12 @@ def calendar():
             db = make_db_connection()
             cursor = db.cursor()
 
+            # Get the current date
+            current_date = datetime.date.today()
+            formatted_date = current_date.isoformat()
+
             # render the 'calendar' template, providing the logged-in user's information
-            return template('calendar', user_info=get_user_info(logged_in_cookie, cursor))
+            return template('calendar', date=formatted_date, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
         # close database connection
             cursor.close()
@@ -714,7 +751,6 @@ def add_event():
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
-            # redirects to the calendar page after adding the event
             return redirect('/calendar')
         else:
             # retrieves time from form data if the event is not all-day
@@ -747,7 +783,6 @@ def add_event():
             with open('static/json/events.json', 'w') as file:
                 json.dump({"events": events}, file, indent=4)
 
-            # redirects to the calendar page after adding the event
             return redirect('/calendar') 
     else:
         # if the user is not logged in, redirect to the home page
@@ -799,7 +834,6 @@ def edit_event():
         with open('static/json/events.json', 'w') as file:
             json.dump({"events": events}, file, indent=4)
 
-        # redirects to the calendar page after adding the event
         return redirect('/calendar') 
     else:
         # if the user is not logged in, redirect to the home page
@@ -835,7 +869,6 @@ def delete_event(id):
     with open('static/json/events.json', 'w') as file:
         json.dump({"events": events}, file, indent=4)
     
-    # redirects to the calendar page after deleting the event
     return redirect("/calendar")
     
 @route('/get_events')
@@ -1110,7 +1143,6 @@ def delete_task():
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
             
-            print("task_id:", task_id)
 
             # redirect to progress table after deleting the task
             return redirect('/progress_table')
@@ -1118,6 +1150,57 @@ def delete_task():
             # close database connection
             cursor.close()
             db.close()
+    else:
+        # if the user is not logged in, redirect to the home page
+        return redirect('/')
+
+@route ('/update_task', method='POST')
+def update_task():
+    '''
+    Route for editing content of a task in the progress table.
+
+    If the user is logged in, it retrieves the task ID and the new
+    content and updates the database. If the user
+    is not logged in, it redirects to the home page.
+    '''
+
+    # checks if the user is already logged in by checking the 'loggedIn' cookie
+    logged_in_cookie = request.get_cookie('loggedIn')
+    token = request.get_cookie('token')
+
+    if logged_in_cookie:
+
+        if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            response.set_cookie('loggedIn', '', expires=0)
+            response.set_cookie('token', '', expires=0)
+            return redirect('/')
+        try:
+            # database Connection
+            db = make_db_connection()
+            cursor = db.cursor()
+
+            # retrieve task ID and new content and cell type from the form data
+            task_id = request.forms.get("task_id")
+            new_content = request.forms.get("new_content")
+            cell_type = request.forms.get("cell_type")
+
+            # Updatera specifika columner utifrån cell_type
+            if cell_type == "task":
+                cursor.execute('UPDATE progress_bar SET project = %s WHERE id = %s', (new_content, task_id))
+            elif cell_type == "description":
+                cursor.execute('UPDATE progress_bar SET description = %s WHERE id = %s', (new_content, task_id))
+            elif cell_type == "date":
+                cursor.execute('UPDATE progress_bar SET spb_date = %s WHERE id = %s', (new_content, task_id))
+
+            db.commit()
+            # redirect to progress table
+            return redirect('/progress_table')
+        
+        finally:
+            # close database connection
+            cursor.close()
+            db.close()
+
     else:
         # if the user is not logged in, redirect to the home page
         return redirect('/')
