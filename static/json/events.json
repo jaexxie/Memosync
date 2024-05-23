@@ -60,11 +60,6 @@
             "description": "undefined",
             "start": "2024-05-08T00:00",
             "end": "1970-01-01T01:00"
-            "user_id": "22",
-            "title": "test",
-            "description": "test ",
-            "start": "2024-05-09T09:51",
-            "end": "2024-05-08T12:51"
         },
         {
             "id": "11",
@@ -169,10 +164,6 @@
             "description": "adawd",
             "start": "2024-05-02",
             "end": "2024-05-01"
-        },
-        {
-            "id": "25",
-
         }
     ]
 }
