@@ -164,14 +164,6 @@
             "description": "adawd",
             "start": "2024-05-02",
             "end": "2024-05-01"
-        },
-        {
-            "id": "25",
-            "user_id": "27",
-            "title": "doctor",
-            "description": "test",
-            "start": "2024-05-23",
-            "end": "2024-05-23"
         }
     ]
 }
