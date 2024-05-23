@@ -31,18 +31,18 @@
   <div class="background_create_event"></div>
   <div class="container_create_event">
     <div id="calendar_container_1">
-      <section id="calendar_1_header">
+      <section class="calendar_header">
+        <h3>Add Event</h3>
         <span class="close">&times;</span>
       </section>
     </div>
     <form action="/add_event" method="post">
       <fieldset>
-        <legend>Add Event</legend>
         <label for="event_name">Event Name</label>
         <input type="text" name="event_name" id="event_name" placeholder="e.g. doctor's appoinment" required>
 
         <label for="event_description">Event Description</label>
-        <textarea name="event_description" id="event_description" cols="30" rows="10"></textarea>
+        <input type="text" name="event_description" id="event_description">
 
         <label for="all_day">All Day Event</label>
         <input type="checkbox" name="all_day" id="all_day">
@@ -68,7 +68,7 @@
   <div class="background_view_event"></div>
   <div class="container_view_event">
     <div id="calendar_container_1">
-      <section id="calendar_1_header">
+      <section class="calendar_header">
         <h3>Edit Event</h3>
         <span class="close_2">&times;</span>
       </section>
@@ -96,13 +96,13 @@
           <input type="time" name="end_time_edit" id="end_time_edit">
 
           <input type="submit" value="Save changes" id="submit">
-          <p id="delete_event"></p>
+          <p id="delete_event">Delete event</p>
         </fieldset>
       </form>
     </div>
   </div>
 
-  <div id='calendar'></div>
+  <div id='calendar'> <a href="*" id="tutor">?</a></div>
 
 </body>
 
