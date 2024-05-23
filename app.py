@@ -177,17 +177,22 @@ def login():
                 cursor.execute('select * from user_info where email=%s', (email))
                 user = cursor.fetchone()
 
-                hash = str(user[4])
+                if user is None:
+                    # no user found with the given email
+                    return template('login', email_or_password_wrong=True, email_not_found=True)
 
-                if pbkdf2_sha256.verify(password, hash):
-                    # if the user exists, sets a cookie indicating they are logged in
-                    response.set_cookie('loggedIn', str(user[0]))
-                    response.set_cookie('token', str(user[6]))
-
-                    # redirects the user to the overview page after successful login
-                    return redirect('/overview')
                 else:
-                    return template('login', email_or_password_wrong=True)
+                    hash = str(user[4])
+
+                    if pbkdf2_sha256.verify(password, hash):
+                        # if the user exists, sets a cookie indicating they are logged in
+                        response.set_cookie('loggedIn', str(user[0]))
+                        response.set_cookie('token', str(user[6]))
+
+                        # redirects the user to the overview page after successful login
+                        return redirect('/overview')
+                    else:
+                        return template('login', email_or_password_wrong=True)
             else:
                 # renders the login page without error
                 return template('login', email_or_password_wrong=False)
