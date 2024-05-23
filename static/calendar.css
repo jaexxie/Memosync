@@ -101,14 +101,15 @@ element.style {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  z-index: 4;
-  pointer-events: none;
-  visibility: hidden;
+  padding: 50px;
+  background-color: #f0e7d8;
+  border-radius: 15px;
   opacity: 0;
-  transition: 0.5s all;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+  font-family: "Montserrat", sans-serif;
+  z-index: 4;
+  width: 300px;
 }
 
 .container_create_event.show {
@@ -131,7 +132,7 @@ element.style {
 }
 
 .container_create_event>form>input {
-  width: 200px;
+  width: 100%;
   border: 0;
   border-bottom: 2px solid #a63a50;
   padding: 10px 20px;
@@ -172,7 +173,6 @@ element.style {
 }
 
 /* view event popup */
-
 .background_view_event {
   position: fixed;
   top: 0;
@@ -203,7 +203,6 @@ element.style {
   pointer-events: none;
   font-family: "Montserrat", sans-serif;
   z-index: 4;
-  height: 600px;
   width: 300px;
 }
 
@@ -217,15 +216,17 @@ element.style {
   background-color: #f0e7d8;
 }
 
-/*calendar container 1 header */
-.container_view_event #calendar_1_header {
+/*calendar container header */
+.container_view_event .calendar_header,
+.container_create_event .calendar_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
 
-.container_view_event #calendar_1_header h3 {
+.container_view_event .calendar_header h3,
+.container_create_event .calendar_header h3 {
   font-family: "Montserrat", sans-serif;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -235,10 +236,10 @@ element.style {
 }
 
 /* "X" in modal header to close the modal*/
-.container_view_event #calendar_1_header .close,
-.container_create_event #calendar_1_header .close {
+.container_view_event .calendar_header>.close_2,
+.container_create_event .calendar_header>.close {
   color: black;
-  font-size: 28px;
+  font-size: 35px;
   font-weight: bold;
   cursor: pointer;
   background: none;
@@ -246,19 +247,21 @@ element.style {
   margin-left: 20px;
 }
 
-.container_view_event #calendar_1_header .close:hover,
-.container_view_event #calendar_1_header .close:focus,
-.container_create_event #calendar_1_header .close:hover,
-.container_create_event #calendar_1_header .close:focus {
+.container_view_event .calendar_header .close:hover,
+.container_view_event .calendar_header .close:focus,
+.container_create_event .calendar_header .close:hover,
+.container_create_event .calendar_header .close:focus,
+.container_view_event .calendar_header .close_2:hover,
+.container_view_event .calendar_header .close_2:focus,
+.container_create_event .calendar_header .close_2:hover,
+.container_create_event .calendar_header .close_2:focus {
   color: #A63A50;
   text-decoration: none;
-
 }
 
 .container_view_event>form {
   display: flex;
   flex-direction: column;
-  gap: 40px;
 }
 
 form>fieldset>* {
@@ -342,6 +345,20 @@ input[type="time"]:focus {
 }
 
 #submit:hover {
+  background-color: rgba(166, 58, 80, 0.5);
+}
+
+#delete_event {
+  border-radius: 5px;
+  padding: 6px 14px;
+  background-color: #a63a50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#delete_event:hover {
   background-color: rgba(166, 58, 80, 0.5);
 }
 
