@@ -746,7 +746,7 @@ def add_event():
                 "title": title,
                 "description": description,
                 "start": start_date,
-                "end": end_date
+                "end": start_date
             }
 
             # append the new event to the list of events
@@ -822,6 +822,7 @@ def edit_event():
         start_time = request.forms.get('start_time_edit')
         end_date = request.forms.get('end_date_edit')
         end_time = request.forms.get('end_time_edit')
+        all_day = request.forms.get('edit_all_day') is not None
 
         # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
@@ -832,8 +833,14 @@ def edit_event():
             if event["id"] == id:
                 event["title"] = title
                 event["description"] = description
-                event["start"] = f"{start_date}T{start_time}"
-                event["end"] = f"{end_date}T{end_time}"
+
+                #check if the event is all-day event
+                if all_day:
+                    event["start"] = start_date
+                    event["end"] = end_date
+                else:
+                    event["start"] = f"{start_date}T{start_time}"
+                    event["end"] = f"{end_date}T{end_time}"
 
         # writes the updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:

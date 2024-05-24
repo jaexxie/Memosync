@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     end_time = document.querySelector('#end_time_edit')
     edit_event_id = document.querySelector('#edit_event_id')
     delete_event = document.querySelector('#delete_event')
+    const edit_all_day = document.querySelector('#edit_all_day');
     
 
     // Extracting event data
