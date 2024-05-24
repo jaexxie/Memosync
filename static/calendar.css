@@ -156,6 +156,22 @@ element.style {
   color: white;
 }
 
+#tutor {
+  font-family: "Montserrat", sans-serif;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #A63A50;
+  width: 45px;
+  height: 40px;
+  border-radius: 50%;
+  color: #E7DCCA;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* view event popup */
 .background_view_event {
   position: fixed;
@@ -319,27 +335,38 @@ input[type="time"]:focus {
   border-bottom: 1px solid #A63A50;
 }
 
-#submit {
+form #submit {
   border-radius: 5px;
   padding: 6px 14px;
   background-color: #a63a50;
   border: none;
   color: white;
   cursor: pointer;
+  width: 40%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10pt;
 }
 
 #submit:hover {
   background-color: rgba(166, 58, 80, 0.5);
 }
 
-#delete_event {
+form #delete_event {
   border-radius: 5px;
   padding: 6px 14px;
   background-color: #a63a50;
   border: none;
-  color: white;
   cursor: pointer;
   text-decoration: none;
+  width: 30%;
+}
+
+#delete_event>a {
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  font-size: 10pt;
+  cursor: pointer;
 }
 
 #delete_event:hover {
