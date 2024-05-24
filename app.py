@@ -945,8 +945,15 @@ def ask_anything():
                 # retrieves the question from the form data
                 ask = request.forms.get('question')
 
+                response_data = question(ask)
+
+                if 'text' in response_data:
+                    response_text = response_data['text']
+                else:
+                    response_text = "Sorry, I couldn't process your request."
+
                 # render the template with the question response
-                return template('ask_questions', response=question(ask), user_info=get_user_info(logged_in_cookie, cursor))
+                return template('ask_questions', response=response_text, user_info=get_user_info(logged_in_cookie, cursor))
             
             # render the template without a reponse
             return template('ask_questions', response=None, user_info=get_user_info(logged_in_cookie, cursor))
