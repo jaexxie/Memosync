@@ -172,14 +172,6 @@
             "description": "event",
             "start": "2024-05-25T",
             "end": "2024-05-25T"
-        },
-        {
-            "id": "28",
-            "user_id": "21",
-            "title": "stiffe",
-            "description": "test",
-            "start": "2024-05-25",
-            "end": "2024-05-25"
         }
     ]
 }

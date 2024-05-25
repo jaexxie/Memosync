@@ -836,8 +836,8 @@ def edit_event():
 
                 #check if the event is all-day event
                 if all_day:
-                    event["start"] = start_date
-                    event["end"] = end_date
+                    event["start"] = start_date + 'T00:00:00'
+                    event["end"] = end_date + 'T23:59:59'
                 else:
                     event["start"] = f"{start_date}T{start_time}"
                     event["end"] = f"{end_date}T{end_time}"
