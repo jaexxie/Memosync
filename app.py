@@ -731,8 +731,8 @@ def add_event():
         # creates a new all-day event
         if all_day:
 
-            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%dT00:00:00")
-            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%Y-%m-%dT23:59:59")
+            start_date = f"{start_date}T00:00:00"
+            end_date = f"{end_date}T23:59:59"
 
             # open the JSON file to read existing events
             with open('static/json/events.json', 'r') as file:
