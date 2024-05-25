@@ -730,14 +730,17 @@ def add_event():
 
         # creates a new all-day event
         if all_day:
+
+            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%dT00:00:00")
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%Y-%m-%dT23:59:59")
+
             # open the JSON file to read existing events
             with open('static/json/events.json', 'r') as file:
                 events = json.load(file)['events']
 
-            for event in events:
-                # determine the new event ID by increamenting the maximum existing ID
-                max_id = int(event.get('id', 0))
-                id_for_new_event = max_id + 1
+            # Find the maximum event ID
+            max_id = max(int(event.get('id', 0)) for event in events)
+            id_for_new_event = max_id + 1
 
             # add form data to variable add_event
             add_event = {
@@ -822,7 +825,7 @@ def edit_event():
         start_time = request.forms.get('start_time_edit')
         end_date = request.forms.get('end_date_edit')
         end_time = request.forms.get('end_time_edit')
-        all_day = request.forms.get('edit_all_day') is not None
+        all_day = request.forms.get('edit_all_day') == 'true'
 
         # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
