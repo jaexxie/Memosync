@@ -16,50 +16,32 @@ from passlib.hash import pbkdf2_sha256
 
 @route('/')
 def index():
-    '''
-    Route for the home page.
 
-    If a user is already logged in, the user is redirected to the
-    overiew page.
-    '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
 
     if logged_in_cookie:
-        # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
-        # user is not logged in and remains on the home page
         return template('index')
 
 # REGISTER
 
 @route('/register')
 def register():
-    '''
-    Route for the registration page.
-
-    If a user is already logged in, the user is redirected to the
-    overview page.
-    '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
     
     if logged_in_cookie:
-        # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
-        # user is not logged in and remains on the registstation page
         return template('register', message=None)
 
 @route('/register/<message>')
-def register(message):
+def send_message_to_users_registering(message):
     '''
     Route for regristration page with a message parameter.
-
-    If a user is already logged in, the user is redirected to the
-    overview page.
     '''
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
@@ -1154,16 +1136,13 @@ def delete_task():
             # deletes task from the progress_bar table
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
-            
 
-            # redirect to progress table after deleting the task
             return redirect('/progress_table')
         finally:
             # close database connection
             cursor.close()
             db.close()
     else:
-        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
 @route ('/update_task', method='POST')
@@ -1209,12 +1188,10 @@ def update_task():
             return redirect('/progress_table')
         
         finally:
-            # close database connection
             cursor.close()
             db.close()
 
     else:
-        # if the user is not logged in, redirect to the home page
         return redirect('/')
      
 @route('/static/<filepath:path>')
