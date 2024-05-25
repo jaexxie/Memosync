@@ -825,7 +825,7 @@ def edit_event():
         start_time = request.forms.get('start_time_edit')
         end_date = request.forms.get('end_date_edit')
         end_time = request.forms.get('end_time_edit')
-        all_day = request.forms.get('edit_all_day') == 'true'
+        all_day = request.forms.get('edit_all_day') == 'True'
 
         # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
