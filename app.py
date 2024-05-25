@@ -749,7 +749,7 @@ def add_event():
                 "title": title,
                 "description": description,
                 "start": start_date,
-                "end": start_date
+                "end": end_date
             }
 
             # append the new event to the list of events
@@ -834,16 +834,18 @@ def edit_event():
         # finds the event by ID and update the relevant details
         for event in events:
             if event["id"] == id:
+                #Update event details
                 event["title"] = title
                 event["description"] = description
 
-                #check if the event is all-day event
+                #handle all day events
                 if all_day:
                     event["start"] = start_date + 'T00:00:00'
                     event["end"] = end_date + 'T23:59:59'
                 else:
                     event["start"] = f"{start_date}T{start_time}"
                     event["end"] = f"{end_date}T{end_time}"
+                
 
         # writes the updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:
