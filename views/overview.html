@@ -127,9 +127,50 @@
         <h3>Calendar</h3>
         <section id="calendar"></section>
       </a>
-      <a href="*" id="tutor">?</a>
     </div>
   </main>
+
+  <div id="lightbox">
+    <a href="javascript:void(0);" id="tutor">?</a>
+  </div>
+
+  <div id="lightbox-overlay">
+    <div id="lightbox-content">
+      <button id="lightbox-close">&times;</button>
+      <video controls>
+        <source src="/static/video/Tutorial.final.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for the lightbox display
+    document.getElementById('tutor').addEventListener('click', function() {
+      document.getElementById('lightbox-overlay').style.display = 'flex';
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', function() {
+      closeLightbox();
+    });
+
+    // Close the lightbox when clicking outside the video content
+    document.getElementById('lightbox-overlay').addEventListener('click', function(event) {
+      if (event.target === this) {
+        closeLightbox();
+      }
+    });
+
+    function closeLightbox(){
+      var lightbox = document.getElementById('lightbox-overlay')
+      var video = lightbox.querySelector('video');
+
+      lightbox.style.display = 'none';
+      video.pause();
+      video.currentTime = 0;
+    }
+  </script>
+
 </body>
 
 </html>
