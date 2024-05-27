@@ -37,6 +37,22 @@ div>#right>a>h3,
   margin-bottom: 20px;
 }
 
+#tutor {
+  font-family: "Montserrat", sans-serif;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #A63A50;
+  width: 45px;
+  height: 40px;
+  border-radius: 50%;
+  color: #E7DCCA;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 div>#left>a>h3:hover,
 div>#right>a>h3:hover,
 #bottom>a>h3:hover {

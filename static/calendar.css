@@ -156,6 +156,22 @@ element.style {
   color: white;
 }
 
+#tutor {
+  font-family: "Montserrat", sans-serif;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #A63A50;
+  width: 45px;
+  height: 40px;
+  border-radius: 50%;
+  color: #E7DCCA;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* view event popup */
 .background_view_event {
   position: fixed;
