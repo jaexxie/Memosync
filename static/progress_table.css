@@ -137,23 +137,6 @@ body {
 
 }
 
-#tutor {
-  font-family: "Montserrat", sans-serif;
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background-color: #A63A50;
-  width: 45px;
-  height: 40px;
-  border-radius: 50%;
-  color: #E7DCCA;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
 
 @media screen and (max-width: 770px) {
   #progress_container {
