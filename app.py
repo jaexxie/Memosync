@@ -16,50 +16,32 @@ from passlib.hash import pbkdf2_sha256
 
 @route('/')
 def index():
-    '''
-    Route for the home page.
 
-    If a user is already logged in, the user is redirected to the
-    overiew page.
-    '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
 
     if logged_in_cookie:
-        # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
-        # user is not logged in and remains on the home page
         return template('index')
 
 # REGISTER
 
 @route('/register')
 def register():
-    '''
-    Route for the registration page.
-
-    If a user is already logged in, the user is redirected to the
-    overview page.
-    '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
     
     if logged_in_cookie:
-        # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
-        # user is not logged in and remains on the registstation page
         return template('register', message=None)
 
 @route('/register/<message>')
-def register(message):
+def send_message_to_users_registering(message):
     '''
     Route for regristration page with a message parameter.
-
-    If a user is already logged in, the user is redirected to the
-    overview page.
     '''
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
@@ -730,14 +712,17 @@ def add_event():
 
         # creates a new all-day event
         if all_day:
+
+            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%dT00:00:00")
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%Y-%m-%dT23:59:59")
+
             # open the JSON file to read existing events
             with open('static/json/events.json', 'r') as file:
                 events = json.load(file)['events']
 
-            for event in events:
-                # determine the new event ID by increamenting the maximum existing ID
-                max_id = int(event.get('id', 0))
-                id_for_new_event = max_id + 1
+            # Find the maximum event ID
+            max_id = max(int(event.get('id', 0)) for event in events)
+            id_for_new_event = max_id + 1
 
             # add form data to variable add_event
             add_event = {
@@ -822,6 +807,7 @@ def edit_event():
         start_time = request.forms.get('start_time_edit')
         end_date = request.forms.get('end_date_edit')
         end_time = request.forms.get('end_time_edit')
+        all_day = request.forms.get('edit_all_day') == 'True'
 
         # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
@@ -830,10 +816,18 @@ def edit_event():
         # finds the event by ID and update the relevant details
         for event in events:
             if event["id"] == id:
+                #Update event details
                 event["title"] = title
                 event["description"] = description
-                event["start"] = f"{start_date}T{start_time}"
-                event["end"] = f"{end_date}T{end_time}"
+
+                #handle all day events
+                if all_day:
+                    event["start"] = start_date + 'T00:00:00'
+                    event["end"] = end_date + 'T23:59:59'
+                else:
+                    event["start"] = f"{start_date}T{start_time}"
+                    event["end"] = f"{end_date}T{end_time}"
+                
 
         # writes the updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:
@@ -1154,16 +1148,13 @@ def delete_task():
             # deletes task from the progress_bar table
             cursor.execute('DELETE FROM progress_bar WHERE id = %s AND user_id = %s', (task_id, logged_in_cookie))
             db.commit()
-            
 
-            # redirect to progress table after deleting the task
             return redirect('/progress_table')
         finally:
             # close database connection
             cursor.close()
             db.close()
     else:
-        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
 @route ('/update_task', method='POST')
@@ -1209,12 +1200,10 @@ def update_task():
             return redirect('/progress_table')
         
         finally:
-            # close database connection
             cursor.close()
             db.close()
 
     else:
-        # if the user is not logged in, redirect to the home page
         return redirect('/')
      
 @route('/static/<filepath:path>')
