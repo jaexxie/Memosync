@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="/static/overview.css" rel="stylesheet" type="text/css" />
   <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+  <link href="/static/tutorial.css" rel="stylesheet" type="text/css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -129,6 +130,22 @@
       </a>
     </div>
   </main>
+
+  <div id="lightbox">
+    <a href="javascript:void(0);" id="tutor">?</a>
+  </div>
+
+  <div id="lightbox-overlay">
+    <div id="lightbox-content">
+      <button id="lightbox-close">&times;</button>
+      <video controls>
+        <source src="/static/video/tutorialv2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
 </body>
 
 </html>
+
+<script src="/static/js/tutorial.js"></script>
