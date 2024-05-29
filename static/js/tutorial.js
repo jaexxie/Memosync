@@ -1,24 +1,30 @@
- // JavaScript for the lightbox display
- document.getElementById('tutor').addEventListener('click', function() {
-    document.getElementById('lightbox-overlay').style.display = 'flex';
-  });
+ document.addEventListener("DOMContentLoaded", function () {
+    var tutorButton = document.getElementById('tutor');
+    var lightboxOverlay = document.getElementById('lightbox-overlay');
+    var lightboxClose = document.getElementById('lightbox-close');
+    var video = lightboxOverlay.querySelector('video');
 
-  document.getElementById('lightbox-close').addEventListener('click', function() {
-    closeLightbox();
-  });
+    tutorButton.addEventListener('click',  function () {
+        console.log("Tutor button clicked");
+        lightboxOverlay.style.display = 'flex';
+        video.play();
+    });
 
-  // Close the lightbox when clicking outside the video content
-  document.getElementById('lightbox-overlay').addEventListener('click', function(event) {
-    if (event.target === this) {
-      closeLightbox();
+    lightboxClose.addEventListener('click', function () {
+        console.log("Lightbox close button clicked");
+        closeLightbox();
+    });
+
+    lightboxOverlay.addEventListener('click', function (event) {
+        if (event.target === lightboxOverlay){
+            console.log("Lightbox overlay clicked");
+            closeLightbox();
+        }
+    });
+
+    function closeLightbox() {
+        lightboxOverlay.style.display = 'none';
+        video.pause();
+        video.currentTime = 0;
     }
-  });
-
-  function closeLightbox(){
-    var lightbox = document.getElementById('lightbox-overlay')
-    var video = lightbox.querySelector('video');
-
-    lightbox.style.display = 'none';
-    video.pause();
-    video.currentTime = 0;
-  }
+ }); 

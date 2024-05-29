@@ -7,6 +7,7 @@
     <link href="/static/calendar.css" rel="stylesheet" type="text/css" />
     <link href="/static/ask_questions.css" rel="stylesheet" type="text/css" />
     <link href="/static/reset.css" rel="stylesheet" type="text/css" />
+    <link href="/static/tutorial.css" rel="stylesheet" type="text/css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,6 +37,20 @@
         </form>
     </section>
 
+    <div id="lightbox">
+        <a href="javascript:void(0);" id="tutor">?</a>
+      </div>
+    
+      <div id="lightbox-overlay">
+        <div id="lightbox-content">
+          <button id="lightbox-close">&times;</button>
+          <video controls>
+            <source src="/static/video/tutorialv2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <script src="/static/js/tutorial.js"></script>
 
 </body>
 

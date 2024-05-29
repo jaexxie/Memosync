@@ -12,10 +12,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-  }
-  
-  #lightbox-overlay {
+    z-index: 1000;
+    font-weight: bold;
+    border: 1px solid #7a2839;
+}
+
+#tutor:hover {
+    background-color: rgba(166, 58, 80, 0.5);
+    border-color: #A63A50;
+}
+
+#lightbox-overlay {
     display: none;
     position: fixed;
     top: 0;
