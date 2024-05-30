@@ -21,7 +21,7 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
-   
+
 }
 
 /*Show class is to the overlay, its visibility changes with JS*/
@@ -146,19 +146,21 @@ form>fieldset>* {
     border-radius: 5px;
     padding: 6px 14px;
     background-color: #a63a50;
-    border: none;
     color: white;
     cursor: pointer;
+    border: 0.8px solid #7a2839;
+    font-family: "Montserrat", sans-serif;
 }
 
 .add-task-btn:hover {
     background-color: rgba(166, 58, 80, 0.5);
+    border-color: #a63a50;
     /* Change background color on hover */
 }
 
 @media screen and (max-width: 500px) {
     .modal-container {
-        width: 80%; 
+        width: 80%;
         max-width: none;
         padding: 30px;
     }

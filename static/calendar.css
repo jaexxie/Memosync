@@ -66,13 +66,14 @@ element.style {
 
 .create_event>button {
   background-color: #a63a50;
-  border: 0.8px solid black;
+  border: 1px solid #7a2839;
   border-radius: 10px;
   padding: 13px 30px;
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
   color: white;
   margin: 0 30px 30px 30px;
+  font-size: 11pt;
 }
 
 .create_event>button:hover {
@@ -323,7 +324,7 @@ form #submit {
   border-radius: 5px;
   padding: 6px 14px;
   background-color: #a63a50;
-  border: none;
+  border: 0.8px solid #7a2839;
   color: white;
   cursor: pointer;
   width: 40%;
@@ -333,6 +334,7 @@ form #submit {
 
 #submit:hover {
   background-color: rgba(166, 58, 80, 0.5);
+  border-color: #a63a50;
 }
 
 form #delete_event {
