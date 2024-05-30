@@ -279,7 +279,7 @@ def update_user_info():
             email = request.forms.get('email')
             image = request.files.get('pic')
 
-            if image:
+            if image.filename != 'empty':
                 
                 # save the image to the specified directory
                 filename = image.filename
