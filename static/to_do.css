@@ -22,7 +22,7 @@ body>h2 {
 .create button {
   display: block;
   background-color: #a63a50;
-  border: 0.8px solid black;
+  border: 1px solid #7a2839;
   border-radius: 10px;
   padding: 13px 30px;
   box-sizing: border-box;
@@ -30,6 +30,7 @@ body>h2 {
   cursor: pointer;
   color: white;
   width: 100%;
+  font-size: 11pt;
 }
 
 .dropdown-content {
@@ -223,11 +224,12 @@ input[type="text"]:focus {
   background-color: #a63a50;
   color: white;
   cursor: pointer;
-  border: none;
+  border: 0.8px solid #7a2839;
 }
 
 #submit:hover {
   background-color: rgba(166, 58, 80, 0.5);
+  border-color: #a63a50;
 }
 
 #add {
@@ -236,11 +238,12 @@ input[type="text"]:focus {
   background-color: #a63a50;
   color: white;
   cursor: pointer;
-  border: none;
+  border: 0.8px solid #7a2839;
 }
 
 #add:hover {
   background-color: rgba(166, 58, 80, 0.5);
+  border-color: #a63a50;
 }
 
 input[type="submit"] {
