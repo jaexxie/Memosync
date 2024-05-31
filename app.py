@@ -85,8 +85,8 @@ def add_user():
             # checks that the request method is POST
             if request.method == 'POST':
                 # retrieves form data submitted by the user
-                first_name = request.forms.get('first_name')
-                last_name = request.forms.get('last_name')
+                first_name = getattr(request.forms, 'first_name')
+                last_name = getattr(request.forms, 'last_name')
                 email = request.forms.get('email')
                 password = request.forms.get('password')
 
@@ -274,8 +274,8 @@ def update_user_info():
             cursor = db.cursor()
 
             # retrieves the user information from the form
-            first_name = request.forms.get('first_name')
-            last_name = request.forms.get('last_name')
+            first_name = getattr(request.forms, 'first_name')
+            last_name = getattr(request.forms, 'last_name')
             email = request.forms.get('email')
             image = request.files.get('pic')
 
@@ -446,8 +446,8 @@ def create_to_do_list():
             cursor = db.cursor()
 
             # retrieves the to-do list title and description from the POST form data
-            to_do_list_title = request.forms.get("title")
-            to_do_list_description = request.forms.get("description")
+            to_do_list_title = getattr(request.forms, "title")
+            to_do_list_description = getattr(request.forms, "description")
 
             # insert the new to-do list into the database with the user ID
             cursor.execute('INSERT INTO to_do_list (to_do_list_title, to_do_list_description, user_id) VALUES (%s, %s, %s)', (to_do_list_title, to_do_list_description, logged_in_cookie,))
@@ -535,8 +535,8 @@ def add_task_to_do_list():
             cursor = db.cursor()
 
             # get the task and title of the to-do list from the form data
-            task = request.forms.get("task")
-            to_do_list_title = request.forms.get("choice")
+            task = getattr(request.forms, "task")
+            to_do_list_title = getattr(request.forms, "choice")
 
             # retrieves teh category ID of the to-do lsit using its title and logged in user ID
             cursor.execute('SELECT id FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s', (to_do_list_title, logged_in_cookie))
