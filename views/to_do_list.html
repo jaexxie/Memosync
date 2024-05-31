@@ -91,8 +91,8 @@
         % if task[2] == cate[0]:
 
         <div class="task">
-          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if
-            task[4]=="true" else '' }}>
+          <!-- The following line must remain as a single line, otherwise the code won't work (Checkbox won't reamin checked) -->
+          <input type="checkbox" class="task_checkbox" name="checkbox_todo" data-task-id="{{ task[0] }}" {{ 'checked' if task[4]=="true" else '' }}>
           <label data-task-id="{{ task[0] }}" class="{{ 'checked' if task[4] == 'true' else ''}}"> {{ task[3] }}
           </label>
           <button data-task-id="{{ task[0] }}" class="delete_todo_task_btn"><img
@@ -106,19 +106,6 @@
     </div>
     %end
 
-  </div>
-  <div id="lightbox">
-    <a href="javascript:void(0);" id="tutor">?</a>
-  </div>
-
-  <div id="lightbox-overlay">
-    <div id="lightbox-content">
-      <button id="lightbox-close">&times;</button>
-      <video controls>
-        <source src="/static/video/tutorialv2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
   </div>
 
 </body>
