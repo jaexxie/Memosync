@@ -1,58 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
-
+    // Hämtar alla element som hanterar modalen
     modal = document.querySelector(".modal-container");
     openModalBtn = document.querySelector("#create-btn");
     closeModalBtn = document.querySelector(".close");
     modalOverlay = document.querySelector(".modal-overlay");
     form = document.getElementById("task-form");
 
-
+    // Öppnar modalen när "create-btn" klickas
     openModalBtn.addEventListener("click", function () {
-
         modal.classList.add("show");
         modalOverlay.classList.add("show");
-
     });
 
+    //Stänger modalen när "overlay" klickas och återställer formuläret 
     modalOverlay.addEventListener("click", function () {
         modal.classList.remove("show");
         modalOverlay.classList.remove("show");
-
         form.reset();
     });
 
+    //Stänger modalen när "close" knappen klickas, formuläret nollställs
     closeModalBtn.addEventListener("click", function () {
         modal.classList.remove("show");
         modalOverlay.classList.remove("show");
-
         form.reset();
-
     });
 
-    //Funktion som uppdaterar backgrundsfärgen på select (#status-col)
+    //Funktion som uppdaterar backgrundsfärgen på select-elementen baserat på dess värde
     var statusForms = document.querySelectorAll(".status-update-form");
 
-    //loopa genom varje select alternativ
+    //loopa genom varje status formulär och lägger till eventlistener 
+    //Som uppdaterar backgrundsfärgen vid ändring
     statusForms.forEach(function (form) {
-
         var selectElement = form.querySelector(".status-selector")
-
         //uppdatera backgrundsfärgen när select värde ändras
         selectElement.addEventListener("change", function () {
-            form.submit();
+            form.submit(); //Formuläret skickas när värdet ändras
         });
 
         //ge backgrundsfärgen baserad på select
         updateBackgroundColor(selectElement);
     })
 
+    // Funktion som ger backgrundsfärg baserat på valt statusvärde
     function updateBackgroundColor(select) {
         var selectedOption = select.value;
         var backgroundColor;
-
         //if (selectedOption === "not_started") {
         // backgroundColor = "#FFA07A"; } else if ...
-
         switch (selectedOption) {
             case "not_started":
                 backgroundColor = "#cf7a74";
@@ -70,11 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
         select.style.backgroundColor = backgroundColor;
     };
 
-
     //funktion som raderar task (uppgifter) från databasen
-    //välj alla delete-task-btn
+    //hämta alla delete-task-btn
     document.querySelectorAll('.delete-task-btn').forEach(button => {
-        // Lägg till händelselyssnare för varje raderingsknapp
+        // Händelselyssnare för varje raderingsknapp
         button.addEventListener("click", function () {
             var taskId = this.dataset.taskId;
             deleteTask(taskId);
@@ -90,89 +84,93 @@ document.addEventListener('DOMContentLoaded', function () {
             body: 'task_id=' + encodeURIComponent(taskId)
         })
 
-            .then(response => {
-                if (!response.ok) {
-                    //ge ett felmeddelande om begäran inte lyckades
-                    console.error("Failed to delete task");
-
-                    //alert("Failed to delete task. Please try again later.");
-
-                }
-
+        .then(response => {
+            if (!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to delete task");
+                //alert("Failed to delete task. Please try again later.");
+            } else {
                 //I annat fall (om svaret lyckas) hämtar hanteraren svaret
                 var row = document.querySelector('[data-task-id="' + taskId + '"]').closest('tr');
+                row.remove(); // Ta bort motsvarande rad från tabellen
+            }
 
-                // Ta bort motsvarande rad från tabellen
-                row.remove();
-
-            })
-
-            .catch((error) => {
-                console.error('Error', error);
-                poemDisplay.textContent = document.createTextNode('Could not fetch verse: ' + error);
-
-                //alert("An error occurred while deleting the task.");
-            });
-
+        })
+        .catch((error) => {
+            console.error('Error', error);
+            alert("An error occurred while deleting the task.");
+        });
     };
 
     //Funktionen nedan sorterar tabellen 
+    const tableHeadings = document.querySelectorAll('thead th');
+    let tableRows = Array.from(document.querySelectorAll('tbody tr'));
 
-    table_headings = document.querySelectorAll('thead th');
-    table_rows = document.querySelectorAll('tbody tr')
-
-    table_headings.forEach((head, i) => {
+    tableHeadings.forEach((head, i) => {
+        //Excludera beskrivningskolumnen från sortering "(i !== 1)"
         if (i !== 1) {
-            let sort_asc = true;
+            //Hålla reda på sorteringen (stigande/fallande)
+            let sortAsc = true;
 
             head.onclick = () => {
-                table_headings.forEach(h => {
-
+                // ta bort "active" och "asc" klasser från alla kloumnrubriker
+                tableHeadings.forEach(h => {
                     h.classList.remove('active', 'asc');
+                    //återställler pillens riktning
                     if (h.querySelector('span.icon-arrow')) {
                         h.querySelector('span.icon-arrow').style.transform = "rotate(0deg)";
                     }
                 });
 
+                //Klickad komlumnrubrik får klassen "active"
                 head.classList.add('active');
-
                 if (head.querySelector('span.icon-arrow')) {
-                    head.classList.toggle('asc', sort_asc);
-                    head.querySelector('span.icon-arrow').style.transform = sort_asc ? "rotate(180deg)" : "rotate(0deg)";
-
+                    head.classList.toggle('asc', sortAsc);
+                    head.querySelector('span.icon-arrow').style.transform = sortAsc ? "rotate(180deg)" : "rotate(0deg)";
                 }
 
-                sort_asc = !sort_asc;
-
+                sortAsc = !sortAsc;
                 document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
 
-                table_rows.forEach(row => {
+                //Lägg till "active" klass till cellern i sorterade kolumnen
+                tableRows.forEach(row => {
                     row.querySelectorAll('td')[i].classList.add('active');
                 });
 
-                sortTable(i, sort_asc);
+                //Anropa funktion
+                sortTable(i, sortAsc);
             };
-
         }
-
     });
 
-    function sortTable(column, sort_asc) {
-        [...table_rows].sort((a, b) => {
-            let first_row = a.querySelectorAll('td')[column].innerText.toLowerCase(),
-                second_row = b.querySelectorAll('td')[column].innerText.toLowerCase();
+    function sortTable(column, sortAsc) {
+        tableRows.sort((a, b) => {
+            let firstRow = a.querySelectorAll('td')[column].innerText.toLowerCase();
+            let secondRow = b.querySelectorAll('td')[column].innerText.toLowerCase();
 
-            return sort_asc ? (first_row < second_row ? -1 : 1) : (first_row < second_row ? 1 : -1);
+            //sortera datum kolumner 
+            if(column === 2) {
+                firstRow = new Date(firstRow);
+                secondRow = new Date(secondRow);
+                return sortAsc ? firstRow - secondRow : secondRow - firstRow;
+            } else if (column === 3) {
+                // Sortera status kolumner 
+                const statusOrder = ["not_started", "in_progress", "completed"];
+                firstRow = statusOrder.indexOf(a.querySelectorAll("td")[column].querySelector("select").value);
+                secondRow = statusOrder.indexOf(b.querySelectorAll("td")[column].querySelector("select").value);
+                return sortAsc ? firstRow - secondRow : secondRow - firstRow;
+            } else {
+                //Sortera text kolumner             
+                return sortAsc ? (firstRow < secondRow ? -1 : 1) : (firstRow < secondRow ? 1 : -1);
+            }
+        });
 
-        })
-
-            .forEach(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
-
-    };
-
+        const tbody = document.querySelector("tbody");
+        tbody.innerHTML = '';
+        tableRows.forEach(row => tbody.appendChild(row));    
+    }
 
     //funktion som gör data i tabellen redigerbar och sparar det nya värdet i databasen
-
     document.querySelectorAll('.editable-cell').forEach(function (cell) {
         cell.addEventListener('blur', function () {
             var taskId = this.dataset.taskId;
@@ -184,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    //function som skickar ny data till bottle som sparar det i databasen
+    //function som skickar ny data till servern för att sparar det i databasen
     function updateTask(taskId, cellType, newContent) {
         fetch('/update_task', {
             method: 'POST',
@@ -193,47 +191,29 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: 'task_id=' + encodeURIComponent(taskId) + '&cell_type=' + encodeURIComponent(cellType) + '&new_content=' + encodeURIComponent(newContent)
         })
-
-            .then(response => {
-                if (!response.ok) {
-                    //ge ett felmeddelande om begäran inte lyckades
-                    console.error("Failed to update task");
-
-                    //alert("Failed to delete task. Please try again later.");
-
-                }
-
-            })
-
-            .catch((error) => {
-                console.error('Error', error);
-
-                alert("An error occurred while updating the task:" + error.message);
-            });
-
+        .then(response => {
+            if (!response.ok) {
+                //ge ett felmeddelande om begäran inte lyckades
+                console.error("Failed to update task");
+                alert("Failed to delete task. Please try again later.");
+            }
+        })
+        .catch((error) => {
+            console.error('Error', error);
+            alert("An error occurred while updating the task:" + error.message);
+        });
     }
 
-    //Nedan kod är för popovers 
+    //Nedan kod är för Bootstrap popovers 
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
     popoverTriggerList.forEach(function (popoverTriggerEl) {
         var popover = new bootstrap.Popover(popoverTriggerEl, {
             trigger: 'hover'
         });
 
-        //Hide popover when clicked 
+        //Dölj popover när elementet klickas  
         popoverTriggerEl.addEventListener('click', function () {
             popover.hide();
-
         });
-
     });
-
-
 });
-
-
-
-
-
-
-
