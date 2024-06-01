@@ -23,7 +23,7 @@ def does_the_token_match_the_users_token(token, id):
         db = make_db_connection()
         cursor = db.cursor()
 
-        cursor.execute('select * from user_info where token = %s and id = %s', (token, id))
+        cursor.execute('SELECT * FROM user_info WHERE token = %s and id = %s', (token, id))
         user = cursor.fetchone()
 
         if user:
