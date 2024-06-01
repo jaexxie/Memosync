@@ -704,8 +704,8 @@ def add_event():
             response.set_cookie('token', '', expires=0)
             return redirect('/')
         # retrives event information from the form data
-        title = request.forms.get('event_name')
-        description = request.forms.get('event_description')
+        title = getattr(request.forms, 'event_name')
+        description = getattr(request.forms, 'event_description')
         all_day = request.forms.get('all_day')
         start_date = request.forms.get('start_date')
         end_date = request.forms.get('end_date')
@@ -801,8 +801,8 @@ def edit_event():
             return redirect('/')
         # retrives event information from the form data
         id = request.forms.get('edit_event_id')
-        title = request.forms.get('title')
-        description = request.forms.get('description')
+        title = getattr(request.forms, 'title')
+        description = getattr(request.forms, 'description')
         start_date = request.forms.get('start_date_edit')
         start_time = request.forms.get('start_time_edit')
         end_date = request.forms.get('end_date_edit')
@@ -975,8 +975,8 @@ def add_project():
             cursor = db.cursor()
 
             # retrieves project information from the form data
-            project = request.forms.get("task")
-            description = request.forms.get("description")
+            project = getattr(request.forms, "task")
+            description = getattr(request.forms, "description")
             spb_date = request.forms.get("deadline_date")
             status = 'not_started'
 
