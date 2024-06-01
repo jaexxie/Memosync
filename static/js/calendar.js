@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-
+document.addEventListener('DOMContentLoaded', function () {
   // popup
   add_event_btn = document.querySelector('#add_event_btn')
   background_create_event = document.querySelector('.background_create_event')
@@ -9,27 +8,27 @@ document.addEventListener('DOMContentLoaded', function() {
   closeBtn = document.querySelector(".close")
   closeBtn_2 = document.querySelector(".close_2");
 
-  add_event_btn.addEventListener('click', function() {
+  add_event_btn.addEventListener('click', function () {
     background_create_event.classList.add('show')
     container_create_event.classList.add('show')
   });
 
-  background_create_event.addEventListener("click", function() {
+  background_create_event.addEventListener("click", function () {
     background_create_event.classList.remove('show')
     container_create_event.classList.remove('show')
   });
 
-  background_view_event.addEventListener("click", function() {
+  background_view_event.addEventListener("click", function () {
     background_view_event.classList.remove('show')
     container_view_event.classList.remove('show')
   });
 
-  closeBtn.addEventListener('click', function() {
+  closeBtn.addEventListener('click', function () {
     background_create_event.classList.remove('show')
     container_create_event.classList.remove('show')
   });
 
-  closeBtn_2.addEventListener('click', function() {
+  closeBtn_2.addEventListener('click', function () {
     background_view_event.classList.remove('show')
     container_view_event.classList.remove('show')
   });
@@ -55,55 +54,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     eventSources: [
 
-    // your event source
-    {
-      url: '/get_events', // use the `url` property
-      color: '#A63A50',    // an option!
-      textColor: 'white'  // an option!
-    }
+      // your event source
+      {
+        url: '/get_events', // use the `url` property
+        color: '#A63A50',    // an option!
+        textColor: 'white'  // an option!
+      }
 
-  ],
+    ],
 
-  eventClick: function(info) {
-    background_view_event.classList.add('show')
-    container_view_event.classList.add('show')
+    eventClick: function (info) {
+      background_view_event.classList.add('show')
+      container_view_event.classList.add('show')
 
-    title = document.querySelector('#title')
-    description = document.querySelector('#description')
-    start_date = document.querySelector('#start_date_edit')
-    end_date = document.querySelector('#end_date_edit')
-    start_time = document.querySelector('#start_time_edit')
-    end_time = document.querySelector('#end_time_edit')
-    edit_event_id = document.querySelector('#edit_event_id')
-    delete_event = document.querySelector('#delete_event')
-    
+      title = document.querySelector('#title')
+      description = document.querySelector('#description')
+      start_date = document.querySelector('#start_date_edit')
+      end_date = document.querySelector('#end_date_edit')
+      start_time = document.querySelector('#start_time_edit')
+      end_time = document.querySelector('#end_time_edit')
+      edit_event_id = document.querySelector('#edit_event_id')
+      delete_event = document.querySelector('#delete_event')
 
-    // Extracting event data
-    const event = info.event;
-    const eventStart = new Date(event.start);
-    const eventEnd = new Date(event.end);
 
-    // Updating HTML elements with event data
-    edit_event_id.value = event.id;
-    title.value = event.title;
+      // Extracting event data
+      const event = info.event;
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
 
-    if (event.extendedProps.description) {
-      description.value = event.extendedProps.description;
-    } else {
+      // Updating HTML elements with event data
+      edit_event_id.value = event.id;
+      title.value = event.title;
+
+      if (event.extendedProps.description) {
+        description.value = event.extendedProps.description;
+      } else {
         console.warn('Event description is undefined');
         description.value = '';
-    }
+      }
 
-    start_date.value = eventStart.toISOString().substring(0, 10);
-    end_date.value = eventEnd.toISOString().substring(0, 10);
-    start_time.value = eventStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    end_time.value = eventEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-    
-    delete_event.innerHTML = '<a href="delete/event/' + info.event.id + '" id="delete_event_link">Delete Event</a>';
-    // change the border color just for fun
-    info.el.style.border = '1.5px solid #2c3e50';
-  },
+      start_date.value = eventStart.toISOString().substring(0, 10);
+      end_date.value = eventEnd.toISOString().substring(0, 10);
+      start_time.value = eventStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      end_time.value = eventEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+
+      delete_event.innerHTML = '<a href="delete/event/' + info.event.id + '" id="delete_event_link">Delete Event</a>';
+      // change the border color just for fun
+      info.el.style.border = '1.5px solid #2c3e50';
+    },
 
   });
   calendar.render();

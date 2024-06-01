@@ -16,36 +16,57 @@ from passlib.hash import pbkdf2_sha256
 
 @route('/')
 def index():
+    '''
+    Route for index page.
+
+    Checks if the user is logged in and redirected to the overview
+    page, otherwise the user is redicted to the index template.
+    '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
 
     if logged_in_cookie:
+        # user is logged in and redicted to the overview page
         return redirect('/overview')
     else:
+        # user is not logged in and remains on the index page
         return template('index')
 
 # REGISTER
 
 @route('/register')
 def register():
+    '''
+    Route for registration page.
+
+    If the user is logged in, it redirects to the overview page, if
+    the user is not logged in, the user remains on the registation page.
+    '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
     
     if logged_in_cookie:
         return redirect('/overview')
+        # user is logged in and redicted to the overview page
     else:
+        # user is not logged in and remains on the register page
         return template('register', message=None)
 
 @route('/register/<message>')
 def send_message_to_users_registering(message):
     '''
     Route for regristration page with a message parameter.
+
+    If the user is logged in, it redirects to the overview page, if
+    the user is not logged in, the user remains on the registation
+    with the given message.
     '''
     
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+
     if logged_in_cookie:
         # user is logged in and redicted to the overview page
         return redirect('/overview')
@@ -62,15 +83,21 @@ def add_user():
     It retrieves user information from the same form, checks for 
     existing users with the same email and adds the new user to the
     database if the email does not already exist.
+
+    If the user is already logged in, it verifies the session token
+    and redirects to the overview page. if the user is not logged in
+    it processes the registration.
     '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
+   
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # verifies the token to ensure it matches the user's token
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            # if tokens do not match, clear cookies and redirect to the home page
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
             return redirect('/')
@@ -90,21 +117,26 @@ def add_user():
                 email = request.forms.get('email')
                 password = request.forms.get('password')
 
-                # Makes Sure That the firstname only includes Alphabetic characters
+                # ensures the first name only contains alphabetic characters
                 if first_name.isalpha():
+                    # ensures the last name contains only alphabetic characters
                     if last_name.isalpha():
+                        # check the length of the first name
                         if len(first_name) <= 50:
+                            # check the length of the last name
                             if len(last_name) <= 50:
                                 # ensures the email does not already exist in the database
                                 cursor.execute('SELECT * FROM user_info WHERE email=%s', (email,))
                                 does_mail_already_exist = cursor.fetchall()
                                 
                                 if does_mail_already_exist:
-                                    # if email arlreayd exists, redirect with the message
+                                    # if email already exists, redirect with the message
                                     return redirect('/register/Email already exists')
                                 
+                                # hashes the password and creates a token
                                 hash_password = pbkdf2_sha256.hash(password)
                                 token = f"{hash_password}RAYANN{datetime}"
+                            
                                 # inserts the new user into the ddatabase
                                 cursor.execute('INSERT INTO user_info (name, lastname, email, password, token) VALUES (%s, %s, %s, %s, %s)', (first_name, last_name, email, hash_password, token))
                                 # commits the transaction
@@ -130,7 +162,7 @@ def add_user():
 @route('/login', method=['GET', 'POST'])
 def login():
     '''
-    Route for hte login page.
+    Route for the login page.
 
     Checks if a user is already logged in. If the login is a GET
     request, it render the login page. If the login is a POST request,
@@ -155,15 +187,15 @@ def login():
                 email = request.forms.get('email')
                 password = request.forms.get('password')
 
-                # checks if the user exists with the given email and password
-                cursor.execute('select * from user_info where email=%s', (email))
+                # checks if the user exists with the given email
+                cursor.execute('SELECT * FROM user_info WHERE email=%s', (email))
                 user = cursor.fetchone()
 
                 if user is None:
                     # no user found with the given email
                     return template('login', email_or_password_wrong=True, email_not_found=True)
-
                 else:
+                    # retrieves the stored hash password
                     hash = str(user[4])
 
                     if pbkdf2_sha256.verify(password, hash):
@@ -174,6 +206,7 @@ def login():
                         # redirects the user to the overview page after successful login
                         return redirect('/overview')
                     else:
+                        # incorrect password
                         return template('login', email_or_password_wrong=True)
             else:
                 # renders the login page without error
@@ -222,10 +255,11 @@ def overview():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -263,10 +297,11 @@ def update_user_info():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -309,24 +344,34 @@ def update_user_info():
     
 @route('/delete/profile/picture', method=['GET', 'POST'])
 def delete_profile_picture():
+    '''
+    Route to delete the user's profile picture.
+
+    Checks if the user is logged in, verifies the session token and
+    updates the user's profile picture to the database. If the user is
+    not logged in, it redirects to the home page.
+    '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # connect to the database
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute('update user_info set profile_picture = %s where id = %s', ('default.jpeg', logged_in_cookie))
+            # updates the user's profile picture to a default image
+            cursor.execute('UPDATE user_info SET profile_picture = %s WHERE id = %s', ('default.jpeg', logged_in_cookie))
             db.commit()
 
+            # redirects tot he referring page after successful update
             return redirect(request.get_header('Referer'))
         finally:
             # close database connection
@@ -338,24 +383,35 @@ def delete_profile_picture():
     
 @route('/delete/my/account', method=['GET', 'POST'])
 def delete_my_account():
+    '''
+    Route to delete the user's account.
+
+    Checks if the user is logged in, verifies the session token and
+    deletes the user's account from the database. If the user is not
+    logged in, it redirects to the home page.
+    '''
     # checks if the user is already logged in by checking the 'loggedIn' cookie
     logged_in_cookie = request.get_cookie('loggedIn')
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # verifies the token to ensure it matches the user's token
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
+            # if tokens do not match, clear cookies and redirect to the home page
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # connect to the database
             db = make_db_connection()
             cursor = db.cursor()
 
-            cursor.execute('delete from user_info where id = %s', (logged_in_cookie))
+            # delete the user's account from the database
+            cursor.execute('DELETE FROM user_info WHERE id = %s', (logged_in_cookie))
             db.commit()
 
+            # redirect to the referring page agest succesful deletion
             return redirect(request.get_header('Referer'))
         finally:
             # close database connection
@@ -392,10 +448,11 @@ def to_do_list():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -435,10 +492,11 @@ def create_to_do_list():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -480,10 +538,11 @@ def delete_to_do_list():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -524,10 +583,11 @@ def add_task_to_do_list():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -538,7 +598,7 @@ def add_task_to_do_list():
             task = getattr(request.forms, "task")
             to_do_list_title = getattr(request.forms, "choice")
 
-            # retrieves teh category ID of the to-do lsit using its title and logged in user ID
+            # retrieves the category ID of the to-do lsit using its title and logged in user ID
             cursor.execute('SELECT id FROM to_do_list WHERE to_do_list_title = %s AND user_id = %s', (to_do_list_title, logged_in_cookie))
             category_id = cursor.fetchone()[0]
 
@@ -571,10 +631,11 @@ def delete_to_do_task():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             #database connection
@@ -588,7 +649,6 @@ def delete_to_do_task():
             cursor.execute('DELETE FROM to_do_lists_task WHERE id = %s', ( task_id))
             db.commit()
             
-
             # redirect to to_do_list table after deleting the task
             return redirect('/to_do_list')
         finally:
@@ -615,21 +675,22 @@ def update_checkbox():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
             db = make_db_connection()
             cursor = db.cursor()
             
-            # retrieve the task ID and the new checkbox state from the POST request's form data
+            # retrieves the task ID and the new checkbox state from the POST request's form data
             task_id = request.forms.get("task_id")
             checked = request.forms.get("checked")
 
-            # update the "finished" status of the specified task in the database
+            # updates the "finished" status of the specified task in the database
             cursor.execute('UPDATE to_do_lists_task SET finished = %s WHERE id = %s', (checked, task_id))
             db.commit()
             
@@ -660,21 +721,22 @@ def calendar():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
             db = make_db_connection()
             cursor = db.cursor()
 
-            # Get the current date
+            # retrieves the current date
             current_date = datetime.date.today()
             formatted_date = current_date.isoformat()
 
-            # render the 'calendar' template, providing the logged-in user's information
+            # renders the 'calendar' template, providing the logged-in user's information
             return template('calendar', date=formatted_date, user_info=get_user_info(logged_in_cookie, cursor))
         finally:
         # close database connection
@@ -698,11 +760,13 @@ def add_event():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
+        
         # retrives event information from the form data
         title = getattr(request.forms, 'event_name')
         description = getattr(request.forms, 'event_description')
@@ -712,7 +776,6 @@ def add_event():
 
         # creates a new all-day event
         if all_day:
-
             start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%Y-%m-%dT00:00:00")
             end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%Y-%m-%dT23:59:59")
 
@@ -794,11 +857,13 @@ def edit_event():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
+        
         # retrives event information from the form data
         id = request.forms.get('edit_event_id')
         title = getattr(request.forms, 'title')
@@ -816,11 +881,11 @@ def edit_event():
         # finds the event by ID and update the relevant details
         for event in events:
             if event["id"] == id:
-                #Update event details
+                # updates event details
                 event["title"] = title
                 event["description"] = description
 
-                #handle all day events
+                # handles all day events
                 if all_day:
                     event["start"] = start_date + 'T00:00:00'
                     event["end"] = end_date + 'T23:59:59'
@@ -828,7 +893,6 @@ def edit_event():
                     event["start"] = f"{start_date}T{start_time}"
                     event["end"] = f"{end_date}T{end_time}"
                 
-
         # writes the updated events back to the JSON file
         with open('static/json/events.json', 'w') as file:
             json.dump({"events": events}, file, indent=4)
@@ -884,12 +948,14 @@ def get_events():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
-        # open tje JSON file to read existing events
+        
+        # open the JSON file to read existing events
         with open('static/json/events.json', 'r') as file:
             all_events = json.load(file)['events']
 
@@ -925,10 +991,11 @@ def progress_table():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -964,10 +1031,11 @@ def add_project():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database connection
@@ -1010,10 +1078,11 @@ def update_status():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database Connection
@@ -1054,10 +1123,11 @@ def delete_task():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             #database connection
@@ -1077,6 +1147,7 @@ def delete_task():
             cursor.close()
             db.close()
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
 
 @route ('/update_task', method='POST')
@@ -1085,8 +1156,8 @@ def update_task():
     Route for editing content of a task in the progress table.
 
     If the user is logged in, it retrieves the task ID and the new
-    content and updates the database. If the user
-    is not logged in, it redirects to the home page.
+    content and updates the database. If the user is not logged in,
+    it redirects to the home page.
     '''
 
     # checks if the user is already logged in by checking the 'loggedIn' cookie
@@ -1094,38 +1165,44 @@ def update_task():
     token = request.get_cookie('token')
 
     if logged_in_cookie:
-
+        # if logged in, clear the 'loggedIn' cookie to log the user out
         if not does_the_token_match_the_users_token(token, logged_in_cookie):
             response.set_cookie('loggedIn', '', expires=0)
             response.set_cookie('token', '', expires=0)
+            # redirects to the home page after logging out
             return redirect('/')
         try:
             # database Connection
             db = make_db_connection()
             cursor = db.cursor()
 
-            # retrieve task ID and new content and cell type from the form data
+            # retrieves task ID and new content and cell type from the form data
             task_id = request.forms.get("task_id")
             new_content = request.forms.get("new_content")
             cell_type = request.forms.get("cell_type")
 
-            # Updatera specifika columner utifrån cell_type
+            # updates the appropriate column in the progress_bar based on the cell type
             if cell_type == "task":
+                # updates the project field with the new content for the given task ID
                 cursor.execute('UPDATE progress_bar SET project = %s WHERE id = %s', (new_content, task_id))
             elif cell_type == "description":
+                # updates the description field with the content for the given task ID
                 cursor.execute('UPDATE progress_bar SET description = %s WHERE id = %s', (new_content, task_id))
             elif cell_type == "date":
+                # updates the spb_date field with the new content for the given task ID
                 cursor.execute('UPDATE progress_bar SET spb_date = %s WHERE id = %s', (new_content, task_id))
 
+            #commit changes to the database
             db.commit()
+
             # redirect to progress table
             return redirect('/progress_table')
-        
         finally:
+            # close database connection
             cursor.close()
             db.close()
-
     else:
+        # if the user is not logged in, redirect to the home page
         return redirect('/')
      
 @route('/static/<filepath:path>')
