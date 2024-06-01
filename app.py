@@ -2,7 +2,6 @@
 from datetime import date
 import datetime
 from random import random
-import re
 from unicodedata import category
 from bottle import route, run, template, static_file, request, redirect, response, delete
 import json
